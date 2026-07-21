@@ -8,8 +8,8 @@ module spi_master_fsm(
     output reg load,
     output reg shift,
     output reg enable,
-    output reg busy
-
+    output reg busy,
+    output reg cs
 );
 
 // State Encoding
@@ -83,18 +83,20 @@ begin
     shift  = 0;
     enable = 0;
     busy   = 0;
-
+    cs = 1'b1;
     case(state)
 
         IDLE:
         begin
             busy = 0;
+            cs = 1'b1;
         end
 
         LOAD:
         begin
             load = 1;
             busy = 1;
+            cs = 1'b0;
         end
 
         SHIFT:
@@ -102,13 +104,14 @@ begin
             shift  = 1;
             enable = 1;
             busy   = 1;
+            cs = 1'b0;
         end
 
         DONE:
         begin
             busy = 0;
+            cs = 1'b1;
         end
-
     endcase
 
 end

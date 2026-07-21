@@ -1,13 +1,16 @@
-module spi_shift_register(
-
+module spi_shift_register # (
+    parameter DATA_WIDTH = 8
+) (
     input clk,
     input rst,
     input load,
     input shift,
-    input [7:0] data_in,
+    input [DATA_WIDTH-1:0] data_in,
+    input miso,
 
+    output reg [DATA_WIDTH-1:0] rx_data,
     output mosi,
-    output reg [7:0] shift_reg
+    output reg [DATA_WIDTH-1:0] shift_reg
 
 );
 
@@ -19,16 +22,19 @@ begin
     if(rst)
     begin
         shift_reg <= 8'd0;
+        rx_data <= 0;
     end
 
     else if(load)
     begin
         shift_reg <= data_in;
+        rx_data <= 0;
     end
 
     else if(shift)
     begin
-        shift_reg <= {shift_reg[6:0],1'b0};
+        shift_reg <= {shift_reg[DATA_WIDTH-2:0], 1'b0};
+        rx_data <= {rx_data[DATA_WIDTH-2:0], miso};
     end
 
 end

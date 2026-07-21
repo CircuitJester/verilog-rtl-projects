@@ -2,35 +2,34 @@ module spi_clock_generator(
 
     input clk,
     input rst,
+    input [7:0] clk_divider,    
+    input cpol,
 
     output reg spi_clk
 
 );
 
-reg [1:0] clk_div;
+reg [7:0] clk_count;
 
 always @(posedge clk or posedge rst)
 begin
 
     if(rst)
     begin
-        clk_div <= 2'd0;
-        spi_clk <= 1'b0;
+        clk_count <= 0;
+        spi_clk <= cpol;
     end
 
     else
     begin
 
-        if(clk_div == 2'd1)
-        begin
-            clk_div <= 2'd0;
-            spi_clk <= ~spi_clk;
-        end
+        clk_count <= clk_count + 1;
 
-        else
-            clk_div <= clk_div + 1;
-
+        if(clk_count >= clk_divider)
+    begin
+        clk_count <= 0;
+        spi_clk <= ~spi_clk;
     end
-
+    end
 end
 endmodule
