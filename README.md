@@ -55,6 +55,7 @@ A structured collection of Verilog HDL projects covering digital design, communi
 - Full Duplex Communication
 - Modular IP Design
 
+
 ### Project 6 — SPI Slave
 
 **Key Learning**
