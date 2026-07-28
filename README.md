@@ -90,6 +90,91 @@ Each project follows the same engineering process:
 6. Git Version Control
 
 
+## Learning Highlights
+
+- Designed modular RTL architectures using Verilog HDL.
+- Built communication protocol controllers from scratch.
+- Developed combinational and sequential digital logic.
+- Implemented finite state machines for protocol control.
+- Designed serial communication interfaces including UART, SPI, I²C and CAN.
+- Implemented frame generation, CRC, bit stuffing and acknowledgement      mechanisms.
+- Created reusable and parameterized RTL modules.
+- Verified designs using self-written Verilog testbenches.
+- Followed modular project organization and version control using Git.
+
+
+## Current Progress
+
+Completed **10 RTL projects** covering industry-standard digital communication protocols and hardware IP development.
+
+### Protocols Implemented
+
+- UART
+- SPI Master
+- SPI Slave
+- I²C Master
+- I²C Slave
+- CAN Controller
+- AXI4-Lite Master
+
+### Skills Demonstrated
+
+- RTL Design
+- Finite State Machine Design
+- Protocol Implementation
+- Bus Architecture
+- Modular Hardware Design
+- Testbench Development
+- Functional Verification
+
+
+# Project 10 — AXI4-Lite Slave IP Core
+
+### Highlights
+
+- Complete AXI4-Lite Slave Interface
+- Memory-Mapped Register File
+- Slave Controller FSM
+- Independent RTL Modules
+- Individual Testbenches
+- Verification
+- Top-Level Integration
+
+# Project 11
+
+### Skills
+
+- Verilog HDL
+- AXI4-Lite Protocol
+- FSM Design
+- Register File Design
+- Address Decoder
+- RTL Verification
+- Hierarchical Design
+
+
+# Project 12
+
+## Skills Demonstrated
+
+- Verilog HDL
+- FPGA RTL Design
+- Digital Logic Design
+- Finite State Machines (FSM)
+- UART Protocol
+- CAN Protocol
+- AXI4 Interface
+- SPI Protocol
+- Register File Design
+- Shift Registers
+- Clock Divider Design
+- Bus Interfaces
+- Testbench Development
+- GTKWave Verification
+- Modular RTL Architecture
+- FPGA IP Development
+
+
 ## Author
 Omm Prakash Sahoo
 Electronics and Communication Engineering  
