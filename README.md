@@ -175,6 +175,33 @@ Completed **10 RTL projects** covering industry-standard digital communication p
 - FPGA IP Development
 
 
+## Project 13 – I²C Master Controller
+
+### Description
+
+Designed and verified a modular I²C Master Controller in Verilog HDL implementing the complete transaction flow including START/STOP generation, serial data transfer, ACK/NACK detection, and FSM-based protocol control.
+
+### Modules
+
+- I²C Clock Generator
+- Start/Stop Generator
+- Shift Register
+- ACK Detector
+- Master FSM
+- Top Module
+
+### Concepts Covered
+
+- I²C Protocol
+- Serial Communication
+- Clock Division
+- Shift Registers
+- FSM Design
+- Modular RTL
+- Digital Verification
+
+
+
 ## Author
 Omm Prakash Sahoo
 Electronics and Communication Engineering  
