@@ -201,6 +201,30 @@ Designed and verified a modular I²C Master Controller in Verilog HDL implementi
 - Digital Verification
 
 
+## Latest Project
+
+### Project 14 – UART Controller
+
+Implemented a modular UART IP Core with:
+
+- Baud Generator
+- UART Transmitter
+- UART Receiver
+- UART TX FSM
+- UART RX FSM
+- Top-Level Integration
+- Loopback Verification
+- Complete GTKWave Verification
+
+Key Concepts
+
+- UART Protocol
+- Asynchronous Communication
+- FSM Design
+- Modular RTL
+- System-Level Verification
+
+
 
 ## Author
 Omm Prakash Sahoo
