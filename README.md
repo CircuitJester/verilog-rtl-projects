@@ -201,7 +201,6 @@ Designed and verified a modular I²C Master Controller in Verilog HDL implementi
 - Digital Verification
 
 
-## Latest Project
 
 ### Project 14 – UART Controller
 
@@ -223,6 +222,36 @@ Key Concepts
 - FSM Design
 - Modular RTL
 - System-Level Verification
+
+
+## Latest Project
+
+## Project 15 – SDRAM Controller
+
+Designed a simplified SDRAM Controller implementing complete memory control logic using modular RTL architecture.
+
+### Modules
+
+- Timing Generator
+- Initialization FSM
+- Command Generator
+- Refresh Controller
+- Read Controller
+- Write Controller
+- Main FSM
+- Top Module
+
+### Concepts Covered
+
+- SDRAM Protocol
+- Finite State Machines
+- Timing Constraints
+- Refresh Scheduling
+- Read/Write Control
+- Command Generation
+- Hierarchical RTL Design
+- System-Level Integration
+- Functional Verification
 
 
 
