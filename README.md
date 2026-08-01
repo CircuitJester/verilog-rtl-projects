@@ -224,7 +224,6 @@ Key Concepts
 - System-Level Verification
 
 
-## Latest Project
 
 ## Project 15 – SDRAM Controller
 
@@ -252,6 +251,32 @@ Designed a simplified SDRAM Controller implementing complete memory control logi
 - Hierarchical RTL Design
 - System-Level Integration
 - Functional Verification
+
+
+
+## Latest Project
+
+## Project 16 – Multi-Port SDRAM Arbiter
+
+**Description**
+
+Designed and verified a modular Multi-Port SDRAM Arbiter capable of coordinating multiple bus masters using Round Robin arbitration, FIFO request buffering, FSM-based control, and shared bus multiplexing.
+
+**Highlights**
+
+- Multi-master arbitration
+- Round Robin scheduling
+- FIFO request buffering
+- Bus Multiplexer
+- Finite State Machine
+- Modular RTL design
+- Hierarchical integration
+- Comprehensive Verilog testbenches
+- GTKWave verification
+
+**Skills**
+
+Verilog • RTL Design • FSM • FIFO • Arbitration • Digital Logic • FPGA Design • ASIC Fundamentals • System Integration
 
 
 
