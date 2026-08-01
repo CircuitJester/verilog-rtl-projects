@@ -2,8 +2,19 @@
 
 A structured collection of Verilog HDL projects covering digital design, communication protocols, and reusable RTL IP development. Every project is verified through simulation and documented as part of a continuous learning journey.
 
+## Development Workflow
 
-## Portfolio Progress
+Each project follows the same engineering process:
+
+1. RTL Design
+2. Testbench Development
+3. Simulation
+4. Waveform Verification
+5. Documentation
+6. Git Version Control
+
+
+## Project Progress
 
 ###  Project 1 — Combinational Logic
 
@@ -35,6 +46,8 @@ A structured collection of Verilog HDL projects covering digital design, communi
 - Control Logic
 - Protocol Verification
 
+
+
 ### Project 4 — Utility IPs
 
 **Key Learning**
@@ -44,6 +57,8 @@ A structured collection of Verilog HDL projects covering digital design, communi
 - Timer Design
 - Data Buffering
 - Reusable RTL Modules
+
+
 
 ### Project 5 — SPI Master
 
@@ -78,17 +93,9 @@ A structured collection of Verilog HDL projects covering digital design, communi
 - Testbench Development
 - Git & GitHub Workflow
 
-## Development Workflow
 
-Each project follows the same engineering process:
 
-1. RTL Design
-2. Testbench Development
-3. Simulation
-4. Waveform Verification
-5. Documentation
-6. Git Version Control
-
+### Project 7
 
 ## Learning Highlights
 
@@ -103,10 +110,6 @@ Each project follows the same engineering process:
 - Followed modular project organization and version control using Git.
 
 
-## Current Progress
-
-Completed **10 RTL projects** covering industry-standard digital communication protocols and hardware IP development.
-
 ### Protocols Implemented
 
 - UART
@@ -116,6 +119,8 @@ Completed **10 RTL projects** covering industry-standard digital communication p
 - I²C Slave
 - CAN Controller
 - AXI4-Lite Master
+
+### Project 8
 
 ### Skills Demonstrated
 
@@ -272,7 +277,6 @@ Designed and verified a modular Multi-Port SDRAM Arbiter capable of coordinating
 - Modular RTL design
 - Hierarchical integration
 - Comprehensive Verilog testbenches
-- GTKWave verification
 
 **Skills**
 
