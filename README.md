@@ -259,8 +259,6 @@ Designed a simplified SDRAM Controller implementing complete memory control logi
 
 
 
-## Latest Project
-
 ## Project 16 – Multi-Port SDRAM Arbiter
 
 **Description**
@@ -281,6 +279,32 @@ Designed and verified a modular Multi-Port SDRAM Arbiter capable of coordinating
 **Skills**
 
 Verilog • RTL Design • FSM • FIFO • Arbitration • Digital Logic • FPGA Design • ASIC Fundamentals • System Integration
+
+
+## Latest Project
+
+## Project 17 – SPI Master Controller
+
+**Objective**
+
+Designed a reusable SPI Master IP using modular RTL architecture.
+
+**Modules**
+
+- SPI Clock Divider
+- SPI Shift Register
+- SPI Master FSM
+- SPI Chip Select Controller
+- SPI Master Top
+
+**Concepts Learned**
+
+- Modular RTL Design
+- Control Path & Data Path Separation
+- Hierarchical Hardware Design
+- System-Level Integration
+- Full-Duplex SPI Communication
+- Functional Verification
 
 
 
