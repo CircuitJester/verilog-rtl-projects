@@ -281,7 +281,7 @@ Designed and verified a modular Multi-Port SDRAM Arbiter capable of coordinating
 Verilog • RTL Design • FSM • FIFO • Arbitration • Digital Logic • FPGA Design • ASIC Fundamentals • System Integration
 
 
-## Latest Project
+
 
 ## Project 17 – SPI Master Controller
 
@@ -306,6 +306,37 @@ Designed a reusable SPI Master IP using modular RTL architecture.
 - Full-Duplex SPI Communication
 - Functional Verification
 
+
+## Latest Project
+
+### Project 18 — Programmable Interrupt Controller
+
+**Description**
+
+Designed a complete 8-channel Programmable Interrupt Controller (PIC) in Verilog featuring interrupt request storage, software-configurable masking, fixed-priority arbitration, and an FSM-based interrupt servicing engine. The controller captures asynchronous interrupt requests, filters them through programmable masks, selects the highest-priority interrupt, notifies the CPU, waits for acknowledgment, and clears serviced requests.
+
+**Key Features**
+
+- Parameterized 8-channel architecture
+- Interrupt Request Register
+- Interrupt Mask Register
+- Fixed Priority Encoder
+- Interrupt Controller FSM
+- CPU Acknowledge Interface
+- One-Hot Interrupt Clear Logic
+- Complete Top-Level Integration
+- Full RTL Simulation and Verification
+
+**Concepts Practiced**
+
+- Interrupt Controller Architecture
+- Register Design
+- Combinational Logic
+- Priority Encoding
+- Finite State Machines
+- Parameterized RTL
+- Hierarchical Design
+- Hardware Verification
 
 
 ## Author
