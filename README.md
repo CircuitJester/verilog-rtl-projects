@@ -1,345 +1,258 @@
-# Verilog RTL Design Portfolio
+# 🚀 Verilog RTL Design 
 
-A structured collection of Verilog HDL projects covering digital design, communication protocols, and reusable RTL IP development. Every project is verified through simulation and documented as part of a continuous learning journey.
+A continuously growing collection of **industry-oriented Verilog HDL projects** focused on **RTL Design, Digital System Design, FPGA Development, and ASIC Design Fundamentals**.
 
-## Development Workflow
+This repository documents my journey from basic digital logic to complex communication protocols, memory controllers, bus architectures, and reusable hardware IP cores.
 
-Each project follows the same engineering process:
+Every project follows a complete engineering workflow including RTL implementation, verification, waveform analysis, documentation, and version control.
 
-1. RTL Design
-2. Testbench Development
-3. Simulation
-4. Waveform Verification
-5. Documentation
-6. Git Version Control
+---
 
+# 📊 Repository Statistics
 
-## Project Progress
+| Category | Count |
+|----------|------:|
+| Projects Completed | **19** |
+| Verilog Modules | **100+** |
+| Testbenches | **100+** |
+| GTKWave Simulations | **100+** |
+| Communication Protocols | **6+** |
+| Memory Systems | **3** |
+| Bus Architectures | **3** |
+| RTL IP Cores | **19** |
 
-###  Project 1 — Combinational Logic
+---
 
-**Key Learning**
+# 🛠 Engineering Workflow
 
-- Basic Logic Gates
-- Arithmetic Circuits
-- Carry Propagation
-- ALU Design
-- Combinational RTL
+Every project follows the same professional development cycle.
 
-### Project 2 — Sequential Logic
+```
+Problem Definition
+        │
+        ▼
+RTL Design
+        │
+        ▼
+Module Verification
+        │
+        ▼
+GTKWave Analysis
+        │
+        ▼
+System Integration
+        │
+        ▼
+Documentation
+        │
+        ▼
+GitHub Version Control
+```
 
-**Key Learning**
+---
 
-- Flip-Flops
-- Registers
-- Counters
-- Shift Registers
-- Clock Division
+# 💻 Technology Stack
 
-###  Project 3 — FSM & UART
-
-**Key Learning**
-
-- Finite State Machines
-- UART Transmission
-- UART Reception
-- Control Logic
-- Protocol Verification
-
-
-
-### Project 4 — Utility IPs
-
-**Key Learning**
-
-- FIFO Design
-- PWM Generation
-- Timer Design
-- Data Buffering
-- Reusable RTL Modules
-
-
-
-### Project 5 — SPI Master
-
-**Key Learning**
-
-- SPI Protocol
-- Clock Generation
-- Shift Registers
-- Full Duplex Communication
-- Modular IP Design
-
-
-### Project 6 — SPI Slave
-
-**Key Learning**
-
-- SPI Slave Architecture
-- Controller FSM
-- Master-Slave Integration
-- System-Level Verification
-- Communication Protocol Design
-
-## Skills Developed
+### Languages
 
 - Verilog HDL
-- RTL Design
-- FSM Design
-- Digital Communication Protocols
-- Modular Hardware Design
-- Hardware Verification
-- Analysis
-- Testbench Development
-- Git & GitHub Workflow
 
+### Simulation
 
+- Icarus Verilog
+- GTKWave
 
-### Project 7
+### Development
 
-## Learning Highlights
+- Visual Studio Code
+- Ubuntu (WSL)
+- Git
+- GitHub
 
-- Designed modular RTL architectures using Verilog HDL.
-- Built communication protocol controllers from scratch.
-- Developed combinational and sequential digital logic.
-- Implemented finite state machines for protocol control.
-- Designed serial communication interfaces including UART, SPI, I²C and CAN.
-- Implemented frame generation, CRC, bit stuffing and acknowledgement      mechanisms.
-- Created reusable and parameterized RTL modules.
-- Verified designs using self-written Verilog testbenches.
-- Followed modular project organization and version control using Git.
+---
 
+# 📚 Project Roadmap
 
-### Protocols Implemented
+| Project | Topic | Status |
+|---------:|-------------------------------|:------:|
+| 1 | Combinational Logic | ✅ |
+| 2 | Sequential Logic | ✅ |
+| 3 | FSM Fundamentals | ✅ |
+| 4 | Utility RTL IPs | ✅ |
+| 5 | SPI Master | ✅ |
+| 6 | SPI Slave | ✅ |
+| 7 | Communication Protocol Controllers | ✅ |
+| 8 | Bus Architecture Fundamentals | ✅ |
+| 9 | FIFO & Buffer Architectures | ✅ |
+| 10 | AXI4-Lite Slave Interface | ✅ |
+| 11 | Register File & Address Decoder | ✅ |
+| 12 | RTL Integration Fundamentals | ✅ |
+| 13 | I²C Master Controller | ✅ |
+| 14 | UART Controller | ✅ |
+| 15 | SDRAM Controller | ✅ |
+| 16 | Multi-Port SDRAM Arbiter | ✅ |
+| 17 | SPI Master IP Core | ✅ |
+| 18 | Programmable Interrupt Controller | ✅ |
+| 19 | AXI4-Lite Slave Peripheral | ✅ |
 
-- UART
-- SPI Master
-- SPI Slave
-- I²C Master
-- I²C Slave
-- CAN Controller
-- AXI4-Lite Master
+---
 
-### Project 8
+# ⭐ Featured Projects
 
-### Skills Demonstrated
+## AXI4-Lite Slave Peripheral
 
-- RTL Design
-- Finite State Machine Design
-- Protocol Implementation
-- Bus Architecture
-- Modular Hardware Design
-- Testbench Development
-- Functional Verification
-
-
-# Project 10 — AXI4-Lite Slave IP Core
-
-### Highlights
-
-- Complete AXI4-Lite Slave Interface
-- Memory-Mapped Register File
-- Slave Controller FSM
-- Independent RTL Modules
-- Individual Testbenches
-- Verification
-- Top-Level Integration
-
-# Project 11
-
-### Skills
-
-- Verilog HDL
-- AXI4-Lite Protocol
-- FSM Design
-- Register File Design
+- Register File
 - Address Decoder
-- RTL Verification
-- Hierarchical Design
-
-
-# Project 12
-
-## Skills Demonstrated
-
-- Verilog HDL
-- FPGA RTL Design
-- Digital Logic Design
-- Finite State Machines (FSM)
-- UART Protocol
-- CAN Protocol
-- AXI4 Interface
-- SPI Protocol
-- Register File Design
-- Shift Registers
-- Clock Divider Design
-- Bus Interfaces
-- Testbench Development
-- GTKWave Verification
-- Modular RTL Architecture
-- FPGA IP Development
-
-
-## Project 13 – I²C Master Controller
-
-### Description
-
-Designed and verified a modular I²C Master Controller in Verilog HDL implementing the complete transaction flow including START/STOP generation, serial data transfer, ACK/NACK detection, and FSM-based protocol control.
-
-### Modules
-
-- I²C Clock Generator
-- Start/Stop Generator
-- Shift Register
-- ACK Detector
-- Master FSM
-- Top Module
-
-### Concepts Covered
-
-- I²C Protocol
-- Serial Communication
-- Clock Division
-- Shift Registers
-- FSM Design
-- Modular RTL
-- Digital Verification
-
-
-
-### Project 14 – UART Controller
-
-Implemented a modular UART IP Core with:
-
-- Baud Generator
-- UART Transmitter
-- UART Receiver
-- UART TX FSM
-- UART RX FSM
+- AXI Read Channel
+- AXI Write Channel
 - Top-Level Integration
-- Loopback Verification
-- Complete GTKWave Verification
+- Complete Verification
 
-Key Concepts
+---
 
-- UART Protocol
-- Asynchronous Communication
-- FSM Design
-- Modular RTL
-- System-Level Verification
+## Programmable Interrupt Controller
 
+- 8 Interrupt Sources
+- Interrupt Mask Register
+- Priority Encoder
+- Interrupt FSM
+- CPU Interface
 
+---
 
-## Project 15 – SDRAM Controller
+## Multi-Port SDRAM Arbiter
 
-Designed a simplified SDRAM Controller implementing complete memory control logic using modular RTL architecture.
+- Round Robin Arbitration
+- FIFO Scheduling
+- Shared Memory Access
+- Bus Multiplexer
+- Arbitration FSM
 
-### Modules
+---
 
-- Timing Generator
+## SDRAM Controller
+
 - Initialization FSM
-- Command Generator
 - Refresh Controller
 - Read Controller
 - Write Controller
-- Main FSM
-- Top Module
+- Timing Generator
 
-### Concepts Covered
+---
 
-- SDRAM Protocol
-- Finite State Machines
-- Timing Constraints
-- Refresh Scheduling
-- Read/Write Control
-- Command Generation
-- Hierarchical RTL Design
-- System-Level Integration
-- Functional Verification
+# 📖 Major Concepts Covered
 
+### RTL Design
 
-
-## Project 16 – Multi-Port SDRAM Arbiter
-
-**Description**
-
-Designed and verified a modular Multi-Port SDRAM Arbiter capable of coordinating multiple bus masters using Round Robin arbitration, FIFO request buffering, FSM-based control, and shared bus multiplexing.
-
-**Highlights**
-
-- Multi-master arbitration
-- Round Robin scheduling
-- FIFO request buffering
-- Bus Multiplexer
-- Finite State Machine
-- Modular RTL design
-- Hierarchical integration
-- Comprehensive Verilog testbenches
-
-**Skills**
-
-Verilog • RTL Design • FSM • FIFO • Arbitration • Digital Logic • FPGA Design • ASIC Fundamentals • System Integration
-
-
-
-
-## Project 17 – SPI Master Controller
-
-**Objective**
-
-Designed a reusable SPI Master IP using modular RTL architecture.
-
-**Modules**
-
-- SPI Clock Divider
-- SPI Shift Register
-- SPI Master FSM
-- SPI Chip Select Controller
-- SPI Master Top
-
-**Concepts Learned**
-
-- Modular RTL Design
-- Control Path & Data Path Separation
-- Hierarchical Hardware Design
-- System-Level Integration
-- Full-Duplex SPI Communication
-- Functional Verification
-
-
-## Latest Project
-
-### Project 18 — Programmable Interrupt Controller
-
-**Description**
-
-Designed a complete 8-channel Programmable Interrupt Controller (PIC) in Verilog featuring interrupt request storage, software-configurable masking, fixed-priority arbitration, and an FSM-based interrupt servicing engine. The controller captures asynchronous interrupt requests, filters them through programmable masks, selects the highest-priority interrupt, notifies the CPU, waits for acknowledgment, and clears serviced requests.
-
-**Key Features**
-
-- Parameterized 8-channel architecture
-- Interrupt Request Register
-- Interrupt Mask Register
-- Fixed Priority Encoder
-- Interrupt Controller FSM
-- CPU Acknowledge Interface
-- One-Hot Interrupt Clear Logic
-- Complete Top-Level Integration
-- Full RTL Simulation and Verification
-
-**Concepts Practiced**
-
-- Interrupt Controller Architecture
-- Register Design
 - Combinational Logic
-- Priority Encoding
-- Finite State Machines
-- Parameterized RTL
+- Sequential Logic
+- Parameterized Design
+- Modular RTL
 - Hierarchical Design
-- Hardware Verification
+
+### Control Logic
+
+- Finite State Machines
+- Arbitration
+- Scheduling
+- Interrupt Handling
+
+### Memory Systems
+
+- Register Files
+- FIFO Buffers
+- SDRAM Controllers
+- Memory-Mapped Registers
+
+### Communication Protocols
+
+- UART
+- SPI
+- I²C
+- CAN
+- AXI4-Lite
+
+### Bus Architecture
+
+- AXI4-Lite Master
+- AXI4-Lite Slave
+- Multi-Port Arbitration
+- Address Decoding
+
+### Verification
+
+- Verilog Testbenches
+- Functional Verification
+- GTKWave Analysis
+- Top-Level Integration Testing
+
+---
+
+# 🎯 Skills Developed
+
+- RTL Design
+- Verilog HDL
+- Digital Logic Design
+- FPGA Design Fundamentals
+- ASIC Design Fundamentals
+- FSM Design
+- Memory Controller Design
+- Communication Protocol Design
+- Bus Interface Design
+- Register Transfer Level Verification
+- Hierarchical Hardware Design
+- Modular IP Development
+- Hardware Debugging
+- Version Control using Git & GitHub
+
+---
+
+# 📈 Current Learning Journey
+
+```
+Digital Logic
+      │
+      ▼
+RTL Design
+      │
+      ▼
+Communication Protocols
+      │
+      ▼
+Memory Controllers
+      │
+      ▼
+Bus Architectures
+      │
+      ▼
+RTL IP Development
+      │
+      ▼
+FPGA Systems
+      │
+      ▼
+ASIC Design
+```
+
+---
 
 
-## Author
-Omm Prakash Sahoo
-Electronics and Communication Engineering  
-FPGA | RTL Design | Embedded Systems | Edge AI
+# 👨‍💻 Author
+
+**Omm Prakash Sahoo**
+
+B.Tech Electronics & Communication Engineering
+
+## ⚡ Core Engineering Domains
+
+- 🔹 FPGA Design
+- 🔹 RTL Design & Verification
+- 🔹 Digital Hardware Architecture
+- 🔹 Memory & Bus Interface Design
+- 🔹 ASIC Design Fundamentals
+- 🔹 Embedded Systems Engineering
+- 🔹 Edge AI Hardware
+
+---
+
+⭐ *This repository is continuously updated with new RTL projects, verification environments, and reusable digital IP cores.*
