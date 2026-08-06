@@ -12,20 +12,20 @@ Every project follows a complete engineering workflow including RTL implementati
 
 | Category | Count |
 |----------|------:|
-| Projects Completed | **20** |
+| Projects Completed | **21** |
 | Verilog Modules | **105+** |
 | Testbenches | **105+** |
 | GTKWave Simulations | **105+** |
 | Communication Protocols | **6+** |
 | Memory Systems | **4** |
 | Bus Architectures | **3** |
-| RTL IP Cores | **20** |
+| RTL IP Cores | **21** |
 
 ---
 
 # 🛠 Engineering Workflow
 
-Every project follows the same professional RTL development cycle.
+Every project follows a structured RTL development methodology.
 
 ```
 Problem Definition
@@ -98,14 +98,30 @@ Git Version Control
 | 18 | Programmable Interrupt Controller | ✅ |
 | 19 | AXI4-Lite Slave Peripheral | ✅ |
 | 20 | DMA Controller | ✅ |
+| 21 | Pipelined ALU | ✅ |
 
 ---
 
 # ⭐ Featured Projects
 
+## Pipelined ALU
+
+A modular **32-bit pipelined execution stage** implementing instruction decoding, arithmetic and logic execution, processor flag generation, and synchronous pipeline registers.
+
+**Highlights**
+
+- ALU Control Unit
+- ALU Execution Unit
+- Processor Flag Generator
+- Pipeline Register
+- Hierarchical RTL Design
+- Complete System-Level Verification
+
+---
+
 ## DMA Controller
 
-A modular memory-to-memory DMA engine demonstrating autonomous hardware operation using a Control Register, Address Generator, Transfer Counter, and FSM-based controller.
+A modular memory-to-memory DMA engine demonstrating autonomous hardware operation using dedicated control logic, address generation, transfer counting, and an FSM-based controller.
 
 **Highlights**
 
@@ -114,7 +130,7 @@ A modular memory-to-memory DMA engine demonstrating autonomous hardware operatio
 - Transfer Counter
 - DMA Controller FSM
 - Top-Level Integration
-- Complete Functional Verification
+- Functional Verification
 
 ---
 
@@ -127,7 +143,7 @@ A modular memory-to-memory DMA engine demonstrating autonomous hardware operatio
 - AXI Read Channel
 - AXI Write Channel
 - Top-Level Integration
-- Complete Verification
+- Functional Verification
 
 ---
 
@@ -173,9 +189,17 @@ A modular memory-to-memory DMA engine demonstrating autonomous hardware operatio
 
 - Combinational Logic
 - Sequential Logic
-- Parameterized Design
-- Modular RTL
-- Hierarchical RTL Design
+- Parameterized RTL
+- Modular Design
+- Hierarchical Design
+
+## Processor Architecture
+
+- ALU Design
+- Processor Datapath
+- Pipeline Registers
+- Status Flag Generation
+- Execution Stage Design
 
 ## Control Logic
 
@@ -214,25 +238,26 @@ A modular memory-to-memory DMA engine demonstrating autonomous hardware operatio
 - Verilog Testbenches
 - Functional Verification
 - GTKWave Analysis
-- Top-Level Integration Testing
+- Top-Level Integration
 - System-Level Verification
 
 ---
 
 # 🎯 Skills Developed
 
-- RTL Design
 - Verilog HDL
+- RTL Design
 - Digital Logic Design
-- FPGA Design Fundamentals
-- ASIC Design Fundamentals
+- Processor Datapath Design
+- ALU Design
+- Pipeline Architecture
 - Finite State Machine (FSM) Design
 - Memory Controller Design
 - DMA Controller Design
 - Interrupt Controller Design
 - Communication Protocol Design
 - Bus Interface Design
-- Register Transfer Level (RTL) Verification
+- RTL Verification
 - Hierarchical Hardware Design
 - Modular IP Development
 - Hardware Debugging
@@ -258,7 +283,13 @@ Memory Systems
 Bus Architectures
       │
       ▼
-System-Level RTL IP Development
+RTL IP Development
+      │
+      ▼
+Processor Datapath Design
+      │
+      ▼
+Pipeline Architecture
       │
       ▼
 FPGA System Design
@@ -268,6 +299,28 @@ ASIC Design
 ```
 
 ---
+
+# 👨‍💻 Author
+
+**Omm Prakash Sahoo**
+
+**B.Tech | Electronics & Communication Engineering**
+
+## ⚡ Core Engineering Domains
+
+- 🔹 RTL Design & Verification
+- 🔹 FPGA Design
+- 🔹 Processor Datapath Design
+- 🔹 Digital Hardware Architecture
+- 🔹 Memory Controller Design
+- 🔹 Bus Interface Design
+- 🔹 DMA & Interrupt Controller Design
+- 🔹 ASIC Design Fundamentals
+- 🔹 Embedded Systems
+- 🔹 Edge AI Hardware
+
+---
+
 
 # 👨‍💻 Author
 
