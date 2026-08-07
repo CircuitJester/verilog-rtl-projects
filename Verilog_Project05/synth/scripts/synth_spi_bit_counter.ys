@@ -1,0 +1,19 @@
+#=========================================================
+# Project      : Verilog Project 05
+# Design       : SPI Bit Counter
+# Tool         : Yosys RTL Synthesis
+#=========================================================
+
+read_verilog RTL/spi_bit_counter.v
+
+hierarchy -top spi_bit_counter
+
+proc
+
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/spi_bit_counter
+
+write_verilog synth/netlists/spi_bit_counter_netlist.v

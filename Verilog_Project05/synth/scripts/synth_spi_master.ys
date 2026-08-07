@@ -1,0 +1,21 @@
+#=========================================================
+# Project      : Verilog Project 05
+# Design       : SPI Master
+#=========================================================
+
+read_verilog RTL/spi_clock_generator.v
+read_verilog RTL/spi_bit_counter.v
+read_verilog RTL/spi_shift_register.v
+read_verilog RTL/spi_master_fsm.v
+read_verilog RTL/spi_master.v
+
+hierarchy -top spi_master
+
+proc
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/spi_master spi_master
+
+write_verilog synth/netlists/spi_master_netlist.v

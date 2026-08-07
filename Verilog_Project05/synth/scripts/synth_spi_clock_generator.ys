@@ -1,0 +1,19 @@
+#=========================================================
+# Project      : Verilog Project 05
+# Design       : SPI Clock Generator
+# Tool         : Yosys RTL Synthesis
+#=========================================================
+
+read_verilog RTL/spi_clock_generator.v
+
+hierarchy -top spi_clock_generator
+
+proc
+
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/spi_clock_generator
+
+write_verilog synth/netlists/spi_clock_generator_netlist.v

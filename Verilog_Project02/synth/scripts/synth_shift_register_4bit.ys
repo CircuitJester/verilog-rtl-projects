@@ -1,0 +1,18 @@
+#=========================================================
+# Project      : Verilog Project 02
+# Design       : 4-bit Shift Register
+#=========================================================
+
+read_verilog RTL/shift_register_4bit.v
+
+hierarchy -top shift_register_4bit
+
+proc
+
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/shift_register_4bit
+
+write_verilog synth/netlists/shift_register_4bit_netlist.v

@@ -1,0 +1,19 @@
+#=========================================================
+# Project      : Verilog Project 04
+# Design       : SPI Master FSM
+# Tool         : Yosys RTL Synthesis
+#=========================================================
+
+read_verilog RTL/spi_master_fsm.v
+
+hierarchy -top spi_master_fsm
+
+proc
+
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/spi_master_fsm
+
+write_verilog synth/netlists/spi_master_fsm_netlist.v

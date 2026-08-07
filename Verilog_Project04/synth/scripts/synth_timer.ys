@@ -1,0 +1,19 @@
+#=========================================================
+# Project      : Verilog Project 04
+# Design       : Timer
+# Tool         : Yosys RTL Synthesis
+#=========================================================
+
+read_verilog RTL/timer.v
+
+hierarchy -top timer
+
+proc
+
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/timer
+
+write_verilog synth/netlists/timer_netlist.v

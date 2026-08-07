@@ -1,0 +1,19 @@
+#=========================================================
+# Project      : Verilog Project 03
+# Design       : Traffic Light FSM
+# Tool         : Yosys RTL Synthesis
+#=========================================================
+
+read_verilog RTL/traffic_light_fsm.v
+
+hierarchy -top traffic_light_fsm
+
+proc
+
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/traffic_light_fsm
+
+write_verilog synth/netlists/traffic_light_fsm_netlist.v

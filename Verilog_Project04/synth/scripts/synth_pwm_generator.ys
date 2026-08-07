@@ -1,0 +1,19 @@
+#=========================================================
+# Project      : Verilog Project 04
+# Design       : PWM Generator
+# Tool         : Yosys RTL Synthesis
+#=========================================================
+
+read_verilog RTL/pwm_generator.v
+
+hierarchy -top pwm_generator
+
+proc
+
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/pwm_generator
+
+write_verilog synth/netlists/pwm_generator_netlist.v

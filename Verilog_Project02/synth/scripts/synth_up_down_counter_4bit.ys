@@ -1,0 +1,18 @@
+#=========================================================
+# Project      : Verilog Project 02
+# Design       : 4-bit Up/Down Counter
+#=========================================================
+
+read_verilog RTL/up_down_counter_4bit.v
+
+hierarchy -top up_down_counter_4bit
+
+proc
+
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/up_down_counter_4bit
+
+write_verilog synth/netlists/up_down_counter_4bit_netlist.v

@@ -1,0 +1,18 @@
+#=========================================================
+# Project      : Verilog Project 02
+# Design       : 4-bit Johnson Counter
+#=========================================================
+
+read_verilog RTL/johnson_counter_4bit.v
+
+hierarchy -top johnson_counter_4bit
+
+proc
+
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/johnson_counter_4bit
+
+write_verilog synth/netlists/johnson_counter_4bit_netlist.v

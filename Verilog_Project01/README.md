@@ -1,26 +1,48 @@
-## Implemented Modules
+# Verilog Project 01 – Combinational Logic Design
 
+## Overview
+
+This project introduces the fundamentals of combinational digital logic using Verilog HDL. The designs were verified through simulation using Icarus Verilog and GTKWave, and synthesized using Yosys to generate hardware schematics, gate-level netlists, and synthesis reports.
+
+## Modules
+
+- AND Gate
 - Half Adder
 - Full Adder
+- 4-bit Carry Look Ahead Adder
 - 4-bit Ripple Carry Adder
-- 4-bit Carry Lookahead Adder
 - 4-bit ALU
 
-## Tools Used
+## Development Flow
 
-- Verilog HDL
-- Icarus Verilog
-- GTKWave
-- VS Code
+RTL Design
+→ Testbench Development
+→ Functional Simulation (Icarus Verilog)
+→ Waveform Analysis (GTKWave)
+→ RTL Synthesis (Yosys)
+→ Schematic Generation
+→ Gate-Level Netlist Generation
+→ Synthesis Report Analysis
 
-## Features
+## Repository Structure
 
-- Hierarchical Design
-- Arithmetic Operations
-- Logical Operations
-- Shift Operations
-- Carry Propagation Analysis
+```text
+RTL/
+tb/
+sim/
 
-## Simulation
+waveforms/
+├── screenshots/
+├── *.vcd
+└── *.gtkw
 
-All modules verified using Icarus Verilog and GTKWave.
+synth/
+├── scripts/
+├── netlists/
+└── schematics/
+
+reports/
+
+docs/
+
+images/

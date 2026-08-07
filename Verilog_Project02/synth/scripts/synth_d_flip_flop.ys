@@ -1,0 +1,19 @@
+#=========================================================
+# Project      : Verilog Project 02
+# Design       : D Flip-Flop
+# Tool         : Yosys RTL Synthesis
+#=========================================================
+
+read_verilog RTL/d_flip_flop.v
+
+hierarchy -top d_flip_flop
+
+proc
+
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/d_flip_flop
+
+write_verilog synth/netlists/d_flip_flop_netlist.v

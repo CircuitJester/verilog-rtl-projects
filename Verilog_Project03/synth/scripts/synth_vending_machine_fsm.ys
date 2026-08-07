@@ -1,0 +1,19 @@
+#=========================================================
+# Project      : Verilog Project 03
+# Design       : Vending Machine FSM
+# Tool         : Yosys RTL Synthesis
+#=========================================================
+
+read_verilog RTL/vending_machine_fsm.v
+
+hierarchy -top vending_machine_fsm
+
+proc
+
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/vending_machine_fsm
+
+write_verilog synth/netlists/vending_machine_fsm_netlist.v

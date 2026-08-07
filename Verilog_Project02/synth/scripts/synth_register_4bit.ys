@@ -1,0 +1,18 @@
+#=========================================================
+# Project      : Verilog Project 02
+# Design       : 4-bit Register
+#=========================================================
+
+read_verilog RTL/register_4bit.v
+
+hierarchy -top register_4bit
+
+proc
+
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/register_4bit
+
+write_verilog synth/netlists/register_4bit_netlist.v

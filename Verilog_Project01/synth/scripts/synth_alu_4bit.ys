@@ -1,0 +1,18 @@
+#=========================================================
+# Project      : Verilog Project 01
+# Design       : 4-bit ALU
+#=========================================================
+
+read_verilog RTL/alu_4bit.v
+
+hierarchy -top alu_4bit
+
+proc
+
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/alu_4bit
+
+write_verilog synth/netlists/alu_4bit_netlist.v

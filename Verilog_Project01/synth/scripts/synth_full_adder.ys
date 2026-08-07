@@ -1,0 +1,19 @@
+#=========================================================
+# Project      : Verilog Project 01
+# Design       : Full Adder
+# Tool         : Yosys RTL Synthesis
+#=========================================================
+
+read_verilog RTL/full_adder.v
+
+hierarchy -top full_adder
+
+proc
+
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/full_adder
+
+write_verilog synth/netlists/full_adder_netlist.v

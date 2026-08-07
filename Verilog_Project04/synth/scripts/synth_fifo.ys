@@ -1,0 +1,19 @@
+#=========================================================
+# Project      : Verilog Project 04
+# Design       : FIFO
+# Tool         : Yosys RTL Synthesis
+#=========================================================
+
+read_verilog RTL/fifo.v
+
+hierarchy -top fifo
+
+proc
+
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/fifo
+
+write_verilog synth/netlists/fifo_netlist.v

@@ -1,66 +1,116 @@
-# Project 03 - Finite State Machines (FSM)
+# Verilog Project 03 – Finite State Machines (FSM) & UART Controllers
 
-## Overview
-This project introduces Finite State Machines (FSMs) and communication protocol design using Verilog RTL.
+A collection of industry-oriented Finite State Machine (FSM) designs implemented in Verilog HDL.
 
-## Implemented Designs
+This project focuses on designing, simulating, verifying, and synthesizing control-oriented digital circuits that are commonly used in communication protocols, embedded systems, and digital controllers.
 
-### 1. Traffic Light Controller FSM
-Implements a four-state traffic controller:
-- North Green / South Red
-- North Yellow / South Red
-- North Red / South Green
-- North Red / South Yellow
+All modules were functionally verified using **Icarus Verilog** and **GTKWave**, followed by RTL synthesis using **Yosys** to generate gate-level netlists, synthesis reports, and hardware schematics.
 
-### 2. Sequence Detector FSM
-Detects the serial bit pattern:
-1011
+---
 
-Concepts:
-- State encoding
-- Pattern recognition
-- Overlapping sequence detection
+# Implemented Modules
 
-### 3. Vending Machine FSM
-A simple vending machine accepting:
-- ₹5 coin
-- ₹10 coin
+- Traffic Light Controller FSM
+- Sequence Detector (1011)
+- Vending Machine FSM
+- UART Transmitter FSM
+- UART Receiver FSM
 
-Dispenses product once ₹10 is accumulated.
+---
 
-### 4. UART Transmitter FSM
-Implements UART transmission:
-- Idle State
-- Start Bit
-- Data Bits
-- Stop Bit
+# Design Flow
 
-Features:
-- LSB first transmission
-- Busy signal generation
-- Shift register based serialization
+RTL Design
 
-### 5. UART Receiver FSM
-Implements UART reception:
-- Start bit detection
-- Serial-to-parallel conversion
-- Stop bit verification
-- Receive complete flag
+↓
 
-## Concepts Learned
-- Moore and Mealy FSMs
-- State Encoding
-- State Transition Logic
-- Output Logic
-- Serial Communication
-- Serialization
-- Deserialization
+Testbench Development
 
-## Tools Used
+↓
+
+Functional Simulation (Icarus Verilog)
+
+↓
+
+Waveform Analysis (GTKWave)
+
+↓
+
+RTL Synthesis (Yosys)
+
+↓
+
+Gate-Level Netlist Generation
+
+↓
+
+Hardware Schematic Generation
+
+↓
+
+Synthesis Report Analysis
+
+---
+
+# Repository Structure
+
+```text
+RTL/
+tb/
+sim/
+
+waveforms/
+├── screenshots/
+
+synth/
+├── scripts/
+├── netlists/
+└── schematics/
+
+reports/
+
+docs/
+
+images/
+
+*.vcd
+*.gtkw
+```
+
+---
+
+# Tools Used
+
 - Verilog HDL
 - Icarus Verilog
 - GTKWave
-- VS Code
+- Yosys
 
+---
 
-Omm Prakash Sahoo
+# Generated Artifacts
+
+- Functional simulation waveforms
+- GTKWave session files
+- Waveform screenshots
+- RTL synthesis scripts
+- SVG hardware schematics
+- Gate-level Verilog netlists
+- Synthesis reports
+
+---
+
+# Learning Outcomes
+
+- Finite State Machine (FSM) Design
+- Mealy and Moore FSM Concepts
+- UART Transmitter Architecture
+- UART Receiver Architecture
+- Sequence Detection Techniques
+- Controller Design
+- RTL Synthesis using Yosys
+- Hardware Resource Analysis
+- Reading Gate-Level Netlists
+- Understanding Synthesized Schematics
+
+---

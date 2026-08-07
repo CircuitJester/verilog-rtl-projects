@@ -1,0 +1,19 @@
+#=========================================================
+# Project      : Verilog Project 03
+# Design       : UART TX FSM
+# Tool         : Yosys RTL Synthesis
+#=========================================================
+
+read_verilog RTL/uart_tx_fsm.v
+
+hierarchy -top uart_tx_fsm
+
+proc
+
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/uart_tx_fsm
+
+write_verilog synth/netlists/uart_tx_fsm_netlist.v

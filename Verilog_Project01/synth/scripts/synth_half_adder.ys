@@ -1,0 +1,19 @@
+#=========================================================
+# Project      : Verilog Project 01
+# Design       : Half Adder
+# Tool         : Yosys
+#=========================================================
+
+read_verilog RTL/half_adder.v
+
+hierarchy -top half_adder
+
+proc
+
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/half_adder
+
+write_verilog synth/netlists/half_adder_netlist.v

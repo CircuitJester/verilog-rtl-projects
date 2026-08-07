@@ -1,0 +1,18 @@
+#=========================================================
+# Project      : Verilog Project 01
+# Design       : CLA 4-bit
+#=========================================================
+
+read_verilog RTL/cla_4bit.v
+
+hierarchy -top cla_4bit
+
+proc
+
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/cla_4bit
+
+write_verilog synth/netlists/cla_4bit_netlist.v

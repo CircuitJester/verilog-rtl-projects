@@ -1,0 +1,18 @@
+#=========================================================
+# Project      : Verilog Project 02
+# Design       : Clock Divider by 2
+#=========================================================
+
+read_verilog RTL/clock_divider_by2.v
+
+hierarchy -top clock_divider_by2
+
+proc
+
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/clock_divider_by2
+
+write_verilog synth/netlists/clock_divider_by2_netlist.v

@@ -1,20 +1,27 @@
-# Day 6 — SPI Master V2
+# Day 06 — SPI Master Controller
 
 ## Completed
 
-- Added configurable clock divider
-- Added Chip Select
-- Added MISO receive path
-- Added Full Duplex communication
-- Parameterized data width
-- Added CPOL support
-- Verified using GTKWave
+- Designed a parameterized SPI Master Controller
+- Implemented configurable SPI clock generation
+- Implemented SPI bit counter
+- Implemented SPI shift register
+- Designed SPI Master FSM
+- Integrated all RTL modules into a hierarchical SPI Master
+- Verified functionality using Icarus Verilog
+- Analyzed waveforms using GTKWave
+- Generated RTL netlists using Yosys
+- Generated synthesized RTL schematics
+
+---
 
 ## Learned
 
-- SPI protocol architecture
-- Full-duplex communication
-- FSM-controlled peripherals
-- Clock division
-- Parameterized RTL
-- Testbench verification
+- Hierarchical RTL design methodology
+- Modular IP construction
+- SPI protocol timing
+- Master-slave communication
+- Clock generation techniques
+- FSM-controlled communication
+- Hierarchical synthesis in Yosys
+- Netlist generation workflow

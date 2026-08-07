@@ -12,14 +12,15 @@ Every project follows a complete engineering workflow including RTL implementati
 
 | Category | Count |
 |----------|------:|
-| Projects Completed | **21** |
-| Verilog Modules | **105+** |
-| Testbenches | **105+** |
-| GTKWave Simulations | **105+** |
+| Projects Completed | **22** |
+| Verilog Modules | **110+** |
+| Testbenches | **110+** |
+| GTKWave Simulations | **110+** |
 | Communication Protocols | **6+** |
+| Processor Subsystems | **2** |
 | Memory Systems | **4** |
 | Bus Architectures | **3** |
-| RTL IP Cores | **21** |
+| RTL IP Cores | **22** |
 
 ---
 
@@ -99,6 +100,7 @@ Git Version Control
 | 19 | AXI4-Lite Slave Peripheral | ✅ |
 | 20 | DMA Controller | ✅ |
 | 21 | Pipelined ALU | ✅ |
+| 22 | Hazard Detection Unit | ✅ |
 
 ---
 
@@ -118,6 +120,21 @@ A modular **32-bit pipelined execution stage** implementing instruction decoding
 - Complete System-Level Verification
 
 ---
+
+
+## Hazard Detection Unit
+
+A processor pipeline control subsystem capable of detecting RAW data hazards, generating stall signals, and controlling pipeline execution using an FSM-based controller.
+
+**Highlights**
+
+- Register Comparator
+- Pipeline Stall Generator
+- Hazard Detection Logic
+- Hazard Controller FSM
+- Top-Level Hazard Detection Unit
+- Complete Functional Verification
+
 
 ## DMA Controller
 
@@ -208,6 +225,8 @@ A modular memory-to-memory DMA engine demonstrating autonomous hardware operatio
 - Scheduling
 - Interrupt Handling
 - DMA Control
+- Hazard Detection
+- Pipeline Stall Control
 
 ## Memory Systems
 
@@ -232,6 +251,14 @@ A modular memory-to-memory DMA engine demonstrating autonomous hardware operatio
 - Address Decoding
 - Multi-Port Arbitration
 - DMA Architecture
+
+## Processor Architecture
+
+- Pipelined Processor Design
+- Hazard Detection Unit
+- Pipeline Control
+- RAW Dependency Detection
+- Control Path Design
 
 ## Verification
 
@@ -260,8 +287,14 @@ A modular memory-to-memory DMA engine demonstrating autonomous hardware operatio
 - RTL Verification
 - Hierarchical Hardware Design
 - Modular IP Development
+- Processor Microarchitecture
+- Hazard Detection Unit Design
+- Pipeline Control Logic
+- Dependency Analysis
+- Control Path RTL Design
 - Hardware Debugging
 - Git & GitHub Workflow
+
 
 ---
 
@@ -310,11 +343,12 @@ ASIC Design
 
 - 🔹 RTL Design & Verification
 - 🔹 FPGA Design
-- 🔹 Processor Datapath Design
+- 🔹 Processor Microarchitecture
 - 🔹 Digital Hardware Architecture
 - 🔹 Memory Controller Design
 - 🔹 Bus Interface Design
 - 🔹 DMA & Interrupt Controller Design
+- 🔹 Pipeline & Hazard Control
 - 🔹 ASIC Design Fundamentals
 - 🔹 Embedded Systems
 - 🔹 Edge AI Hardware

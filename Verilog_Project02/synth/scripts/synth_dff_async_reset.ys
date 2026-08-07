@@ -1,0 +1,18 @@
+#=========================================================
+# Project      : Verilog Project 02
+# Design       : D Flip-Flop with Asynchronous Reset
+#=========================================================
+
+read_verilog RTL/dff_async_reset.v
+
+hierarchy -top dff_async_reset
+
+proc
+
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/dff_async_reset
+
+write_verilog synth/netlists/dff_async_reset_netlist.v

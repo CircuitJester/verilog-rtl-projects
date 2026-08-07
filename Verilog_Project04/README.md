@@ -1,93 +1,111 @@
-# Project 4 – RTL IP Core Design
+# Verilog Project 04 – Timers, PWM & FIFO Designs
 
-This project focuses on developing reusable RTL IP cores that are widely used in FPGA and ASIC designs. Unlike basic digital logic circuits, these modules are commonly integrated into processors, communication peripherals, and embedded systems.
+A collection of reusable digital hardware building blocks implemented in Verilog HDL.
 
-## Objectives
+This project focuses on commonly used IP cores found in embedded systems, FPGA designs, and ASIC development. Each module has been functionally verified using **Icarus Verilog** and **GTKWave**, followed by RTL synthesis using **Yosys**.
 
-- Understand memory-based hardware design.
-- Learn reusable RTL IP development.
-- Design and verify synchronous digital modules.
-- Simulate and analyze waveforms.
+---
 
-# Modules Implemented
+# Implemented Modules
 
-## 1. FIFO (First-In First-Out)
+- Timer
+- PWM Generator
+- FIFO
 
-### Description
-Designed an 8-bit, 4-depth synchronous FIFO memory.
+---
 
-### Features
+# Design Flow
 
-- 8-bit data width
-- 4-word storage depth
-- Write Pointer
-- Read Pointer
-- Full Flag
-- Empty Flag
-- Synchronous Read/Write
-- Circular Buffer Operation
+RTL Design
 
-### Concepts Learned
+↓
 
-- Memory Arrays
-- Pointer Arithmetic
-- Circular Buffers
-- Full & Empty Detection
-- Producer-Consumer Architecture
+Testbench Development
 
-## 2. PWM Generator
+↓
 
-### Description
+Functional Simulation (Icarus Verilog)
 
-Implemented an 8-bit PWM (Pulse Width Modulation) generator using a free-running counter and comparatorhaving 50% duty cycle.
+↓
 
-### Features
+Waveform Analysis (GTKWave)
 
-- 8-bit Resolution
-- Adjustable Duty Cycle
-- Continuous PWM Generation
-- Comparator-Based Output
+↓
 
-### Concepts Learned
+RTL Synthesis (Yosys)
 
-- Counter Design
-- Duty Cycle Control
-- Comparator Logic
-- PWM Signal Generation
+↓
 
-## 3. Timer Module
+Gate-Level Netlist Generation
 
-### Description
+↓
 
-Implemented a programmable timer capable of generating periodic timeout pulses.
+Hardware Schematic Generation
 
-### Features
+↓
 
-- Programmable Period
-- Enable Control
-- Reset Support
-- One-Cycle Timeout Pulse
-- Automatic Counter Reset
+Synthesis Report Analysis
 
-### Concepts Learned
+---
 
-- Hardware Timing.
-- Programmable Counters.
-- Timeout Generation.
+# Repository Structure
+
+```text
+RTL/
+tb/
+sim/
+
+waveforms/
+├── screenshots/
+
+synth/
+├── scripts/
+├── netlists/
+└── schematics/
+
+reports/
+
+docs/
+
+images/
+
+*.vcd
+*.gtkw
+```
+
+---
+
+# Tools Used
+
+- Verilog HDL
+- Icarus Verilog
+- GTKWave
+- Yosys
+
+---
+
+# Generated Artifacts
+
+- Functional simulation waveforms
+- GTKWave session files
+- Waveform screenshots
+- RTL synthesis scripts
+- SVG hardware schematics
+- Gate-level Verilog netlists
+- Synthesis reports
+
+---
 
 # Learning Outcomes
 
-After completing this project, I gained practical experience in:
-
-- Memory-Based Hardware Design
-- Sequential Logic Design
-- Counter-Based Architectures
-- PWM Generation
 - Timer Design
-- Waveform Analysis
-- Simulation and Debugging
+- PWM Signal Generation
+- FIFO Buffer Design
+- Sequential Logic Implementation
+- RTL Synthesis
+- Hardware Resource Analysis
+- Gate-Level Netlist Understanding
+- Synthesized Hardware Visualization
 
-## Author
-**Omm Prakash Sahoo**
-B.Tech Electronics & Communication Engineering
-Learning RTL Design, FPGA Development, Embedded Systems, and Digital IC Design through hands-on projects.
+---
+

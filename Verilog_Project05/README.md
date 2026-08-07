@@ -1,53 +1,97 @@
-# SPI Master Controller (Version 2)
+# Project 05 — SPI Master Controller
 
 ## Overview
 
-A modular SPI (Serial Peripheral Interface) Master controller designed in Verilog HDL.
-The project demonstrates RTL design methodology using reusable modules, FSM-based control, configurable timing, and parameterized architecture.
+This project implements a parameterized SPI Master Controller in Verilog HDL.
 
-## Features
+The design is built using a modular RTL architecture where the SPI Master is constructed from reusable hardware blocks including a clock generator, bit counter, finite state machine, and shift register.
 
- -> SPI Clock Generator
- -> Configurable Clock Divider
- -> Chip Select (Active LOW)
- -> Full Duplex Communication
- -> MOSI Transmitter
- -> MISO Receiver
- -> Parameterized Data Width
- -> FSM Controller
- -> Bit Counter
- -> Modular RTL Design
- -> Verification
+The controller supports full-duplex SPI communication with programmable clock division and configurable clock polarity.
 
-## Modules
+---
 
-spi_clock_generator.v
-spi_shift_register.v
-spi_bit_counter.v
-spi_master_fsm.v
-spi_master.v
+# Features
 
-## Verification
+- Parameterized data width
+- Configurable SPI clock divider
+- CPOL support
+- Chip Select (CS) generation
+- MOSI transmit path
+- MISO receive path
+- Full-duplex communication
+- Modular RTL implementation
+- Synthesized using Yosys
+- Verified using GTKWave
 
-- Verilog Testbench
-- Simulation
-- MOSI verification
-- MISO verification
-- CS timing verification
-- Busy signal verification
+---
 
-## Future Improvements
+# Design Architecture
 
-- SPI Modes 0–3
-- Multi-byte transfer support
-- FIFO integration
-- Interrupt support
+Top-Level IP
 
-## Skills Demonstrated
+- SPI Master Controller
 
-- RTL Design
-- FSM Design
-- Parameterized Verilog
-- Modular Design
-- Communication Protocols
-- Digital Verification
+Internal RTL Modules
+
+- SPI Clock Generator
+- SPI Bit Counter
+- SPI Shift Register
+- SPI Master FSM
+
+---
+
+# Folder Structure
+
+```
+Project05
+│
+├── RTL/
+├── tb/
+├── sim/
+├── reports/
+├── synth/
+│   ├── scripts/
+│   ├── schematics/
+│   └── netlists/
+│
+├── waveforms/
+└── README.md
+```
+
+---
+
+# Verification
+
+Simulation Tool
+
+- Icarus Verilog
+
+Waveform Viewer
+
+- GTKWave
+
+---
+
+# Synthesis
+
+Tool
+
+- Yosys Open Synthesis Suite
+
+Outputs
+
+- Synthesized RTL Netlist
+- RTL Schematic
+- Resource Utilization Report
+
+---
+
+# Learning Outcomes
+
+- Hierarchical RTL Design
+- Modular Hardware Architecture
+- SPI Protocol Fundamentals
+- Parameterized Verilog Design
+- RTL Verification Workflow
+- Yosys RTL Synthesis
+- RTL Netlist Generation

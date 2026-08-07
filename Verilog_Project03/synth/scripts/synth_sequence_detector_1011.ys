@@ -1,0 +1,19 @@
+#=========================================================
+# Project      : Verilog Project 03
+# Design       : Sequence Detector 1011
+# Tool         : Yosys RTL Synthesis
+#=========================================================
+
+read_verilog RTL/sequence_detector_1011.v
+
+hierarchy -top sequence_detector_1011
+
+proc
+
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/sequence_detector_1011
+
+write_verilog synth/netlists/sequence_detector_1011_netlist.v

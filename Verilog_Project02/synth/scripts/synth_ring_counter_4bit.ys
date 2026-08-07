@@ -1,0 +1,19 @@
+#=========================================================
+# Project      : Verilog Project 02
+# Design       : 4-bit Ring Counter
+# Tool         : Yosys RTL Synthesis
+#=========================================================
+
+read_verilog RTL/ring_counter_4bit.v
+
+hierarchy -top ring_counter_4bit
+
+proc
+
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/ring_counter_4bit
+
+write_verilog synth/netlists/ring_counter_4bit_netlist.v

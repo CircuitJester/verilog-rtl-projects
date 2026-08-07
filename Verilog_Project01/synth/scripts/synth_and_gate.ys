@@ -1,0 +1,19 @@
+#=========================================================
+# Project      : Verilog Project 01
+# Design       : AND Gate
+# Tool         : Yosys
+#=========================================================
+
+read_verilog RTL/and_gate.v
+
+hierarchy -top and_gate
+
+proc
+
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/and_gate
+
+write_verilog synth/netlists/and_gate_netlist.v

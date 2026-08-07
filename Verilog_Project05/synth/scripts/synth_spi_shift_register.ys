@@ -1,0 +1,19 @@
+#=========================================================
+# Project      : Verilog Project 05
+# Design       : SPI Shift Register
+# Tool         : Yosys RTL Synthesis
+#=========================================================
+
+read_verilog RTL/spi_shift_register.v
+
+hierarchy -top spi_shift_register
+
+proc
+
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/spi_shift_register
+
+write_verilog synth/netlists/spi_shift_register_netlist.v
