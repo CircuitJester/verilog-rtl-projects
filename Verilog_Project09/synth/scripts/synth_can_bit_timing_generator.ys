@@ -1,0 +1,23 @@
+# ============================================================
+# Project     : Verilog Project 09
+# Design      : CAN Bit Timing Generator
+# Tool        : Yosys
+# ============================================================
+
+read_verilog RTL/can_bit_timing_generator.v
+
+hierarchy -check -top can_bit_timing_generator
+
+proc
+opt
+
+stat
+
+show -format svg \
+     -prefix synth/schematics/can_bit_timing_generator \
+     -stretch \
+     -width \
+     -colors 2 \
+     -notitle
+
+write_verilog synth/netlists/can_bit_timing_generator_netlist.v

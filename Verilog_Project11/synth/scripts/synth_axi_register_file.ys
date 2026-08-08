@@ -1,0 +1,11 @@
+read_verilog RTL/axi_register_file.v
+hierarchy -top axi_register_file
+proc
+opt
+memory
+opt
+techmap
+opt
+stat
+write_verilog synth/netlists/axi_register_file_netlist.v
+show -format svg -prefix synth/schematics/axi_register_file

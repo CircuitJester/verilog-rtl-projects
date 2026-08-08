@@ -1,0 +1,11 @@
+read_verilog RTL/axi_slave_write_response.v
+hierarchy -top axi_slave_write_response
+proc
+opt
+memory
+opt
+techmap
+opt
+stat
+write_verilog synth/netlists/axi_slave_write_response_netlist.v
+show -format svg -prefix synth/schematics/axi_slave_write_response

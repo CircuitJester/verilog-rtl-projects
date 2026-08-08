@@ -1,0 +1,26 @@
+#=========================================================
+# Project      : Verilog Project 07
+# Design       : I2C Master
+# Tool         : Yosys
+#=========================================================
+
+read_verilog RTL/i2c_ack_detector.v
+read_verilog RTL/i2c_bit_counter.v
+read_verilog RTL/i2c_clock_generator.v
+read_verilog RTL/i2c_master_fsm.v
+read_verilog RTL/i2c_shift_register.v
+read_verilog RTL/i2c_start_stop_generator.v
+read_verilog RTL/i2c_master.v
+
+hierarchy -top i2c_master
+
+proc
+opt
+
+stat
+
+select -module i2c_master
+
+show -format svg -prefix synth/schematics/i2c_master
+
+write_verilog synth/netlists/i2c_master_netlist.v

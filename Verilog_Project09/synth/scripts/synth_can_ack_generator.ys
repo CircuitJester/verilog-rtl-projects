@@ -1,0 +1,7 @@
+read_verilog RTL/can_ack_generator.v
+hierarchy -top can_ack_generator
+proc
+opt
+stat
+write_verilog synth/netlists/can_ack_generator_netlist.v
+show -format dot -prefix synth/schematics/can_ack_generator

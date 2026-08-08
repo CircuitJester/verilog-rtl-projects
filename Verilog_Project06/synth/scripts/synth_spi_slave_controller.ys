@@ -1,0 +1,18 @@
+#=========================================================
+# Project      : Verilog Project 06
+# Design       : SPI Slave Controller
+# Tool         : Yosys
+#=========================================================
+
+read_verilog RTL/spi_slave_controller.v
+
+hierarchy -top spi_slave_controller
+
+proc
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/spi_slave_controller
+
+write_verilog synth/netlists/spi_slave_controller_netlist.v

@@ -1,0 +1,18 @@
+#=========================================================
+# Project      : Verilog Project 06
+# Design       : SPI Slave Bit Counter
+# Tool         : Yosys
+#=========================================================
+
+read_verilog RTL/spi_slave_bit_counter.v
+
+hierarchy -top spi_slave_bit_counter
+
+proc
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/spi_slave_bit_counter
+
+write_verilog synth/netlists/spi_slave_bit_counter_netlist.v

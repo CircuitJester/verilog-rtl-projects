@@ -1,0 +1,26 @@
+# ============================================================
+# Project     : Verilog Project 09
+# Design      : CAN Controller
+# Tool        : Yosys
+# ============================================================
+
+read_verilog RTL/can_ack_generator.v
+read_verilog RTL/can_bit_stuffing.v
+read_verilog RTL/can_bit_timing_generator.v
+read_verilog RTL/can_crc_generator.v
+read_verilog RTL/can_frame_generator.v
+read_verilog RTL/can_tx_fsm.v
+read_verilog RTL/can_controller.v
+
+hierarchy -check -top can_controller
+
+proc
+opt
+
+stat
+
+select -module can_controller
+
+show -format svg -prefix synth/schematics/can_controller
+
+write_verilog synth/netlists/can_controller_netlist.v

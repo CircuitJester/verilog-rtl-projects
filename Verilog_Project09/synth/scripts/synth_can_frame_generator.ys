@@ -1,0 +1,20 @@
+# ============================================================
+# Project     : Verilog Project 09
+# Design      : CAN Frame Generator
+# Tool        : Yosys
+# ============================================================
+
+read_verilog RTL/can_frame_generator.v
+
+hierarchy -check -top can_frame_generator
+
+proc
+opt
+
+stat
+
+select -module can_frame_generator
+
+show -format svg -prefix synth/schematics/can_frame_generator
+
+write_verilog synth/netlists/can_frame_generator_netlist.v

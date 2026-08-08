@@ -1,0 +1,13 @@
+read_verilog RTL/axi_read_data.v
+
+hierarchy -check -top axi_read_data
+
+proc
+opt
+stat
+
+select -module axi_read_data
+
+show -format svg -prefix synth/schematics/axi_read_data
+
+write_verilog synth/netlists/axi_read_data_netlist.v

@@ -1,0 +1,20 @@
+# ============================================================
+# Project     : Verilog Project 09
+# Design      : CAN CRC Generator
+# Tool        : Yosys
+# ============================================================
+
+read_verilog RTL/can_crc_generator.v
+
+hierarchy -check -top can_crc_generator
+
+proc
+opt
+
+stat
+
+select -module can_crc_generator
+
+show -format svg -prefix synth/schematics/can_crc_generator
+
+write_verilog synth/netlists/can_crc_generator_netlist.v

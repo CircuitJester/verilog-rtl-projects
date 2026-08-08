@@ -1,0 +1,24 @@
+#=========================================================
+# Project      : Verilog Project 08
+# Design       : I2C Slave
+# Tool         : Yosys
+#=========================================================
+
+read_verilog RTL/i2c_ack_generator.v
+read_verilog RTL/i2c_address_comparator.v
+read_verilog RTL/i2c_slave_bit_counter.v
+read_verilog RTL/i2c_slave_fsm.v
+read_verilog RTL/i2c_slave_shift_register.v
+read_verilog RTL/i2c_slave.v
+
+hierarchy -top i2c_slave
+
+proc
+opt
+stat
+
+select -module i2c_slave
+
+show -format svg -prefix synth/schematics/i2c_slave
+
+write_verilog synth/netlists/i2c_slave_netlist.v

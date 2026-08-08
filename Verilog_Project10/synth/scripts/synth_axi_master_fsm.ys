@@ -1,0 +1,13 @@
+read_verilog RTL/axi_master_fsm.v
+
+hierarchy -check -top axi_master_fsm
+
+proc
+opt
+stat
+
+select -module axi_master_fsm
+
+show -format svg -prefix synth/schematics/axi_master_fsm
+
+write_verilog synth/netlists/axi_master_fsm_netlist.v

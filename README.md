@@ -1,26 +1,29 @@
-# 🚀 Verilog RTL Design 
+# 🚀 Verilog RTL Design
 
 A continuously growing collection of **industry-oriented Verilog HDL projects** focused on **RTL Design, Digital System Design, FPGA Development, and ASIC Design Fundamentals**.
 
-This repository documents my journey from basic digital logic to advanced communication protocols, memory controllers, bus architectures, DMA engines, interrupt controllers, and reusable RTL IP cores.
+This repository documents my journey from basic digital logic to advanced communication protocols, memory controllers, bus architectures, DMA engines, interrupt controllers, processor datapath components, pipeline control, and reusable RTL IP cores.
 
-Every project follows a complete engineering workflow including RTL implementation, verification, waveform analysis, documentation, and version control.
+Every project follows a complete engineering workflow including RTL implementation, verification, waveform analysis, documentation, synthesis, and version control.
+
+Projects **01–11** additionally follow a structured **Yosys RTL synthesis workflow**, including synthesis scripts, synthesized netlists, and RTL schematic generation.
 
 ---
 
 # 📊 Repository Statistics
 
-| Category | Count |
-|----------|------:|
-| Projects Completed | **22** |
-| Verilog Modules | **110+** |
-| Testbenches | **110+** |
-| GTKWave Simulations | **110+** |
-| Communication Protocols | **6+** |
-| Processor Subsystems | **2** |
-| Memory Systems | **4** |
-| Bus Architectures | **3** |
-| RTL IP Cores | **22** |
+| Category                  |    Count |
+| ------------------------- | -------: |
+| Projects Completed        |   **23** |
+| Verilog Modules            | **110+** |
+| Testbenches                | **110+** |
+| GTKWave Simulations        | **110+** |
+| Yosys Synthesis Projects  |   **11** |
+| Communication Protocols   |   **6+** |
+| Processor Subsystems      |    **3+** |
+| Memory Systems             |    **4** |
+| Bus Architectures         |    **3** |
+| RTL IP Cores              |   **23** |
 
 ---
 
@@ -28,7 +31,7 @@ Every project follows a complete engineering workflow including RTL implementati
 
 Every project follows a structured RTL development methodology.
 
-```
+```text
 Problem Definition
         │
         ▼
@@ -45,6 +48,15 @@ GTKWave Analysis
         │
         ▼
 System Integration
+        │
+        ▼
+Yosys RTL Synthesis
+        │
+        ▼
+Netlist Generation
+        │
+        ▼
+RTL Schematic Analysis
         │
         ▼
 Documentation
@@ -66,6 +78,10 @@ Git Version Control
 - Icarus Verilog
 - GTKWave
 
+## RTL Synthesis
+
+- Yosys
+
 ## Development Environment
 
 - Visual Studio Code
@@ -77,30 +93,90 @@ Git Version Control
 
 # 📚 Project Roadmap
 
-| Project | Topic | Status |
-|---------:|-------------------------------|:------:|
-| 1 | Combinational Logic | ✅ |
-| 2 | Sequential Logic | ✅ |
-| 3 | FSM Fundamentals | ✅ |
-| 4 | Utility RTL IPs | ✅ |
-| 5 | SPI Master | ✅ |
-| 6 | SPI Slave | ✅ |
-| 7 | Communication Protocol Controllers | ✅ |
-| 8 | Bus Architecture Fundamentals | ✅ |
-| 9 | FIFO & Buffer Architectures | ✅ |
-| 10 | AXI4-Lite Slave Interface | ✅ |
-| 11 | Register File & Address Decoder | ✅ |
-| 12 | RTL Integration Fundamentals | ✅ |
-| 13 | I²C Master Controller | ✅ |
-| 14 | UART Controller | ✅ |
-| 15 | SDRAM Controller | ✅ |
-| 16 | Multi-Port SDRAM Arbiter | ✅ |
-| 17 | SPI Master IP Core | ✅ |
-| 18 | Programmable Interrupt Controller | ✅ |
-| 19 | AXI4-Lite Slave Peripheral | ✅ |
-| 20 | DMA Controller | ✅ |
-| 21 | Pipelined ALU | ✅ |
-| 22 | Hazard Detection Unit | ✅ |
+| Project | Topic                              | Status |
+| ------: | ---------------------------------- | :----: |
+|       1 | Combinational Logic                |    ✅   |
+|       2 | Sequential Logic                   |    ✅   |
+|       3 | FSM Fundamentals                   |    ✅   |
+|       4 | Utility RTL IPs                    |    ✅   |
+|       5 | SPI Master                         |    ✅   |
+|       6 | SPI Slave                          |    ✅   |
+|       7 | I²C Master Controller              |    ✅   |
+|       8 | I²C Slave Controller               |    ✅   |
+|       9 | CAN Bus Controller                 |    ✅   |
+|      10 | AXI4-Lite Master IP                |    ✅   |
+|      11 | AXI4-Lite Slave IP                 |    ✅   |
+|      12 | RTL Integration Fundamentals       |    ✅   |
+|      13 | I²C Master Controller              |    ✅   |
+|      14 | UART Controller                    |    ✅   |
+|      15 | SDRAM Controller                   |    ✅   |
+|      16 | Multi-Port SDRAM Arbiter           |    ✅   |
+|      17 | SPI Master IP Core                 |    ✅   |
+|      18 | Programmable Interrupt Controller  |    ✅   |
+|      19 | AXI4-Lite Slave Peripheral         |    ✅   |
+|      20 | DMA Controller                     |    ✅   |
+|      21 | Pipelined ALU                      |    ✅   |
+|      22 | Hazard Detection Unit              |    ✅   |
+|      23 | Forwarding Unit                    |    ✅   |
+
+---
+
+# 🔬 Yosys RTL Synthesis
+
+Projects **01–11** have been integrated into the repository's initial RTL synthesis workflow using **Yosys**.
+
+The synthesis workflow demonstrates the transition from Verilog RTL toward a synthesized hardware representation.
+
+## Yosys Workflow
+
+```text
+Verilog RTL
+     │
+     ▼
+Yosys RTL Parsing
+     │
+     ▼
+Hierarchy Analysis
+     │
+     ▼
+Process Conversion
+     │
+     ▼
+Logic Optimization
+     │
+     ▼
+Technology-Independent Synthesis
+     │
+     ├──────────────► Synthesized Netlist
+     │
+     └──────────────► RTL Schematic
+```
+
+## Yosys-Enabled Projects
+
+| Project | Design                    | Yosys |
+| ------: | ------------------------- | :---: |
+| 01      | Combinational Logic       |  ✅   |
+| 02      | Sequential Logic          |  ✅   |
+| 03      | FSM Fundamentals          |  ✅   |
+| 04      | Utility RTL IPs           |  ✅   |
+| 05      | SPI Master                |  ✅   |
+| 06      | SPI Slave                 |  ✅   |
+| 07      | I²C Master                |  ✅   |
+| 08      | I²C Slave                 |  ✅   |
+| 09      | CAN Bus Controller        |  ✅   |
+| 10      | AXI4-Lite Master IP       |  ✅   |
+| 11      | AXI4-Lite Slave IP        |  ✅   |
+
+Each Yosys-enabled project contains:
+
+- Yosys synthesis scripts
+- RTL hierarchy analysis
+- Logic optimization
+- Cell statistics
+- Synthesized Verilog netlists
+- RTL schematic generation
+- Synthesis command documentation
 
 ---
 
@@ -121,7 +197,6 @@ A modular **32-bit pipelined execution stage** implementing instruction decoding
 
 ---
 
-
 ## Hazard Detection Unit
 
 A processor pipeline control subsystem capable of detecting RAW data hazards, generating stall signals, and controlling pipeline execution using an FSM-based controller.
@@ -135,6 +210,24 @@ A processor pipeline control subsystem capable of detecting RAW data hazards, ge
 - Top-Level Hazard Detection Unit
 - Complete Functional Verification
 
+---
+
+## Forwarding Unit
+
+A processor pipeline datapath subsystem designed to reduce RAW data hazards by forwarding results from later pipeline stages directly to dependent execution-stage operands.
+
+**Highlights**
+
+- Register Dependency Comparison
+- EX/MEM Hazard Detection
+- MEM/WB Hazard Detection
+- Forward-A Control Logic
+- Forward-B Control Logic
+- Pipeline Dependency Analysis
+- Modular RTL Architecture
+- Complete Functional Verification
+
+---
 
 ## DMA Controller
 
@@ -209,6 +302,8 @@ A modular memory-to-memory DMA engine demonstrating autonomous hardware operatio
 - Parameterized RTL
 - Modular Design
 - Hierarchical Design
+- Reusable RTL IP
+- RTL Integration
 
 ## Processor Architecture
 
@@ -217,6 +312,9 @@ A modular memory-to-memory DMA engine demonstrating autonomous hardware operatio
 - Pipeline Registers
 - Status Flag Generation
 - Execution Stage Design
+- Hazard Detection
+- Data Forwarding
+- Pipeline Control
 
 ## Control Logic
 
@@ -227,6 +325,7 @@ A modular memory-to-memory DMA engine demonstrating autonomous hardware operatio
 - DMA Control
 - Hazard Detection
 - Pipeline Stall Control
+- Forwarding Control
 
 ## Memory Systems
 
@@ -235,6 +334,7 @@ A modular memory-to-memory DMA engine demonstrating autonomous hardware operatio
 - SDRAM Controllers
 - DMA Address Generation
 - Memory-Mapped Registers
+- Memory Arbitration
 
 ## Communication Protocols
 
@@ -251,14 +351,7 @@ A modular memory-to-memory DMA engine demonstrating autonomous hardware operatio
 - Address Decoding
 - Multi-Port Arbitration
 - DMA Architecture
-
-## Processor Architecture
-
-- Pipelined Processor Design
-- Hazard Detection Unit
-- Pipeline Control
-- RAW Dependency Detection
-- Control Path Design
+- Memory-Mapped Peripheral Design
 
 ## Verification
 
@@ -267,6 +360,17 @@ A modular memory-to-memory DMA engine demonstrating autonomous hardware operatio
 - GTKWave Analysis
 - Top-Level Integration
 - System-Level Verification
+- Waveform Debugging
+
+## Synthesis
+
+- Yosys RTL Synthesis
+- RTL Hierarchy Analysis
+- Logic Optimization
+- Cell Statistics
+- Synthesized Netlist Generation
+- RTL Schematic Generation
+- Technology-Independent Synthesis
 
 ---
 
@@ -278,6 +382,8 @@ A modular memory-to-memory DMA engine demonstrating autonomous hardware operatio
 - Processor Datapath Design
 - ALU Design
 - Pipeline Architecture
+- Forwarding Logic
+- Hazard Detection
 - Finite State Machine (FSM) Design
 - Memory Controller Design
 - DMA Controller Design
@@ -288,19 +394,17 @@ A modular memory-to-memory DMA engine demonstrating autonomous hardware operatio
 - Hierarchical Hardware Design
 - Modular IP Development
 - Processor Microarchitecture
-- Hazard Detection Unit Design
-- Pipeline Control Logic
-- Dependency Analysis
-- Control Path RTL Design
 - Hardware Debugging
+- RTL Synthesis
+- Yosys
+- Netlist Analysis
 - Git & GitHub Workflow
-
 
 ---
 
 # 📈 Current Learning Journey
 
-```
+```text
 Digital Logic
       │
       ▼
@@ -325,7 +429,16 @@ Processor Datapath Design
 Pipeline Architecture
       │
       ▼
+Hazard Detection
+      │
+      ▼
+Data Forwarding
+      │
+      ▼
 FPGA System Design
+      │
+      ▼
+RTL Synthesis
       │
       ▼
 ASIC Design
@@ -355,30 +468,9 @@ ASIC Design
 
 ---
 
-
-# 👨‍💻 Author
-
-**Omm Prakash Sahoo**
-
-**B.Tech | Electronics & Communication Engineering**
-
-## ⚡ Core Engineering Domains
-
-- 🔹 RTL Design & Verification
-- 🔹 FPGA Design
-- 🔹 Digital Hardware Architecture
-- 🔹 Memory Controller Design
-- 🔹 Bus Interface Design
-- 🔹 DMA & Interrupt Controller Design
-- 🔹 ASIC Design Fundamentals
-- 🔹 Embedded Systems
-- 🔹 Edge AI Hardware
-
----
-
 ## 🌟 Repository Vision
 
-This repository is being developed as a long-term collection of reusable RTL IP cores and digital hardware projects. It follows industry-style design practices with an emphasis on modularity, verification, documentation, and continuous improvement.
+This repository is being developed as a long-term collection of reusable RTL IP cores and digital hardware projects. It follows industry-style design practices with an emphasis on modularity, verification, documentation, synthesis, and continuous improvement.
 
 Each completed project strengthens the foundation for more advanced topics including FPGA systems, SoC architecture, processor design, and ASIC implementation.
 

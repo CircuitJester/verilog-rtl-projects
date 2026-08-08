@@ -2,9 +2,11 @@
 
 ## Overview
 
-This project implements a complete **AXI4-Lite Master IP Core** in Verilog HDL. The design demonstrates how an AXI master initiates and controls read and write transactions using the AXI4-Lite protocol. The implementation is modular, with each protocol channel designed, verified, and integrated independently before building the complete system.
-The project follows an industry-style RTL design methodology consisting of modular development, finite state machine control, protocol verification, and system-level integration.
+This project implements a complete **AXI4-Lite Master IP Core** in Verilog HDL. The design demonstrates how an AXI master initiates, controls, and completes read and write transactions using the AXI4-Lite protocol.
 
+The implementation follows a modular RTL architecture where each AXI channel is developed and verified independently before being integrated into a complete AXI4-Lite Master.
+
+The project follows a professional RTL design methodology consisting of modular hardware development, Ready/Valid handshake implementation, finite state machine control, functional verification, system-level integration, and RTL synthesis using Yosys.
 
 ## Features
 
@@ -13,55 +15,131 @@ The project follows an industry-style RTL design methodology consisting of modul
 - AXI4-Lite Write Response Channel
 - AXI4-Lite Read Address Channel
 - AXI4-Lite Read Data Channel
-- Master Transaction Finite State Machine
+- Ready/Valid Handshake Logic
+- Master Transaction FSM
+- Parameterized RTL Architecture
+- Modular Channel-Based Design
 - Top-Level AXI Master Integration
+- Dedicated Module Testbenches
 - Complete System-Level Verification
-- Simulation Support
+- GTKWave Simulation Analysis
+- Yosys RTL Synthesis
+- Synthesized Netlist Generation
+- RTL Schematic Generation
 
 ## Implemented Modules
 
-### Write Address Channel
+### AXI Write Address Channel
 
-- Generates AWADDR
-- Generates AWVALID
-- Waits for AWREADY handshake
+The write address channel manages the AXI4-Lite address phase of a write transaction.
 
-### Write Data Channel
+Responsibilities:
 
-- Generates WDATA
-- Generates WVALID
-- Waits for WREADY handshake
+- Generates `AWADDR`
+- Generates `AWVALID`
+- Monitors `AWREADY`
+- Performs the `AWVALID && AWREADY` handshake
+- Completes the write address transfer
 
-### Write Response Channel
+### AXI Write Data Channel
 
-- Receives BRESP
-- Waits for BVALID
-- Generates BREADY
+The write data channel transfers the actual data associated with a write transaction.
 
-### Read Address Channel
+Responsibilities:
 
-- Generates ARADDR
-- Generates ARVALID
-- Waits for ARREADY handshake
+- Generates `WDATA`
+- Generates `WSTRB` where applicable
+- Generates `WVALID`
+- Monitors `WREADY`
+- Performs the `WVALID && WREADY` handshake
 
-### Read Data Channel
+### AXI Write Response Channel
 
-- Receives RDATA
-- Waits for RVALID
-- Generates RREADY
+The write response channel receives the completion response from the AXI slave.
 
-## Verification
+Responsibilities:
 
-Each RTL module was verified independently using dedicated Verilog testbenches.
-Final verification was performed using a complete AXI Master Top-Level simulation.
+- Monitors `BVALID`
+- Receives `BRESP`
+- Generates `BREADY`
+- Detects completion of the write transaction
+- Handles the AXI response phase
 
-## Learning Outcomes
+### AXI Read Address Channel
 
-- AXI4-Lite protocol fundamentals
-- Ready/Valid handshake mechanism
-- Modular RTL design
-- Finite State Machine implementation
-- Hierarchical module integration
-- RTL verification methodology
-- System-level verification
+The read address channel initiates an AXI4-Lite read transaction.
 
+Responsibilities:
+
+- Generates `ARADDR`
+- Generates `ARVALID`
+- Monitors `ARREADY`
+- Performs the `ARVALID && ARREADY` handshake
+- Completes the read address transfer
+
+### AXI Read Data Channel
+
+The read data channel receives data returned by the AXI slave.
+
+Responsibilities:
+
+- Monitors `RVALID`
+- Receives `RDATA`
+- Receives `RRESP`
+- Generates `RREADY`
+- Completes the read transaction
+
+### AXI Master FSM
+
+The transaction FSM coordinates the overall AXI4-Lite master operation.
+
+It controls:
+
+- Write transaction sequencing
+- Read transaction sequencing
+- Channel activation
+- Handshake progression
+- Transaction completion
+- Control-state transitions
+
+### AXI Master Top
+
+The top-level module integrates all AXI4-Lite components into a single reusable master IP block.
+
+It connects:
+
+- AXI write address channel
+- AXI write data channel
+- AXI write response channel
+- AXI read address channel
+- AXI read data channel
+- Master transaction FSM
+
+## Architecture
+
+The AXI4-Lite Master follows a channel-based architecture:
+
+```text
+                         AXI4-Lite MASTER
+                               │
+                ┌──────────────┴──────────────┐
+                │                             │
+          WRITE TRANSACTION             READ TRANSACTION
+                │                             │
+       ┌────────┼────────┐              ┌─────┴─────┐
+       │        │        │              │           │
+     AW       WDATA     BRESP          AR          RDATA
+       │        │        │              │           │
+       ▼        ▼        ▼              ▼           ▼
+   Write     Write     Write          Read        Read
+  Address     Data    Response       Address       Data
+   Channel   Channel  Channel        Channel     Channel
+       │        │        │              │           │
+       └────────┴────────┘              └───────────┘
+                │                             │
+                └──────────┬──────────────────┘
+                           ▼
+                    AXI MASTER FSM
+                           │
+                           ▼
+                    AXI MASTER TOP

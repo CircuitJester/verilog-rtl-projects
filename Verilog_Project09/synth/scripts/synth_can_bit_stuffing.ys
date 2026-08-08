@@ -1,0 +1,34 @@
+# ============================================================
+# Project     : Verilog Project 09
+# Design      : CAN Bit Stuffing
+# Tool        : Yosys
+# ============================================================
+
+read_verilog RTL/can_bit_stuffing.v
+
+hierarchy -check -top can_bit_stuffing
+
+# Convert behavioral RTL into RTLIL
+proc
+
+# Basic optimization
+opt
+
+# Display synthesis statistics
+stat
+
+# Generate schematic directly as SVG
+# -stretch keeps inputs on the left and outputs on the right
+# -width annotates bus widths
+# -colors improves readability of dense connections
+# -notitle removes the default Graphviz title
+
+show -format svg \
+     -prefix synth/schematics/can_bit_stuffing \
+     -stretch \
+     -width \
+     -colors 2 \
+     -notitle
+
+# Write synthesized RTL netlist
+write_verilog synth/netlists/can_bit_stuffing_netlist.v

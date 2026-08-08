@@ -2,78 +2,49 @@
 
 ## Overview
 
-This project implements a modular SPI (Serial Peripheral Interface) Slave Controller in Verilog HDL. The design follows a reusable RTL architecture with independent modules for the controller, shift register, and bit counter. The project also includes end-to-end integration testing with the SPI Master developed in Project 5 there are no changes in it only the timing will be upgraded to get professional output.
+This project implements a modular SPI (Serial Peripheral Interface) Slave Controller in Verilog HDL.
+
+The design follows a reusable RTL architecture consisting of independent modules for SPI bit counting, serial data shifting, controller FSM logic, and the top-level SPI slave interface.
+
+The project also integrates with the SPI Master developed in **Verilog Project 05**, enabling end-to-end Master–Slave communication verification.
+
+The implementation has been verified through RTL simulation and GTKWave waveform analysis. The individual RTL blocks have also been synthesized using **Yosys** to generate synthesized netlists and structural schematics.
+
+---
 
 ## Features
 
 - SPI Slave Architecture
-- Full Duplex Communication
+- Full-Duplex SPI Communication
 - Parameterized Data Width
-- Shift Register based Data Transmission
-- Shift Register based Data Reception
+- Shift Register Based Data Transmission
+- Shift Register Based Data Reception
 - Chip Select (Active LOW)
-- Bit Counter
+- SPI Bit Counter
 - FSM Based Controller
-- Modular RTL Design
-- Verification
-- Master-Slave System Level Simulation
+- Modular RTL Architecture
+- RTL Simulation
+- GTKWave Waveform Verification
+- Yosys RTL Synthesis
+- Synthesized Verilog Netlists
+- Structural SVG Schematics
+- Master–Slave System-Level Simulation
 
+---
 
-## Modules
+## Architecture
 
-### spi_slave_shift_register
+The SPI Slave is divided into multiple reusable RTL blocks:
 
-- Loads transmit data
-- Receives MOSI data
-- Transmits MISO data
-- Parameterized design
-
-### spi_slave_bit_counter
-
-- Counts received SPI bits
-- Generates transfer completion signal
-
-### spi_slave_controller
-
-Finite State Machine with four states
-
-- IDLE
-- LOAD
-- SHIFT
-- COMPLETE
-
-Controls
-
-- Busy signal
-- Load signal
-
-### spi_slave
-
-Top-level module integrating all slave components.
-
-
-## Verification
-
-- Reset operation
-- Shift Register
-- Bit Counter
-- Controller FSM
-- SPI Clock
-- Chip Select
-- MOSI transmission
-- MISO transmission
-- Master-Slave integration
-
-## Current Limitations
-
-Current implementation is intended for learning and portfolio purposes.
-
-## Skills Demonstrated
-
-- RTL Design
-- FSM Design
-- Communication Protocol Design
-- Modular Hardware Architecture
-- Digital Verification
-- Testbench Development
-- System Integration
+```text
+                    SPI Slave
+                        │
+          ┌─────────────┼─────────────┐
+          │             │             │
+          ▼             ▼             ▼
+   Shift Register   Bit Counter   Controller FSM
+          │             │             │
+          └─────────────┼─────────────┘
+                        │
+                        ▼
+                 SPI Slave Interface

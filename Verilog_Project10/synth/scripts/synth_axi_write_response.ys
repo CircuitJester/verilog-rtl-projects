@@ -1,0 +1,13 @@
+read_verilog RTL/axi_write_response.v
+
+hierarchy -check -top axi_write_response
+
+proc
+opt
+stat
+
+select -module axi_write_response
+
+show -format svg -prefix synth/schematics/axi_write_response
+
+write_verilog synth/netlists/axi_write_response_netlist.v

@@ -1,0 +1,24 @@
+read_verilog RTL/axi_register_file.v
+read_verilog RTL/axi_slave_read_address.v
+read_verilog RTL/axi_slave_read_data.v
+read_verilog RTL/axi_slave_write_address.v
+read_verilog RTL/axi_slave_write_data.v
+read_verilog RTL/axi_slave_write_response.v
+read_verilog RTL/axi_slave_controller.v
+read_verilog RTL/axi_slave_top.v
+
+hierarchy -check -top axi_slave_top
+
+proc
+opt
+memory
+opt
+techmap
+opt
+stat
+
+select -module axi_slave_top
+
+write_verilog synth/netlists/axi_slave_top_netlist.v
+
+show -format svg -prefix synth/schematics/axi_slave_top

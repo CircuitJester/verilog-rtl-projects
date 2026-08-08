@@ -1,0 +1,11 @@
+read_verilog RTL/i2c_slave_shift_register.v
+
+hierarchy -top i2c_slave_shift_register
+
+proc
+opt
+stat
+
+show -format svg -prefix synth/schematics/i2c_slave_shift_register
+
+write_verilog synth/netlists/i2c_slave_shift_register_netlist.v

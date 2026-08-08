@@ -1,0 +1,13 @@
+read_verilog RTL/axi_read_address.v
+
+hierarchy -check -top axi_read_address
+
+proc
+opt
+stat
+
+select -module axi_read_address
+
+show -format svg -prefix synth/schematics/axi_read_address
+
+write_verilog synth/netlists/axi_read_address_netlist.v

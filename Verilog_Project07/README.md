@@ -1,9 +1,16 @@
-# I²C Master Controller (Version 1)
+# I²C Master Controller
 
 ## Overview
 
-This project implements a modular I²C (Inter-Integrated Circuit) Master Controller in Verilog HDL. The design is developed using a modular RTL approach where each functional block is designed, simulated, verified independently, and finally integrated into a complete I²C Master Controller.
-The implementation focuses on understanding the internal architecture of an I²C Master while following a professional RTL design workflow.
+This project implements a modular I²C (Inter-Integrated Circuit) Master Controller in Verilog HDL.
+
+The design is developed using a modular RTL approach where each functional block is designed, simulated, verified independently, and finally integrated into a complete I²C Master Controller.
+
+The implementation focuses on understanding the internal architecture of an I²C Master while following a professional RTL design workflow including RTL simulation, GTKWave waveform analysis, and Yosys-based synthesis.
+
+Each major RTL block is synthesized independently to generate a synthesized Verilog netlist and structural SVG schematic. The complete I²C Master is also synthesized as a hierarchical top-level design.
+
+---
 
 ## Features
 
@@ -16,7 +23,14 @@ The implementation focuses on understanding the internal architecture of an I²C
 - ACK/NACK Detection
 - FSM Based Controller
 - Modular RTL Architecture
-- Verification
+- Independent Module Verification
+- GTKWave Waveform Analysis
+- Yosys RTL Synthesis
+- Synthesized Verilog Netlists
+- Structural SVG Schematics
+- Synthesis Reports
+
+---
 
 ## Modules
 
@@ -29,8 +43,7 @@ The implementation focuses on understanding the internal architecture of an I²C
 - I²C Master Top Module
 - System Testbench
 
-
-Verified Components:-
+### Verified Components
 
 - Clock Generation
 - START Condition
@@ -41,44 +54,29 @@ Verified Components:-
 - FSM Operation
 - Complete Module Integration
 
-## Learning Outcomes
+Each RTL module was simulated independently using dedicated Verilog testbenches.
 
-- I²C Bus Architecture
-- Open-Drain Communication Concept
-- START and STOP Conditions
-- ACK / NACK Mechanism
-- FSM Design
-- Modular RTL Development
-- Hardware Verification
-- Digital Communication Protocols
+The generated VCD files were analyzed using GTKWave to verify signal transitions and functional behavior.
 
-## Current Limitations (Version 1)
+---
 
-This project is an educational implementation intended to understand I²C architecture.
+## Verification
 
-The following advanced features are planned for a future version:-
+The verification flow follows:
 
-- True Open-Drain SDA Implementation
-- Bidirectional SDA Control
-- 7-bit Address Transmission
-- Read/Write Transactions
-- Repeated START Support
-- Clock Stretching
-- Multi-Master Arbitration
-- Error Detection and Recovery
-- Multi-Byte Transfers
-- FIFO Integration
-
-## Future Improvements
-
-Future versions will extend this design toward an industry-style I²C controller by adding:-
-
-- Full I²C Specification Compliance
-- Industrial Timing Implementation
-- Complete Address + Data Transactions
-- I²C Slave Integration
-- End-to-End Master-Slave Verification
-
-## Status
-
-This project is part of a structured RTL Design focused on developing reusable digital IP cores for FPGA and ASIC applications.
+```text
+RTL Design
+    ↓
+Verilog Simulation
+    ↓
+VCD Generation
+    ↓
+GTKWave Analysis
+    ↓
+Waveform Screenshots
+    ↓
+Yosys Synthesis
+    ↓
+Synthesized Netlist
+    ↓
+Structural SVG Schematic

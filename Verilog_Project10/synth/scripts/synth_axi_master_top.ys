@@ -1,0 +1,19 @@
+read_verilog RTL/axi_master_fsm.v
+read_verilog RTL/axi_read_address.v
+read_verilog RTL/axi_read_data.v
+read_verilog RTL/axi_write_address.v
+read_verilog RTL/axi_write_data.v
+read_verilog RTL/axi_write_response.v
+read_verilog RTL/axi_master_top.v
+
+hierarchy -check -top axi_master_top
+
+proc
+opt
+stat
+
+select -module axi_master_top
+
+show -format svg -prefix synth/schematics/axi_master_top
+
+write_verilog synth/netlists/axi_master_top_netlist.v

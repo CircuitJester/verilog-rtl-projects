@@ -1,0 +1,17 @@
+read_verilog RTL/axi_slave_controller.v
+
+hierarchy -check -top axi_slave_controller
+
+proc
+opt
+memory
+opt
+techmap
+opt
+stat
+
+select -module axi_slave_controller
+
+write_verilog synth/netlists/axi_slave_controller_netlist.v
+
+show -format svg -prefix synth/schematics/axi_slave_controller

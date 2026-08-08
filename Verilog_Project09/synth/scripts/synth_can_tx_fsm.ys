@@ -1,0 +1,20 @@
+# ============================================================
+# Project     : Verilog Project 09
+# Design      : CAN TX FSM
+# Tool        : Yosys
+# ============================================================
+
+read_verilog RTL/can_tx_fsm.v
+
+hierarchy -check -top can_tx_fsm
+
+proc
+opt
+
+stat
+
+select -module can_tx_fsm
+
+show -format svg -prefix synth/schematics/can_tx_fsm
+
+write_verilog synth/netlists/can_tx_fsm_netlist.v
