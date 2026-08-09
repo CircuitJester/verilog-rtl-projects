@@ -11,37 +11,34 @@ wire south_red;
 wire south_yellow;
 wire south_green;
 
-traffic_light_fsm uut(
+traffic_light_fsm dut (
     .clk(clk),
     .rst(rst),
-
     .north_red(north_red),
     .north_yellow(north_yellow),
     .north_green(north_green),
-
     .south_red(south_red),
     .south_yellow(south_yellow),
     .south_green(south_green)
 );
 
-initial begin
-    clk = 0;
+initial 
+begin
+    clk = 1'b0;
     forever #5 clk = ~clk;
 end
 
 initial begin
-
     $dumpfile("traffic_light.vcd");
-    $dumpvars(0,tb_traffic_light_fsm);
+    $dumpvars(0, tb_traffic_light_fsm);
 
-    rst = 1;
+    rst = 1'b1;
     #10;
 
-    rst = 0;
-
+    rst = 1'b0;
     #100;
 
     $finish;
-
 end
+
 endmodule

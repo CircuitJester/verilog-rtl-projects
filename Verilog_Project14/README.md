@@ -1,169 +1,101 @@
-# Project 14 – UART Controller (Universal Asynchronous Receiver Transmitter)
+# Project 14 – UART Controller
 
 ## Overview
 
-This project implements a modular UART Controller in Verilog HDL. The design supports asynchronous serial communication by integrating separate transmitter, receiver, baud rate generator, and finite state machines (FSMs) into a reusable UART IP core.
-The project follows a modular RTL design methodology, making each block independently verifiable before system-level integration.
+This project implements a modular UART Controller in Verilog HDL. The design demonstrates asynchronous serial communication through dedicated transmitter and receiver datapaths, baud-rate generation, and FSM-based control logic.
 
+The project separates the transmit and receive paths into reusable RTL modules and integrates them through a top-level UART controller.
 
 ## Features
 
-- Parameterizable Data Width
-- Configurable Baud Rate Divider
+- UART Baud Rate Generator
 - UART Transmitter
 - UART Receiver
 - UART TX FSM
 - UART RX FSM
-- Modular Architecture
-- Loopback Verification
-- Fully Synthesizable RTL
+- Top-Level UART Integration
+- Modular RTL Architecture
+- Individual Module Verification
+- System-Level Verification
+- GTKWave Waveform Analysis
+- Yosys RTL Synthesis
+- Synthesized Netlist Generation
+- RTL Schematic Generation
 
+## Implemented Modules
 
-## Modules
+### UART Baud Generator
 
-### 1. UART Baud Generator
+Generates the timing required for UART transmission and reception.
 
-Generates baud tick pulses from the system clock.
+### UART Transmitter
 
-Files:-
+Converts parallel transmit data into a serial UART data stream.
 
-- uart_baud_generator.v
-- tb_uart_baud_generator.v
+### UART Receiver
 
+Samples and reconstructs serial UART data into parallel data.
 
+### UART TX FSM
 
-### 2. UART Transmitter
+Controls the UART transmission sequence including idle, start, data, and stop phases.
 
-Converts parallel data into serial UART frames.
+### UART RX FSM
 
-Files
+Controls the UART reception sequence and manages serial data sampling.
 
-- uart_transmitter.v
-- tb_uart_transmitter.v
+### UART Top
 
-
-### 3. UART Receiver
-
-Converts serial UART frames into parallel data.
-
-Files
-
-- uart_receiver.v
-- tb_uart_receiver.v
-
-
-### 4. UART TX FSM
-
-Controls the transmission sequence.
-
-State Flow
-
-```
-IDLE
- ↓
-LOAD
- ↓
-START
- ↓
-SHIFT
- ↓
-STOP
- ↓
-DONE
-```
-
-Files
-
-- uart_tx_fsm.v
-- tb_uart_tx_fsm.v
-
-
-### 5. UART RX FSM
-
-Controls the receive sequence.
-
-State Flow
-
-```
-IDLE
- ↓
-START
- ↓
-RECEIVE
- ↓
-STOP
- ↓
-DONE
-```
-
-Files
-
-- uart_rx_fsm.v
-- tb_uart_rx_fsm.v
-
-
-### 6. UART Top Module
-
-Integrates all UART components into a complete controller.
-
-Files
-
-- uart_top.v
-- tb_uart_top.v
-
-
-## Simulation Results
-
-Verified modules:-
-
-- Baud Generator
-- UART Transmitter
-- UART Receiver
-- UART TX FSM
-- UART RX FSM
-- UART Top Module
-
+Integrates the transmitter, receiver, baud generator, and control logic into the complete UART system.
 
 ## Verification
 
-Loopback Test
+Individual RTL modules were verified using dedicated Verilog testbenches.
 
-```
-TX -----> RX
-```
+System-level verification was performed on the integrated UART controller.
 
-Test Data
+Verification includes:
 
-```
-0xA5
-0x5A
-```
+- Baud Timing Generation
+- UART Transmission
+- UART Reception
+- Start Bit Handling
+- Data Bit Transfer
+- Stop Bit Handling
+- TX FSM Operation
+- RX FSM Operation
+- Top-Level Integration
+- GTKWave Waveform Analysis
 
-Results
+## Synthesis
 
-```
-TX Data = RX Data
-```
+The UART RTL hierarchy was synthesized using Yosys.
 
-Transmission Status
+The synthesis flow includes:
 
-```
-PASS
-```
+- RTL elaboration
+- Hierarchy checking
+- Process conversion
+- Logic optimization
+- Design statistics
+- Synthesized netlist generation
+- RTL schematic generation
 
+The top-level UART controller was synthesized as an integrated RTL design.
 
+## Learning Outcomes
 
+During this project I learned:
 
-## Concepts Learned
-
-- UART Communication
-- Asynchronous Serial Protocol
-- Baud Rate Generation
-- Parallel-to-Serial Conversion
-- Serial-to-Parallel Conversion
-- Finite State Machines
-- Modular RTL Design
-- Loopback Verification
-- System-Level Verification
-
-
+- UART communication fundamentals
+- Asynchronous serial communication
+- Baud-rate generation
+- UART transmitter architecture
+- UART receiver architecture
+- FSM-based communication control
+- Modular RTL design
+- Hierarchical integration
+- Functional verification
+- GTKWave waveform debugging
+- RTL synthesis using Yosys
+- Synthesized netlist analysis

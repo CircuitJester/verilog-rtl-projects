@@ -1,0 +1,11 @@
+read_verilog RTL/arbiter_fsm.v
+
+hierarchy -top arbiter_fsm
+
+proc
+opt
+stat
+
+show -format svg -prefix synth/schematics/arbiter_fsm
+
+write_verilog synth/netlists/arbiter_fsm_netlist.v

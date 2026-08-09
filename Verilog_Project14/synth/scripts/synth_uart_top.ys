@@ -1,0 +1,17 @@
+read_verilog RTL/uart_baud_generator.v
+read_verilog RTL/uart_receiver.v
+read_verilog RTL/uart_rx_fsm.v
+read_verilog RTL/uart_transmitter.v
+read_verilog RTL/uart_tx_fsm.v
+read_verilog RTL/uart_top.v
+
+hierarchy -top uart_top
+
+proc
+opt
+stat
+
+select -module uart_top
+show -format svg -prefix synth/schematics/uart_top
+
+write_verilog synth/netlists/uart_top_netlist.v

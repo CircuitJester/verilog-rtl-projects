@@ -1,5 +1,4 @@
-module i2c_master_fsm(
-
+module i2c_master_fsm (
     input scl,
     input rst,
     input start,
@@ -12,7 +11,6 @@ module i2c_master_fsm(
     output reg shift,
     output reg ack_enable,
     output reg busy
-
 );
 
 localparam IDLE  = 3'd0;
@@ -25,105 +23,82 @@ localparam DONE  = 3'd6;
 
 reg [2:0] state;
 
-always @(posedge scl or posedge rst)
+always @(posedge scl or posedge rst) 
+
 begin
 
-    if(rst)
+    if (rst) begin
         state <= IDLE;
+    end else begin
+        case (state)
+            IDLE:
+                if (start)
+                    state <= START;
 
-    else
-    begin
+            START:
+                state <= LOAD;
 
-        case(state)
+            LOAD:
+                state <= SHIFT;
 
-        IDLE:
-            if(start)
-                state <= START;
+            SHIFT:
+                if (done)
+                    state <= ACK;
 
-        START:
-            state <= LOAD;
-
-        LOAD:
-            state <= SHIFT;
-
-        SHIFT:
-            if(done)
-                state <= ACK;
-
-        ACK:
-        begin
-            if(ack_received)
+            ACK:
                 state <= STOP;
-            else
-                state <= STOP;
+
+            STOP:
+                state <= DONE;
+
+            DONE:
+                state <= IDLE;
+
+            default:
+                state <= IDLE;
+        endcase
+    end
+end
+
+always @(*) 
+begin
+
+    start_condition = 1'b0;
+    stop_condition = 1'b0;
+    load = 1'b0;
+    shift = 1'b0;
+    ack_enable = 1'b0;
+    busy = 1'b0;
+
+    case (state)
+        START: begin
+            start_condition = 1'b1;
+            busy = 1'b1;
         end
 
-        STOP:
-            state <= DONE;
+        LOAD: begin
+            load = 1'b1;
+            busy = 1'b1;
+        end
 
-        DONE:
-            state <= IDLE;
+        SHIFT: begin
+            shift = 1'b1;
+            busy = 1'b1;
+        end
 
-        default:
-            state <= IDLE;
+        ACK: begin
+            ack_enable = 1'b1;
+            busy = 1'b1;
+        end
 
-        endcase
+        STOP: begin
+            stop_condition = 1'b1;
+            busy = 1'b1;
 
-    end
-end
-
-always @(*)
-begin
-
-    start_condition = 0;
-    stop_condition  = 0;
-    load            = 0;
-    shift           = 0;
-    ack_enable      = 0;
-    busy            = 0;
-
-    case(state)
-
-    IDLE:
-    begin
-        busy = 0;
-    end
-
-    START:
-    begin
-        start_condition = 1;
-        busy = 1;
-    end
-
-    LOAD:
-    begin
-        load = 1;
-        busy = 1;
-    end
-
-    SHIFT:
-    begin
-        shift = 1;
-        busy = 1;
-    end
-
-    ACK:
-    begin
-        ack_enable = 1;
-        busy = 1;
-    end
-
-    STOP:
-    begin
-        stop_condition = 1;
-        busy = 1;
-    end
-
-    DONE:
-    begin
-        busy = 0;
-    end
+        end
 
     endcase
+
 end
+
 endmodule

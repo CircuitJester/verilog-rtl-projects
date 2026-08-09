@@ -3,12 +3,12 @@ module tb_uart_tx_fsm;
 reg clk;
 reg rst;
 reg start;
-
 reg [7:0] data_in;
+
 wire tx;
 wire busy;
 
-uart_tx_fsm uut(
+uart_tx_fsm dut (
     .clk(clk),
     .rst(rst),
     .start(start),
@@ -17,31 +17,35 @@ uart_tx_fsm uut(
     .busy(busy)
 );
 
-initial begin
-    clk = 0;
+initial 
+begin
+
+    clk = 1'b0;
     forever #5 clk = ~clk;
+
 end
 
-initial begin
-
+initial 
+begin
+    
     $dumpfile("uart_tx.vcd");
-    $dumpvars(0,tb_uart_tx_fsm);
+    $dumpvars(0, tb_uart_tx_fsm);
 
-    rst = 1;
-    start = 0;
+    rst = 1'b1;
+    start = 1'b0;
     data_in = 8'b10110010;
 
     #10;
-    rst = 0;
+    rst = 1'b0;
 
     #10;
-    start = 1;
+    start = 1'b1;
 
     #10;
-    start = 0;
+    start = 1'b0;
 
     #150;
-
     $finish;
 end
+
 endmodule

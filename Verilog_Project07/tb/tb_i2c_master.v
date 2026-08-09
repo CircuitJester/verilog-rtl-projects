@@ -16,9 +16,10 @@ wire sda;
 wire busy;
 
 i2c_master #(
-    .DATA_WIDTH(DATA_WIDTH)
-) uut(
 
+    .DATA_WIDTH(DATA_WIDTH)
+    
+) dut (
     .clk(clk),
     .rst(rst),
     .start(start),
@@ -28,34 +29,35 @@ i2c_master #(
     .scl(scl),
     .sda(sda),
     .busy(busy)
-
 );
 
 always #5 clk = ~clk;
 
-initial
-begin
+initial begin
 
     $dumpfile("waves/i2c_master.vcd");
     $dumpvars(0, tb_i2c_master);
 
-    clk = 0;
-    rst = 1;
-    start = 0;
+    clk = 1'b0;
+    rst = 1'b1;
+    start = 1'b0;
 
     data_in = 8'hA5;
-    sda_in = 0;      // Simulate ACK
-    clk_divider = 4;
+    sda_in = 1'b0;
+    clk_divider = 16'd4;
 
     #20;
-    rst = 0;
+    rst = 1'b0;
+
     #20;
-    start = 1;
+    start = 1'b1;
+
     #10;
-    start = 0;
-    #500;
+    start = 1'b0;
 
+    #500;
     $finish;
 
 end
+
 endmodule

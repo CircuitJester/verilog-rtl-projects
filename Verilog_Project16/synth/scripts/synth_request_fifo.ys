@@ -1,0 +1,11 @@
+read_verilog RTL/request_fifo.v
+
+hierarchy -top request_fifo
+
+proc
+opt
+stat
+
+show -format svg -prefix synth/schematics/request_fifo
+
+write_verilog synth/netlists/request_fifo_netlist.v

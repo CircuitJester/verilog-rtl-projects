@@ -38,8 +38,6 @@ uut
     .read_data(read_data)
 );
 
-// Clock
-
 always #5 clk = ~clk;
 
 // Test Sequence

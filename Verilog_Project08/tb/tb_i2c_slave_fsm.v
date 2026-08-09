@@ -13,8 +13,7 @@ wire shift_enable;
 wire ack_enable;
 wire busy;
 
-i2c_slave_fsm uut(
-
+i2c_slave_fsm dut (
     .scl(scl),
     .rst(rst),
     .start_detected(start_detected),
@@ -27,65 +26,53 @@ i2c_slave_fsm uut(
 
 );
 
-// Clock Generation
-
 always #5 scl = ~scl;
 
-// Test Sequence
+initial 
 
-initial
 begin
 
     $dumpfile("waves/i2c_slave_fsm.vcd");
     $dumpvars(0, tb_i2c_slave_fsm);
 
-    scl = 0;
-    rst = 1;
+    scl = 1'b0;
+    rst = 1'b1;
+    start_detected = 1'b0;
+    address_match = 1'b0;
+    byte_done = 1'b0;
+    stop_detected = 1'b0;
 
-    start_detected = 0;
-    address_match  = 0;
-    byte_done      = 0;
-    stop_detected  = 0;
-
-    // Reset
-    
     #20;
-    rst = 0;
+    rst = 1'b0;
 
-    // START detected
-    
     #10;
-    start_detected = 1;
+    start_detected = 1'b1;
+
     #10;
-    start_detected = 0;
+    start_detected = 1'b0;
 
-    // Address received 
+    address_match = 1'b1;
 
-    address_match = 1;
     #20;
-    byte_done = 1;
-    #10;
-    byte_done = 0;
+    byte_done = 1'b1;
 
-    // Receive Data Byte
+    #10;
+    byte_done = 1'b0;
 
     #30;
-    byte_done = 1;
-    #10;
-    byte_done = 0;
+    byte_done = 1'b1;
 
-    // STOP detected
-    
+    #10;
+    byte_done = 1'b0;
+
     #20;
-    stop_detected = 1;
-    #10;
-    stop_detected = 0;
+    stop_detected = 1'b1;
 
-   
+    #10;
+    stop_detected = 1'b0;
 
     #40;
-
     $finish;
-
 end
+
 endmodule

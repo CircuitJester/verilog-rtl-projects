@@ -1,0 +1,11 @@
+read_verilog RTL/sdram_write_controller.v
+
+hierarchy -top sdram_write_controller
+
+proc
+opt
+stat
+
+show -format svg -prefix synth/schematics/sdram_write_controller
+
+write_verilog synth/netlists/sdram_write_controller_netlist.v

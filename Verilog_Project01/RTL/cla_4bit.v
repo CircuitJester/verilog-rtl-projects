@@ -1,4 +1,4 @@
-module cla_4bit(
+module cla_4bit (
     input [3:0] a,
     input [3:0] b,
     input cin,
@@ -9,12 +9,16 @@ module cla_4bit(
 wire [3:0] p;
 wire [3:0] g;
 
-wire c1,c2,c3,c4;
+wire c1;
+wire c2;
+wire c3;
+wire c4;
 
 assign p = a ^ b;
 assign g = a & b;
 
-assign c1 = g[0] | (p[0] & cin);
+assign c1 = g[0] |
+            (p[0] & cin);
 
 assign c2 = g[1] |
             (p[1] & g[0]) |

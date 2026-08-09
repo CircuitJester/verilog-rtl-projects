@@ -18,10 +18,10 @@ wire busy;
 wire cs;
 wire [DATA_WIDTH-1:0] rx_data;
 
+
 spi_master #(
     .DATA_WIDTH(DATA_WIDTH)
-) uut (
-
+) dut (
     .clk(clk),
     .rst(rst),
     .start(start),
@@ -34,49 +34,47 @@ spi_master #(
     .busy(busy),
     .cs(cs),
     .rx_data(rx_data)
-
 );
 
 always #5 clk = ~clk;
 
-initial begin
+initial 
+begin
     $dumpfile("spi_master.vcd");
     $dumpvars(0, tb_spi_master);
 end
 
-initial begin
+initial 
+begin
 
-    clk = 0;
-    rst = 1;
-    start = 0;
-    cpol = 0;
+    clk = 1'b0;
+    rst = 1'b1;
+    start = 1'b0;
+    cpol = 1'b0;
     clk_divider = 8'd3;
     data_in = 8'b10110010;
-
-    miso = 0;
-
-    #20;
-    rst = 0;
+    miso = 1'b0;
 
     #20;
-    start = 1;
+    rst = 1'b0;
+
+    #20;
+    start = 1'b1;
 
     #10;
-    start = 0;
+    start = 1'b0;
 
 end
 
-always @(posedge spi_clk)
+always @(posedge spi_clk) 
 begin
+
     miso <= ~miso;
 end
 
 initial begin
-
     #500;
-
     $finish;
-
 end
 
 endmodule

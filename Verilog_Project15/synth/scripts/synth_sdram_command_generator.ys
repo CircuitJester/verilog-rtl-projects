@@ -1,0 +1,11 @@
+read_verilog RTL/sdram_command_generator.v
+
+hierarchy -top sdram_command_generator
+
+proc
+opt
+stat
+
+show -format svg -prefix synth/schematics/sdram_command_generator
+
+write_verilog synth/netlists/sdram_command_generator_netlist.v

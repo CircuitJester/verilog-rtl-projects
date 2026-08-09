@@ -3,10 +3,11 @@ module tb_uart_rx_fsm;
 reg clk;
 reg rst;
 reg rx;
+
 wire [7:0] data_out;
 wire done;
 
-uart_rx_fsm uut(
+uart_rx_fsm dut (
     .clk(clk),
     .rst(rst),
     .rx(rx),
@@ -14,38 +15,36 @@ uart_rx_fsm uut(
     .done(done)
 );
 
-initial begin
-    clk = 0;
+initial 
+begin
+    clk = 1'b0;
     forever #5 clk = ~clk;
 end
 
 initial begin
-
     $dumpfile("uart_rx.vcd");
-    $dumpvars(0,tb_uart_rx_fsm);
+    $dumpvars(0, tb_uart_rx_fsm);
 
-    rst = 1;
-    rx = 1;
-    #10 rst = 0;
+    rst = 1'b1;
+    rx = 1'b1;
 
-    // Start bit
-    rx = 0; #10;
+    #10 rst = 1'b0;
 
-    // Data bits for 10110010 (LSB first)
-    rx = 0; #10; // D0
-    rx = 1; #10; // D1
-    rx = 0; #10; // D2
-    rx = 0; #10; // D3
-    rx = 1; #10; // D4
-    rx = 1; #10; // D5
-    rx = 0; #10; // D6
-    rx = 1; #10; // D7
+    rx = 1'b0; #10;
 
-    // Stop bit
-    rx = 1; #10;
+    rx = 1'b0; #10;
+    rx = 1'b1; #10;
+    rx = 1'b0; #10;
+    rx = 1'b0; #10;
+    rx = 1'b1; #10;
+    rx = 1'b1; #10;
+    rx = 1'b0; #10;
+    rx = 1'b1; #10;
+
+    rx = 1'b1; #10;
 
     #20;
     $finish;
-
 end
+
 endmodule

@@ -1,7 +1,7 @@
-module sequence_detector_1011(
-    input clk,
-    input rst,
-    input din,
+module sequence_detector_1011 (
+    input  clk,
+    input  rst,
+    input  din,
     output reg detected
 );
 
@@ -13,57 +13,36 @@ parameter S4 = 3'b100;
 
 reg [2:0] state;
 
-always @(posedge clk or posedge rst)
+always @(posedge clk or posedge rst) 
+
 begin
-    if(rst)
+    if (rst) begin
         state <= S0;
-
-    else
-    begin
-        case(state)
-
+    end else begin
+        case (state)
             S0:
-                if(din)
-                    state <= S1;
-                else
-                    state <= S0;
+                state <= din ? S1 : S0;
 
             S1:
-                if(din)
-                    state <= S1;
-                else
-                    state <= S2;
+                state <= din ? S1 : S2;
 
             S2:
-                if(din)
-                    state <= S3;
-                else
-                    state <= S0;
+                state <= din ? S3 : S0;
 
             S3:
-                if(din)
-                    state <= S4;
-                else
-                    state <= S2;
+                state <= din ? S4 : S2;
 
             S4:
-                if(din)
-                    state <= S1;
-                else
-                    state <= S2;
+                state <= din ? S1 : S2;
 
             default:
                 state <= S0;
-
         endcase
     end
 end
 
-always @(*)
-begin
-    if(state == S4)
-        detected = 1'b1;
-    else
-        detected = 1'b0;
+always @(*) begin
+    detected = (state == S4);
 end
+
 endmodule

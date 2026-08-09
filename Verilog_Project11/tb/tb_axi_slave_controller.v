@@ -38,7 +38,6 @@ axi_slave_controller uut(
 
 );
 
-// Clock
 always #5 clk = ~clk;
 
 // Stimulus

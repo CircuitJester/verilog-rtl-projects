@@ -13,8 +13,6 @@ reg [ADDR_WIDTH-1:0] write_address;
 reg [ADDR_WIDTH-1:0] read_address;
 reg [DATA_WIDTH-1:0] write_data;
 
-// AXI Slave Signals
-
 reg awready;
 reg wready;
 reg [1:0] bresp;
@@ -22,8 +20,6 @@ reg bvalid;
 reg arready;
 reg [DATA_WIDTH-1:0] rdata;
 reg rvalid;
-
-// Outputs
 
 wire [ADDR_WIDTH-1:0] awaddr;
 wire awvalid;
@@ -34,58 +30,52 @@ wire [ADDR_WIDTH-1:0] araddr;
 wire arvalid;
 wire rready;
 wire [DATA_WIDTH-1:0] data_out;
-
 wire done;
 
-// DUT
+axi_master_top #(
 
-axi_master_top #
+    .ADDR_WIDTH(ADDR_WIDTH),
+    .DATA_WIDTH(DATA_WIDTH)
 
-(
+) dut (
 
-.ADDR_WIDTH(ADDR_WIDTH),
-.DATA_WIDTH(DATA_WIDTH)
-)
-
-uut(
-
-.clk(clk),
-.rst(rst),
-
-.start_write(start_write),
-.start_read(start_read),
-.write_address(write_address),
-.read_address(read_address),
-.write_data(write_data),
-.awready(awready),
-.wready(wready),
-.bresp(bresp),
-.bvalid(bvalid),
-.arready(arready),
-.rdata(rdata),
-.rvalid(rvalid),
-.awaddr(awaddr),
-.awvalid(awvalid),
-.wdata(wdata),
-.wvalid(wvalid),
-.bready(bready),
-.araddr(araddr),
-.arvalid(arvalid),
-.rready(rready),
-.data_out(data_out),
-.done(done)
+    .clk(clk),
+    .rst(rst),
+    .start_write(start_write),
+    .start_read(start_read),
+    .write_address(write_address),
+    .read_address(read_address),
+    .write_data(write_data),
+    .awready(awready),
+    .wready(wready),
+    .bresp(bresp),
+    .bvalid(bvalid),
+    .arready(arready),
+    .rdata(rdata),
+    .rvalid(rvalid),
+    .awaddr(awaddr),
+    .awvalid(awvalid),
+    .wdata(wdata),
+    .wvalid(wvalid),
+    .bready(bready),
+    .araddr(araddr),
+    .arvalid(arvalid),
+    .rready(rready),
+    .data_out(data_out),
+    .done(done)
 
 );
 
-// Clock
 
 always #5 clk = ~clk;
 
-initial
+
+initial 
+
 begin
 
     $dumpfile("waves/axi_master_top.vcd");
-    $dumpvars(0,tb_axi_master_top);
+    $dumpvars(0, tb_axi_master_top);
 
     clk = 0;
     rst = 1;
@@ -108,46 +98,55 @@ begin
     rdata  = 32'hABCDEF12;
     rvalid = 0;
 
-    // RESET
     #20;
     rst = 0;
 
-    // WRITE TRANSACTION
-
     #20;
     start_write = 1;
+
     #10;
     start_write = 0;
+
     #20;
     awready = 1;
+
     #10;
     awready = 0;
+
     #20;
     wready = 1;
+
     #10;
     wready = 0;
+
     #20;
     bvalid = 1;
+
     #10;
     bvalid = 0;
 
-    // READ TRANSACTION
-
     #40;
     start_read = 1;
+
     #10;
     start_read = 0;
+
     #20;
     arready = 1;
+
     #10;
     arready = 0;
+
     #20;
     rvalid = 1;
+
     #20;
     rvalid = 0;
 
     #100;
 
     $finish;
+    
 end
+
 endmodule

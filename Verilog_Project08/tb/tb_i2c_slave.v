@@ -11,7 +11,6 @@ reg rst;
 reg start_detected;
 reg stop_detected;
 reg sda;
-
 reg [ADDRESS_WIDTH-1:0] received_address;
 
 wire ack;
@@ -19,13 +18,11 @@ wire busy;
 wire [DATA_WIDTH-1:0] rx_data;
 
 i2c_slave #(
-
     .DATA_WIDTH(DATA_WIDTH),
     .ADDRESS_WIDTH(ADDRESS_WIDTH),
     .SLAVE_ADDRESS(SLAVE_ADDRESS)
-
-) uut (
-
+    
+) dut (
     .scl(scl),
     .rst(rst),
     .start_detected(start_detected),
@@ -35,63 +32,51 @@ i2c_slave #(
     .ack(ack),
     .busy(busy),
     .rx_data(rx_data)
-
 );
-
-// Clock
 
 always #5 scl = ~scl;
 
-// Test Sequence
+initial 
 
-initial
 begin
 
     $dumpfile("waves/i2c_slave.vcd");
     $dumpvars(0, tb_i2c_slave);
 
-    scl = 0;
-    rst = 1;
-
-    start_detected = 0;
-    stop_detected = 0;
-    sda = 0;
+    scl = 1'b0;
+    rst = 1'b1;
+    start_detected = 1'b0;
+    stop_detected = 1'b0;
+    sda = 1'b0;
     received_address = 0;
 
-    // Reset
-
     #20;
-    rst = 0;
-
-    // START
+    rst = 1'b0;
 
     #10;
-    start_detected = 1;
-    #10;
-    start_detected = 0;
+    start_detected = 1'b1;
 
-    // Address = 0x42
+    #10;
+    start_detected = 1'b0;
 
     received_address = 7'h42;
 
-    // Send Data = B2
+    sda = 1'b1; #10;
+    sda = 1'b0; #10;
+    sda = 1'b1; #10;
+    sda = 1'b1; #10;
+    sda = 1'b0; #10;
+    sda = 1'b0; #10;
+    sda = 1'b1; #10;
+    sda = 1'b0; #10;
 
-    sda = 1; #10;
-    sda = 0; #10;
-    sda = 1; #10;
-    sda = 1; #10;
-    sda = 0; #10;
-    sda = 0; #10;
-    sda = 1; #10;
-    sda = 0; #10;
+    stop_detected = 1'b1;
 
-    // STOP
-
-    stop_detected = 1;
     #10;
-    stop_detected = 0;
+    stop_detected = 1'b0;
+
     #40;
     $finish;
-
 end
+
 endmodule

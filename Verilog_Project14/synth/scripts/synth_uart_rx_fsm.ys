@@ -1,0 +1,11 @@
+read_verilog RTL/uart_rx_fsm.v
+
+hierarchy -top uart_rx_fsm
+
+proc
+opt
+stat
+
+show -format svg -prefix synth/schematics/uart_rx_fsm
+
+write_verilog synth/netlists/uart_rx_fsm_netlist.v

@@ -1,5 +1,4 @@
-module spi_master_fsm(
-
+module spi_master_fsm (
     input clk,
     input rst,
     input start,
@@ -12,8 +11,6 @@ module spi_master_fsm(
     output reg cs
 );
 
-// State Encoding
-
 localparam IDLE  = 2'b00;
 localparam LOAD  = 2'b01;
 localparam SHIFT = 2'b10;
@@ -22,97 +19,65 @@ localparam DONE  = 2'b11;
 reg [1:0] state;
 reg [1:0] next_state;
 
-// State Register.
+always @(posedge clk or posedge rst) 
 
-always @(posedge clk or posedge rst)
 begin
 
-    if(rst)
+    if (rst)
         state <= IDLE;
-
     else
         state <= next_state;
-
+        
 end
 
-// Next State Logic.
-
-always @(*)
+always @(*) 
 begin
-
-    case(state)
-
+    case (state)
         IDLE:
-        begin
-            if(start)
-                next_state = LOAD;
-            else
-                next_state = IDLE;
-        end
+            next_state = start ? LOAD : IDLE;
 
         LOAD:
-        begin
             next_state = SHIFT;
-        end
 
         SHIFT:
-        begin
-            if(done)
-                next_state = DONE;
-            else
-                next_state = SHIFT;
-        end
+            next_state = done ? DONE : SHIFT;
 
         DONE:
-        begin
             next_state = IDLE;
-        end
 
         default:
             next_state = IDLE;
-
     endcase
 end
 
-// Output Logic.
+always @(*) 
 
-always @(*)
 begin
-
-    load   = 0;
-    shift  = 0;
-    enable = 0;
-    busy   = 0;
+    load = 1'b0;
+    shift = 1'b0;
+    enable = 1'b0;
+    busy = 1'b0;
     cs = 1'b1;
-    case(state)
 
-        IDLE:
-        begin
-            busy = 0;
-            cs = 1'b1;
-        end
-
-        LOAD:
-        begin
-            load = 1;
-            busy = 1;
+    case (state)
+        LOAD: begin
+            load = 1'b1;
+            busy = 1'b1;
             cs = 1'b0;
         end
 
-        SHIFT:
-        begin
-            shift  = 1;
-            enable = 1;
-            busy   = 1;
+        SHIFT: begin
+            shift = 1'b1;
+            enable = 1'b1;
+            busy = 1'b1;
             cs = 1'b0;
         end
 
-        DONE:
-        begin
-            busy = 0;
+        DONE: begin
+            busy = 1'b0;
             cs = 1'b1;
         end
     endcase
-
 end
+
 endmodule

@@ -1,0 +1,11 @@
+read_verilog RTL/round_robin_arbiter.v
+
+hierarchy -top round_robin_arbiter
+
+proc
+opt
+stat
+
+show -format svg -prefix synth/schematics/round_robin_arbiter
+
+write_verilog synth/netlists/round_robin_arbiter_netlist.v

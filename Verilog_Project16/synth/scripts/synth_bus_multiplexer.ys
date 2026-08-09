@@ -1,0 +1,11 @@
+read_verilog RTL/bus_multiplexer.v
+
+hierarchy -top bus_multiplexer
+
+proc
+opt
+stat
+
+show -format svg -prefix synth/schematics/bus_multiplexer
+
+write_verilog synth/netlists/bus_multiplexer_netlist.v

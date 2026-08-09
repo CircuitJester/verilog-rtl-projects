@@ -1,0 +1,17 @@
+read_verilog RTL/i2c_ack_detector.v
+read_verilog RTL/i2c_clock_generator.v
+read_verilog RTL/i2c_master_fsm.v
+read_verilog RTL/i2c_shift_register.v
+read_verilog RTL/i2c_start_stop.v
+read_verilog RTL/i2c_master_top.v
+
+hierarchy -top i2c_master_top
+
+proc
+opt
+stat
+
+select -module i2c_master_top
+show -format svg -prefix synth/schematics/i2c_master_top
+
+write_verilog synth/netlists/i2c_master_top_netlist.v

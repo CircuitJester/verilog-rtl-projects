@@ -16,63 +16,75 @@ wire start_crc;
 wire transmit;
 wire busy;
 
-can_tx_fsm uut(
-
-.clk(clk),
-.rst(rst),
-.start(start),
-.stuffing_done(stuffing_done),
-.crc_done(crc_done),
-.tx_done(tx_done),
-.ack_received(ack_received),
-.load_frame(load_frame),
-.start_stuffing(start_stuffing),
-.start_crc(start_crc),
-.transmit(transmit),
-.busy(busy)
-
+can_tx_fsm dut (
+    .clk(clk),
+    .rst(rst),
+    .start(start),
+    .stuffing_done(stuffing_done),
+    .crc_done(crc_done),
+    .tx_done(tx_done),
+    .ack_received(ack_received),
+    .load_frame(load_frame),
+    .start_stuffing(start_stuffing),
+    .start_crc(start_crc),
+    .transmit(transmit),
+    .busy(busy)
 );
 
 always #5 clk = ~clk;
 
-initial
+initial 
+
 begin
 
     $dumpfile("waves/can_tx_fsm.vcd");
     $dumpvars(0, tb_can_tx_fsm);
 
-    clk = 0;
-    rst = 1;
+    clk = 1'b0;
+    rst = 1'b1;
 
-    start = 0;
-    stuffing_done = 0;
-    crc_done = 0;
-    tx_done = 0;
-    ack_received = 0;
+    start = 1'b0;
+    stuffing_done = 1'b0;
+    crc_done = 1'b0;
+    tx_done = 1'b0;
+    ack_received = 1'b0;
 
-    #20 rst = 0;
+    #20;
+    rst = 1'b0;
 
-    // Start transmission
-    #10 start = 1;
-    #10 start = 0;
+    #10;
+    start = 1'b1;
 
-    // Frame stuffing complete
-    #20 stuffing_done = 1;
-    #10 stuffing_done = 0;
+    #10;
+    start = 1'b0;
 
-    // CRC complete
-    #20 crc_done = 1;
-    #10 crc_done = 0;
+    #20;
+    stuffing_done = 1'b1;
 
-    // Transmission complete
-    #20 tx_done = 1;
-    #10 tx_done = 0;
+    #10;
+    stuffing_done = 1'b0;
 
-    // ACK received
-    #20 ack_received = 1;
-    #10 ack_received = 0;
+    #20;
+    crc_done = 1'b1;
+
+    #10;
+    crc_done = 1'b0;
+
+    #20;
+    tx_done = 1'b1;
+
+    #10;
+    tx_done = 1'b0;
+
+    #20;
+    ack_received = 1'b1;
+
+    #10;
+    ack_received = 1'b0;
+
     #40;
     $finish;
-
+    
 end
+
 endmodule

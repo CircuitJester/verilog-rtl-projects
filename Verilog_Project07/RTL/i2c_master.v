@@ -1,6 +1,6 @@
 module i2c_master #(
     parameter DATA_WIDTH = 8
-)(
+) (
     input clk,
     input rst,
     input start,
@@ -20,39 +20,29 @@ wire shift;
 wire ack_enable;
 wire done;
 wire ack_received;
+
 wire [DATA_WIDTH-1:0] shift_reg;
 wire [$clog2(DATA_WIDTH)-1:0] bit_count;
 
-// Clock Generator
-
-i2c_clock_generator clock_gen(
-
+i2c_clock_generator clock_gen (
     .clk(clk),
     .rst(rst),
     .clk_divider(clk_divider),
     .scl(scl)
-
 );
 
-// Start Stop Generator
-
-i2c_start_stop_generator start_stop(
-
+i2c_start_stop_generator start_stop (
     .clk(clk),
     .rst(rst),
     .start(start_condition),
     .stop(stop_condition),
     .sda(),
     .busy()
-
 );
-
-// Shift Register
 
 i2c_shift_register #(
     .DATA_WIDTH(DATA_WIDTH)
-) shift_register(
-
+) shift_register (
     .scl(scl),
     .rst(rst),
     .load(load),
@@ -60,40 +50,27 @@ i2c_shift_register #(
     .data_in(data_in),
     .sda(sda),
     .shift_reg(shift_reg)
-
 );
-
-
-// Bit Counter
 
 i2c_bit_counter #(
     .DATA_WIDTH(DATA_WIDTH)
-) counter(
-
+) counter (
     .scl(scl),
     .rst(rst),
     .enable(shift),
     .done(done),
     .bit_count(bit_count)
-
 );
 
-// ACK Detector
-
-i2c_ack_detector ack(
-
+i2c_ack_detector ack (
     .scl(scl),
     .rst(rst),
     .ack_enable(ack_enable),
     .sda(sda_in),
     .ack_received(ack_received)
-
 );
 
-// FSM
-
-i2c_master_fsm fsm(
-
+i2c_master_fsm fsm (
     .scl(scl),
     .rst(rst),
     .start(start),
@@ -105,6 +82,7 @@ i2c_master_fsm fsm(
     .shift(shift),
     .ack_enable(ack_enable),
     .busy(busy)
-
+    
 );
+
 endmodule

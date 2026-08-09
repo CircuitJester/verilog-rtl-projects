@@ -1,0 +1,11 @@
+read_verilog RTL/priority_encoder.v
+
+hierarchy -top priority_encoder
+
+proc
+opt
+stat
+
+show -format svg -prefix synth/schematics/priority_encoder
+
+write_verilog synth/netlists/priority_encoder_netlist.v

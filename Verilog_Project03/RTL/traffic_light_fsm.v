@@ -1,4 +1,4 @@
-module traffic_light_fsm(
+module traffic_light_fsm (
     input clk,
     input rst,
 
@@ -19,55 +19,51 @@ parameter S3 = 2'b11;
 reg [1:0] state;
 
 always @(posedge clk or posedge rst)
-begin
-    if(rst)
+
+ begin
+    if (rst) begin
         state <= S0;
-    else
-        case(state)
+    end else begin
+        case (state)
             S0: state <= S1;
             S1: state <= S2;
             S2: state <= S3;
             S3: state <= S0;
             default: state <= S0;
         endcase
+    end
 end
 
-always @(*)
-begin
-    north_red    = 0;
-    north_yellow = 0;
-    north_green  = 0;
+always @(*) begin
+    north_red    = 1'b0;
+    north_yellow = 1'b0;
+    north_green  = 1'b0;
 
-    south_red    = 0;
-    south_yellow = 0;
-    south_green  = 0;
+    south_red    = 1'b0;
+    south_yellow = 1'b0;
+    south_green  = 1'b0;
 
-    case(state)
-
-        S0:
-        begin
-            north_green = 1;
-            south_red   = 1;
+    case (state)
+        S0: begin
+            north_green = 1'b1;
+            south_red   = 1'b1;
         end
 
-        S1:
-        begin
-            north_yellow = 1;
-            south_red    = 1;
+        S1: begin
+            north_yellow = 1'b1;
+            south_red    = 1'b1;
         end
 
-        S2:
-        begin
-            north_red   = 1;
-            south_green = 1;
+        S2: begin
+            north_red   = 1'b1;
+            south_green = 1'b1;
         end
 
-        S3:
-        begin
-            north_red     = 1;
-            south_yellow  = 1;
+        S3: begin
+            north_red    = 1'b1;
+            south_yellow = 1'b1;
         end
-
     endcase
 end
+
 endmodule

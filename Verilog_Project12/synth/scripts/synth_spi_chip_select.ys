@@ -1,0 +1,11 @@
+read_verilog RTL/spi_chip_select.v
+
+hierarchy -top spi_chip_select
+
+proc
+opt
+stat
+
+show -format svg -prefix synth/schematics/spi_chip_select
+
+write_verilog synth/netlists/spi_chip_select_netlist.v

@@ -10,8 +10,7 @@ wire shift;
 wire enable;
 wire busy;
 
-spi_master_fsm uut(
-
+spi_master_fsm dut (
     .clk(clk),
     .rst(rst),
     .start(start),
@@ -22,35 +21,42 @@ spi_master_fsm uut(
     .busy(busy)
 );
 
-initial
+initial 
 begin
-    clk = 0;
+
+    clk = 1'b0;
     forever #5 clk = ~clk;
 end
 
-initial
+
+initial 
 begin
 
     $dumpfile("spi_fsm.vcd");
-    $dumpvars(0,tb_spi_master_fsm);
+    $dumpvars(0, tb_spi_master_fsm);
 
-    rst = 1;
-    start = 0;
-    done = 0;
-    #10;
-
-    rst = 0;
+    rst = 1'b1;
+    start = 1'b0;
+    done = 1'b0;
 
     #10;
-    start = 1;
+    rst = 1'b0;
+
     #10;
-    start = 0;
+    start = 1'b1;
+
+    #10;
+    start = 1'b0;
+
     #50;
-    done = 1;
-    #10;
-    done = 0;
-    #30;
+    done = 1'b1;
 
+    #10;
+    done = 1'b0;
+
+    #30;
     $finish;
+
 end
+
 endmodule

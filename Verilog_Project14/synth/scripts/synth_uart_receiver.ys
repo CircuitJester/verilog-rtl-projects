@@ -1,0 +1,12 @@
+read_verilog RTL/uart_receiver.v
+read_verilog RTL/uart_rx_fsm.v
+
+hierarchy -top uart_receiver
+
+proc
+opt
+stat
+
+show -format svg -prefix synth/schematics/uart_receiver
+
+write_verilog synth/netlists/uart_receiver_netlist.v

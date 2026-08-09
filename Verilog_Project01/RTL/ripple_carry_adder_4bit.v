@@ -1,4 +1,4 @@
-module ripple_carry_adder_4bit(
+module ripple_carry_adder_4bit (
     input [3:0] a,
     input [3:0] b,
     input cin,
@@ -10,7 +10,7 @@ wire c1;
 wire c2;
 wire c3;
 
-full_adder fa0(
+full_adder fa0 (
     .a(a[0]),
     .b(b[0]),
     .cin(cin),
@@ -18,7 +18,7 @@ full_adder fa0(
     .cout(c1)
 );
 
-full_adder fa1(
+full_adder fa1 (
     .a(a[1]),
     .b(b[1]),
     .cin(c1),
@@ -26,7 +26,7 @@ full_adder fa1(
     .cout(c2)
 );
 
-full_adder fa2(
+full_adder fa2 (
     .a(a[2]),
     .b(b[2]),
     .cin(c2),
@@ -34,7 +34,7 @@ full_adder fa2(
     .cout(c3)
 );
 
-full_adder fa3(
+full_adder fa3 (
     .a(a[3]),
     .b(b[3]),
     .cin(c3),

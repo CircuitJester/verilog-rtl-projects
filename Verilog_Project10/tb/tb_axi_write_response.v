@@ -11,24 +11,25 @@ wire bready;
 wire done;
 wire error;
 
-axi_write_response uut(
-
-.clk(clk),
-.rst(rst),
-.bresp(bresp),
-.bvalid(bvalid),
-.bready(bready),
-.done(done),
-.error(error)
+axi_write_response dut (
+    .clk(clk),
+    .rst(rst),
+    .bresp(bresp),
+    .bvalid(bvalid),
+    .bready(bready),
+    .done(done),
+    .error(error)
+    
 );
 
 always #5 clk = ~clk;
 
-initial
+initial 
+
 begin
 
     $dumpfile("waves/axi_write_response.vcd");
-    $dumpvars(0,tb_axi_write_response);
+    $dumpvars(0, tb_axi_write_response);
 
     clk = 0;
     rst = 1;
@@ -36,30 +37,26 @@ begin
     bresp = 2'b00;
     bvalid = 0;
 
-    // Reset
-
     #20;
     rst = 0;
-
-    // Successful Write
 
     #20;
     bresp = 2'b00;
     bvalid = 1;
+
     #10;
     bvalid = 0;
-
-    // Error Response
 
     #30;
     bresp = 2'b10;
     bvalid = 1;
+
     #10;
     bvalid = 0;
 
     #40;
-
     $finish;
 
 end
+
 endmodule

@@ -1,0 +1,11 @@
+read_verilog RTL/i2c_ack_detector.v
+
+hierarchy -top i2c_ack_detector
+
+proc
+opt
+stat
+
+show -format svg -prefix synth/schematics/i2c_ack_detector
+
+write_verilog synth/netlists/i2c_ack_detector_netlist.v

@@ -2,110 +2,110 @@
 
 ## Overview
 
-This project implements a simplified SDRAM (Synchronous Dynamic Random Access Memory) Controller in Verilog. The controller demonstrates the fundamental architecture of SDRAM control logic, including initialization, timing generation, refresh management, read/write sequencing, command generation, and top-level integration.
-This project is for learning RTL design, finite state machines (FSMs), timing control, and hierarchical hardware design.
+This project implements a modular SDRAM Controller in Verilog HDL. The design demonstrates the control architecture required to interface with synchronous DRAM, including initialization, command generation, timing control, read and write operations, refresh management, and centralized FSM-based control.
 
+The project follows a hierarchical RTL architecture where individual controller blocks are developed and verified independently before being integrated into the complete SDRAM Controller.
 
 ## Features
 
-- SDRAM Initialization Sequence
-- Timing Generator
 - SDRAM Command Generator
-- Automatic Refresh Controller
-- Read Controller
-- Write Controller
-- Main Control FSM
-- Top-Level Integration
-- Individual Testbenches
+- SDRAM Initialization FSM
+- SDRAM Main FSM
+- SDRAM Read Controller
+- SDRAM Write Controller
+- SDRAM Refresh Controller
+- SDRAM Timing Generator
+- Top-Level SDRAM Controller
+- Modular RTL Architecture
+- Individual Module Verification
 - System-Level Verification
+- GTKWave Waveform Analysis
+- Yosys RTL Synthesis
+- Synthesized Netlist Generation
+- RTL Schematic Generation
 
+## Implemented Modules
 
-## Modules
+### SDRAM Command Generator
 
-### 1. SDRAM Timing Generator
+Generates the control commands required for SDRAM operations.
 
-Generates programmable timing delays used by all SDRAM operations.
+### SDRAM Initialization FSM
 
+Controls the SDRAM startup and initialization sequence.
 
-### 2. SDRAM Initialization FSM
+### SDRAM Main FSM
 
-Implements the SDRAM power-up initialization sequence.
+Coordinates the overall SDRAM controller operation.
 
+### SDRAM Read Controller
 
-### 3. SDRAM Command Generator
+Manages the sequence required to perform SDRAM read operations.
 
-Generates SDRAM command signals:
+### SDRAM Write Controller
 
-- ACTIVE
-- READ
-- WRITE
-- PRECHARGE
-- REFRESH
-- LOAD MODE REGISTER
+Manages the sequence required to perform SDRAM write operations.
 
+### SDRAM Refresh Controller
 
-### 4. SDRAM Refresh Controller
+Generates and manages periodic SDRAM refresh operations.
 
-Generates periodic refresh requests to preserve memory contents.
+### SDRAM Timing Generator
 
+Provides the timing and control signals required by the SDRAM control architecture.
 
-### 5. SDRAM Read Controller
+### SDRAM Top
 
-Implements:
+Integrates all controller blocks into the complete SDRAM Controller.
 
-- ACTIVATE
-- Wait tRCD
-- READ
-- DONE
+## Verification
 
+Each major RTL component was verified using a dedicated Verilog testbench.
 
-### 6. SDRAM Write Controller
+System-level verification was performed using the integrated SDRAM top-level design.
 
-Implements:
+Verification includes:
 
-- ACTIVATE
-- Wait tRCD
-- WRITE
-- DONE
-
-
-### 7. SDRAM Main FSM
-
-Coordinates every subsystem.
-
-Priority:
-
-```
-Refresh
-
-↓
-
-Read
-
-↓
-
-Write
-```
-
-
-### 8. SDRAM Top Module
-
-Integrates all modules into one controller.
-
-
-## Skills Demonstrated
-
-- RTL Design
-- Finite State Machines
+- SDRAM Initialization
+- Command Generation
 - Timing Control
-- SDRAM Protocol Basics
-- Modular Hardware Design
-- Hierarchical Design
-- System Integration
-- Functional Verification
-- Testbench Development
+- Read Control
+- Write Control
+- Refresh Control
+- FSM State Transitions
+- Top-Level Integration
+- GTKWave Waveform Analysis
 
+## Synthesis
 
-## Learning Outcome
+The complete SDRAM Controller hierarchy was synthesized using Yosys.
 
-This project demonstrates the architecture of a simplified SDRAM controller and serves as a foundation for building industrial memory controllers used in FPGA and ASIC designs.
+The synthesis flow includes:
+
+- RTL elaboration
+- Hierarchy analysis
+- Process conversion
+- Logic optimization
+- Cell statistics
+- Synthesized netlist generation
+- RTL schematic generation
+
+The top-level SDRAM controller was synthesized as an integrated multi-module RTL design.
+
+## Learning Outcomes
+
+During this project I learned:
+
+- SDRAM controller architecture
+- Memory initialization sequences
+- SDRAM command generation
+- Memory read and write control
+- Refresh management
+- Hardware timing control
+- FSM-based memory controller design
+- Modular RTL architecture
+- Hierarchical hardware integration
+- Functional verification
+- GTKWave waveform debugging
+- RTL synthesis using Yosys
+- Synthesized netlist analysis

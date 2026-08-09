@@ -1,0 +1,11 @@
+read_verilog RTL/sdram_timing_generator.v
+
+hierarchy -top sdram_timing_generator
+
+proc
+opt
+stat
+
+show -format svg -prefix synth/schematics/sdram_timing_generator
+
+write_verilog synth/netlists/sdram_timing_generator_netlist.v

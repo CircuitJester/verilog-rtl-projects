@@ -1,0 +1,11 @@
+read_verilog RTL/uart_baud_generator.v
+
+hierarchy -top uart_baud_generator
+
+proc
+opt
+stat
+
+show -format svg -prefix synth/schematics/uart_baud_generator
+
+write_verilog synth/netlists/uart_baud_generator_netlist.v

@@ -1,0 +1,11 @@
+read_verilog RTL/i2c_clock_generator.v
+
+hierarchy -top i2c_clock_generator
+
+proc
+opt
+stat
+
+show -format svg -prefix synth/schematics/i2c_clock_generator
+
+write_verilog synth/netlists/i2c_clock_generator_netlist.v

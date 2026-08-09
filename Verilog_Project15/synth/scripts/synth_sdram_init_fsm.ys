@@ -1,0 +1,11 @@
+read_verilog RTL/sdram_init_fsm.v
+
+hierarchy -top sdram_init_fsm
+
+proc
+opt
+stat
+
+show -format svg -prefix synth/schematics/sdram_init_fsm
+
+write_verilog synth/netlists/sdram_init_fsm_netlist.v

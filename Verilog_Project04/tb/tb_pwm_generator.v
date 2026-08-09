@@ -6,39 +6,30 @@ reg [7:0] duty;
 
 wire pwm;
 
-pwm_generator uut(
-
+pwm_generator dut (
     .clk(clk),
     .rst(rst),
     .duty(duty),
-
     .pwm(pwm)
-
 );
 
-initial
-begin
-    clk = 0;
+initial begin
+    clk = 1'b0;
     forever #5 clk = ~clk;
 end
 
-initial
-begin
-
+initial begin
     $dumpfile("pwm.vcd");
-    $dumpvars(0,tb_pwm_generator);
+    $dumpvars(0, tb_pwm_generator);
 
-    rst = 1;
-
-    duty = 8'd128;      // 50% duty cycle
+    rst = 1'b1;
+    duty = 8'd128;
 
     #10;
-
-    rst = 0;
+    rst = 1'b0;
 
     #3000;
-
     $finish;
-
 end
+
 endmodule

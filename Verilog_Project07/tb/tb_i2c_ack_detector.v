@@ -9,46 +9,49 @@ reg sda;
 
 wire ack_received;
 
-i2c_ack_detector uut(
+i2c_ack_detector dut (
 
     .scl(scl),
     .rst(rst),
     .ack_enable(ack_enable),
     .sda(sda),
     .ack_received(ack_received)
-
+    
 );
 
 always #5 scl = ~scl;
 
-initial
-begin
+initial begin
 
     $dumpfile("waves/i2c_ack_detector.vcd");
-    $dumpvars(0,tb_i2c_ack_detector);
+    $dumpvars(0, tb_i2c_ack_detector);
 
-    scl = 0;
-    rst = 1;
-    ack_enable = 0;
-    sda = 1;
-    #20;
-    rst = 0;
+    scl = 1'b0;
+    rst = 1'b1;
+    ack_enable = 1'b0;
+    sda = 1'b1;
 
-    // Simulate ACK
     #20;
-    ack_enable = 1;
-    sda = 0;
+    rst = 1'b0;
+
+    #20;
+    ack_enable = 1'b1;
+    sda = 1'b0;
+
     #10;
-    ack_enable = 0;
+    ack_enable = 1'b0;
+
     #40;
 
-    // Simulate NACK
-    ack_enable = 1;
-    sda = 1;
+    ack_enable = 1'b1;
+    sda = 1'b1;
+
     #10;
-    ack_enable = 0;
+    ack_enable = 1'b0;
+
     #40;
     $finish;
 
 end
+
 endmodule

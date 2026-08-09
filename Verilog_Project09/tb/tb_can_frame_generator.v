@@ -11,39 +11,38 @@ reg [DATA_WIDTH-1:0] data;
 
 wire [30:0] frame;
 
-can_frame_generator #
+can_frame_generator #(
+    .ID_WIDTH(ID_WIDTH),
+    .DATA_WIDTH(DATA_WIDTH)
 
-(
-.ID_WIDTH(ID_WIDTH),
-.DATA_WIDTH(DATA_WIDTH)
+) dut (
 
-)
-uut
-
-(
-.load(load),
-.identifier(identifier),
-.data(data),
-.frame(frame)
+    .load(load),
+    .identifier(identifier),
+    .data(data),
+    .frame(frame)
+    
 );
 
-initial
+initial 
+
 begin
 
     $dumpfile("waves/can_frame_generator.vcd");
     $dumpvars(0, tb_can_frame_generator);
 
-    load = 0;
+    load = 1'b0;
     identifier = 11'h123;
-
     data = 8'hB2;
+
     #20;
-    load = 1;
+    load = 1'b1;
+
     #40;
-    load = 0;
+    load = 1'b0;
+
     #20;
-
     $finish;
-
 end
+
 endmodule
