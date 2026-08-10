@@ -1,0 +1,12 @@
+read_verilog RTL/spi_clock_divider.v
+
+hierarchy -top spi_clock_divider
+
+proc
+opt
+stat
+
+select -module spi_clock_divider
+show -format svg -prefix synth/schematics/spi_clock_divider
+
+write_verilog synth/netlists/spi_clock_divider_netlist.v

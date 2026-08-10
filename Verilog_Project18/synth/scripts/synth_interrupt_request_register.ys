@@ -1,0 +1,12 @@
+read_verilog RTL/interrupt_request_register.v
+
+hierarchy -top interrupt_request_register
+
+proc
+opt
+stat
+
+select -module interrupt_request_register
+show -format svg -prefix synth/schematics/interrupt_request_register
+
+write_verilog synth/netlists/interrupt_request_register_netlist.v

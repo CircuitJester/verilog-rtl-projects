@@ -1,0 +1,12 @@
+read_verilog RTL/interrupt_priority_encoder.v
+
+hierarchy -top interrupt_priority_encoder
+
+proc
+opt
+stat
+
+select -module interrupt_priority_encoder
+show -format svg -prefix synth/schematics/interrupt_priority_encoder
+
+write_verilog synth/netlists/interrupt_priority_encoder_netlist.v

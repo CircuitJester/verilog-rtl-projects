@@ -1,0 +1,12 @@
+read_verilog RTL/spi_master_fsm.v
+
+hierarchy -top spi_master_fsm
+
+proc
+opt
+stat
+
+select -module spi_master_fsm
+show -format svg -prefix synth/schematics/spi_master_fsm
+
+write_verilog synth/netlists/spi_master_fsm_netlist.v

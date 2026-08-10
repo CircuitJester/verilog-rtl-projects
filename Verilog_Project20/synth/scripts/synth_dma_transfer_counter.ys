@@ -1,0 +1,12 @@
+read_verilog RTL/dma_transfer_counter.v
+
+hierarchy -top dma_transfer_counter
+
+proc
+opt
+stat
+
+select -module dma_transfer_counter
+show -format svg -prefix synth/schematics/dma_transfer_counter
+
+write_verilog synth/netlists/dma_transfer_counter_netlist.v

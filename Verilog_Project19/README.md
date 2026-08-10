@@ -1,167 +1,131 @@
-# Project 19 – AXI4-Lite Slave Peripheral (Simplified)
+# Project 19 – AXI4-Lite Slave Peripheral
 
 ## Overview
 
-This project implements a simplified AXI4-Lite Slave Peripheral in Verilog HDL. The design demonstrates how a processor communicates with memory-mapped hardware registers through separate read and write channels using VALID/READY handshakes.
+This project implements a modular AXI4-Lite Slave Peripheral in Verilog HDL. The design provides a memory-mapped peripheral interface capable of receiving AXI4-Lite read and write transactions and accessing an internal register file through address decoding logic.
 
-The project is organized using a modular architecture, where each functional block is designed, verified, and then integrated into a complete single module.
+The architecture is divided into independent RTL modules for address decoding, AXI read handling, AXI write handling, and register storage before being integrated into the complete AXI4-Lite slave peripheral.
+
+The project follows a structured RTL development methodology including modular RTL design, dedicated verification, hierarchical integration, Yosys synthesis, synthesized netlist generation, and RTL schematic analysis.
+
+## Features
+
+- AXI4-Lite Read Channel
+- AXI4-Lite Write Channel
+- Address Decoder
+- Memory-Mapped Register File
+- AXI4-Lite Slave Top-Level Integration
+- Modular RTL Architecture
+- Dedicated Verification Environment
+- System-Level Verification
+- Yosys RTL Synthesis
+- Synthesized Netlist Generation
+- RTL Schematic Generation
 
 
 
-## Objectives
 
-- Learn memory-mapped peripheral design
-- Understand AXI4-Lite communication fundamentals
-- Implement register-based hardware interfaces
-- Design reusable RTL modules
-- Practice hierarchical system integration
-- Verify complete functionality using simulation
+## Peripheral Architecture
 
-
-## Architecture
-
+```text
+                  AXI4-Lite Interface
+                         |
+              +----------+----------+
+              |                     |
+              v                     v
+       AXI Write Channel     AXI Read Channel
+              |                     |
+              +----------+----------+
+                         |
+                         v
+                  Address Decoder
+                         |
+                         v
+                    Register File
 ```
-                AXI Master (CPU)
-                       │
-      ┌────────────────┼────────────────┐
-      │                │                │
-      ▼                ▼                ▼
- Write Channel    Read Channel      Address Bus
-      │                │                │
-      └────────────┬───┴────────────────┘
-                   ▼
-          Address Decoder
-                   │
-             Register Select
-                   │
-                   ▼
-             Register File
-                   │
-                   ▼
-               Read Data
-```
 
-
-
-## Project Modules
-
-### 1. Register File
-
-- Four 32-bit programmable registers
-- Synchronous write operation
-- Combinational read operation
-- Parameterized design
-
-
-
-### 2. Address Decoder
-
-- Converts CPU addresses into register indices
-- Supports four memory-mapped registers
-- Detects invalid addresses
-
-| Address | Register |
-|----------|----------|
-| 0x00 | REG0 |
-| 0x04 | REG1 |
-| 0x08 | REG2 |
-| 0x0C | REG3 |
-
-
-
-### 3. AXI Write Channel
-
-Implements simplified AXI write protocol.
-
-Features:
-
-- AWVALID
-- AWREADY
-- WVALID
-- WREADY
-- BVALID
-- BREADY
-- Write Enable Generation
-
-
-### 4. AXI Read Channel
-
-Implements simplified AXI read protocol.
-
-Features:
-
-- ARVALID
-- ARREADY
-- RVALID
-- RREADY
-- Read Enable Generation
-
-
-### 5. AXI Slave Top
-
-Integrates all modules into one complete AXI4-Lite slave peripheral.
 
 
 ## Verification
 
-Every module was verified individually before complete system integration.
+The RTL modules are accompanied by dedicated Verilog testbenches.
 
-### Module Verification
+The verification environment covers:
 
-- Register File
-- Address Decoder
-- AXI Write Channel
-- AXI Read Channel
-
-### System Verification
-
-Verified:
-
-- Reset
-- Register writes
-- Register reads
-- Address decoding
-- Read handshake
-- Write handshake
-- Data retention
-- Invalid address handling
-- End-to-end AXI transactions
+- Address Decoder Operation
+- Register File Access
+- AXI Write Transactions
+- AXI Read Transactions
+- AXI Slave Integration
+- Memory-Mapped Register Access
+- System-Level Peripheral Behavior
 
 
-## Concepts Learned
+## Synthesis
 
-- AXI4-Lite Fundamentals
-- Memory-Mapped Registers
-- Register File Design
-- Address Decoding
-- VALID/READY Handshake
-- Synchronous RTL
-- Combinational RTL
-- Modular RTL Design
-- Hierarchical Integration
-- Top-Level Verification
+The RTL design was synthesized using Yosys.
 
+The synthesis workflow includes:
+
+- RTL elaboration
+- Hierarchy analysis
+- Process conversion
+- Logic optimization
+- Design statistics
+- Synthesized netlist generation
+- RTL schematic generation
+
+Each major RTL module was synthesized independently, followed by synthesis of the complete `axi_slave_top` design.
+
+The synthesis flow explicitly selects the intended top-level module before schematic generation to ensure that the generated schematic represents the correct design hierarchy.
+
+## Project Structure
+
+```text
+Verilog_Project19/
+│
+├── build/
+│
+├── RTL/
+│   ├── address_decoder.v
+│   ├── axi_read_channel.v
+│   ├── axi_slave_top.v
+│   ├── axi_write_channel.v
+│   └── register_file.v
+│
+├── tb/
+│   ├── tb_address_decoder.v
+│   ├── tb_axi_read_channel.v
+│   ├── tb_axi_slave_top.v
+│   ├── tb_axi_write_channel.v
+│   └── tb_register_file.v
+│
+├── Verification/
+│
+├── synth/
+│   ├── netlists/
+│   ├── schematics/
+│   └── scripts/
+│
+├── waves/
+│
+├── README.md
+└── command.md
+```
 
 ## Learning Outcomes
 
-After completing this project I understand:
+During this project I learned:
 
-- How processors access hardware peripherals
-- Memory-mapped register architecture
-- AXI read/write transactions
-- VALID/READY handshake protocol
-- Modular RTL development
-- RTL integration methodology
-- Complete subsystem verification
-
-
-
-## Future Improvements
-
-- Full AXI4-Lite compliance
-- BRESP and RRESP support
-- WSTRB (Byte Enables)
-- Independent address/data buffering
-- Back-to-back transaction support
-- Formal Verification
-- FPGA implementation
+- AXI4-Lite slave architecture
+- Memory-mapped peripheral design
+- AXI read and write channel handling
+- Address decoding
+- Register file architecture
+- Ready/Valid handshake concepts
+- Modular RTL design
+- Hierarchical hardware integration
+- Dedicated RTL verification
+- Yosys synthesis
+- Synthesized netlist generation
+- RTL schematic analysis

@@ -1,0 +1,16 @@
+read_verilog RTL/interrupt_request_register.v
+read_verilog RTL/interrupt_mask_register.v
+read_verilog RTL/interrupt_priority_encoder.v
+read_verilog RTL/interrupt_controller_fsm.v
+read_verilog RTL/interrupt_controller_top.v
+
+hierarchy -top interrupt_controller_top
+
+proc
+opt
+stat
+
+select -module interrupt_controller_top
+show -format svg -prefix synth/schematics/interrupt_controller_top
+
+write_verilog synth/netlists/interrupt_controller_top_netlist.v

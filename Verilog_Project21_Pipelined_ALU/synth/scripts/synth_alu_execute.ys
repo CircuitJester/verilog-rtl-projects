@@ -1,0 +1,13 @@
+read_verilog RTL/alu_execute.v
+
+hierarchy -top alu_execute
+
+proc
+opt
+stat
+
+select -module alu_execute
+show -format svg -prefix synth/schematics/alu_execute
+
+write_verilog synth/netlists/alu_execute_netlist.v
+

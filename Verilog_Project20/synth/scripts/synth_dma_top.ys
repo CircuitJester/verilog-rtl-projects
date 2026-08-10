@@ -1,0 +1,16 @@
+read_verilog RTL/dma_address_generator.v
+read_verilog RTL/dma_control_register.v
+read_verilog RTL/dma_controller_fsm.v
+read_verilog RTL/dma_transfer_counter.v
+read_verilog RTL/dma_top.v
+
+hierarchy -top dma_top
+
+proc
+opt
+stat
+
+select -module dma_top
+show -format svg -prefix synth/schematics/dma_top
+
+write_verilog synth/netlists/dma_top_netlist.v

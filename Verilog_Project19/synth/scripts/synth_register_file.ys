@@ -1,0 +1,12 @@
+read_verilog RTL/register_file.v
+
+hierarchy -top register_file
+
+proc
+opt
+stat
+
+select -module register_file
+show -format svg -prefix synth/schematics/register_file
+
+write_verilog synth/netlists/register_file_netlist.v

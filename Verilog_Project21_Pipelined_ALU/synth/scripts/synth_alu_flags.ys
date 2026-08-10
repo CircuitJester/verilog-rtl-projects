@@ -1,0 +1,12 @@
+read_verilog RTL/alu_flags.v
+
+hierarchy -top alu_flags
+
+proc
+opt
+stat
+
+select -module alu_flags
+show -format svg -prefix synth/schematics/alu_flags
+
+write_verilog synth/netlists/alu_flags_netlist.v

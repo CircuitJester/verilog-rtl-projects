@@ -1,153 +1,182 @@
-# DMA Controller (Direct Memory Access)
+# Project 20 – DMA Controller
 
-A modular DMA (Direct Memory Access) Controller implemented in Verilog HDL. The design demonstrates how a hardware engine autonomously transfers data by coordinating address generation, transfer counting, and finite state machine (FSM) control without continuous CPU intervention.
+## Overview
 
+This project implements a modular Direct Memory Access (DMA) Controller in Verilog HDL. The design demonstrates how dedicated hardware can autonomously control memory-to-memory data transfers without requiring continuous processor intervention.
 
-## Project Overview
+The DMA architecture is divided into independent RTL modules for control-register handling, source and destination address generation, transfer counting, and transaction sequencing. These modules are integrated through a top-level DMA controller.
 
-The DMA Controller is a fundamental building block of modern microcontrollers, processors, and SoCs. Instead of requiring the CPU to move every data word individually, the DMA engine performs block transfers autonomously after receiving an initial configuration from software.
+The project follows a structured RTL development methodology including modular RTL design, dedicated verification, hierarchical integration, Yosys synthesis, synthesized netlist generation, and RTL schematic analysis.
 
-This project implements a simplified memory-to-memory DMA architecture using a modular RTL design approach.
 
 
 ## Features
 
-- Modular RTL architecture
-- Memory-to-Memory DMA operation
-- CPU-controlled DMA start
-- Automatic source address generation
-- Automatic destination address generation
-- Configurable transfer length
-- Transfer counter with completion detection
-- FSM-based DMA control
-- Busy and Done status generation
-- Complete RTL simulation and verification
+- DMA Control Register
+- DMA Address Generator
+- DMA Transfer Counter
+- DMA Controller FSM
+- Top-Level DMA Integration
+- Memory-to-Memory Transfer Control
+- Source and Destination Address Management
+- Transfer Length Tracking
+- DMA Start and Completion Control
+- Modular RTL Architecture
+- Dedicated Verification Environment
+- System-Level Verification
+- Yosys RTL Synthesis
+- Synthesized Netlist Generation
+- RTL Schematic Generation
 
 
-## Project Architecture
 
+## DMA Transfer Flow
+
+```text
+DMA Start
+    |
+    v
+Control Register
+    |
+    v
+Controller FSM
+    |
+    +-------------------+
+    |                   |
+    v                   v
+Source Address     Destination Address
+    |                   |
+    +---------+---------+
+              |
+              v
+        Data Transfer
+              |
+              v
+       Transfer Counter
+              |
+        +-----+-----+
+        |           |
+     More Data    Complete
+        |           |
+        |           v
+        +------> DMA Done
 ```
-                 CPU
-                  │
-          Configuration
-                  │
-                  ▼
-      +----------------------+
-      | DMA Control Register |
-      +----------------------+
-                  │
-                  ▼
-      +----------------------+
-      | DMA Controller FSM   |
-      +----------------------+
-        │      │       │
-        ▼      ▼       ▼
- Address Generator  Transfer Counter
-        │              │
-        └──────┬───────┘
-               ▼
-          DMA Completion
+
+
+
+## DMA Architecture
+
+```text
+                  +----------------------+
+                  |   DMA Control Reg    |
+                  +----------+-----------+
+                             |
+                             v
+                  +----------------------+
+                  |   DMA Controller FSM |
+                  +----+------------+----+
+                       |            |
+                       v            v
+             +-------------+  +-------------+
+             |   Address   |  |   Transfer  |
+             |  Generator  |  |   Counter   |
+             +------+------+  +------+------+
+                    |                |
+                    +-------+--------+
+                            |
+                            v
+                     DMA Transfer
+                            |
+                            v
+                       DMA Done
 ```
-
-
-
-## Modules
-
-### DMA Control Register
-
-- Captures CPU start command
-- Generates Busy status
-- Generates Done status
-
-
-### DMA Address Generator
-
-- Loads initial source address
-- Loads initial destination address
-- Automatically increments addresses after each transfer
-
-
-### DMA Transfer Counter
-
-- Loads transfer length
-- Counts remaining transfers
-- Generates Transfer Complete signal
-
-
-### DMA Controller FSM
-
-Implements the complete DMA control sequence.
-
-States:
-
-- IDLE
-- LOAD
-- READ
-- WRITE
-- UPDATE
-- DONE
-
-
-### DMA Top
-
-Integrates every DMA module into one reusable IP core.
 
 
 ## Verification
 
-Every module was verified independently before complete system integration.
+The RTL modules are accompanied by dedicated Verilog testbenches.
 
-Verification includes:
+The verification environment covers:
 
-- Individual RTL verification
-- Module-level testbenches
-- Top-level testbench
-- Functional simulation
-- verification
+- DMA Control Register Operation
+- Source Address Generation
+- Destination Address Generation
+- Transfer Counter Operation
+- DMA Controller FSM
+- Start and Completion Handling
+- Transfer Sequencing
+- Top-Level DMA Integration
 
 
-## Concepts Covered
 
-- Verilog HDL
-- RTL Design
-- Hierarchical Design
-- Finite State Machines (FSM)
-- Control Path & Data Path Separation
-- DMA Architecture
-- Address Generation
-- Transfer Counter Design
-- Hardware Control Logic
-- Parameterized RTL
-- Hardware Verification
+## Synthesis
+
+The RTL design was synthesized using Yosys.
+
+The synthesis workflow includes:
+
+- RTL elaboration
+- Hierarchy analysis
+- Process conversion
+- Logic optimization
+- Design statistics
+- Synthesized netlist generation
+- RTL schematic generation
+
+Each major RTL module was synthesized independently, followed by synthesis of the complete `dma_top` design.
+
+The synthesis flow explicitly selects the intended top-level module before schematic generation to ensure that the generated schematic represents the correct DMA hierarchy.
+
+
+
+## Project Structure
+
+```text
+Verilog_Project20/
+│
+├── build/
+│
+├── RTL/
+│   ├── dma_address_generator.v
+│   ├── dma_control_register.v
+│   ├── dma_controller_fsm.v
+│   ├── dma_top.v
+│   └── dma_transfer_counter.v
+│
+├── tb/
+│   ├── tb_dma_address_generator.v
+│   ├── tb_dma_control_register.v
+│   ├── tb_dma_controller_fsm.v
+│   ├── tb_dma_top.v
+│   └── tb_dma_transfer_counter.v
+│
+├── Verification/
+│
+├── synth/
+│   ├── netlists/
+│   ├── schematics/
+│   └── scripts/
+│
+├── waves/
+│
+├── README.md
+└── command.md
+```
 
 
 ## Learning Outcomes
 
-Through this project, the following concepts were explored:
+During this project I learned:
 
 - DMA controller architecture
-- Hardware state machine design
-- Autonomous hardware operation
-- Memory address generation
-- Transfer management
-- Modular RTL development
-- System-level integration
-- Hardware verification workflow
-
-
-
-## Future Improvements
-
-Possible enhancements include:
-
-- Burst transfer support
-- Memory-to-Peripheral DMA
-- Peripheral-to-Memory DMA
-- Circular Buffer Mode
-- Scatter-Gather DMA
-- Multi-Channel DMA
-- AXI/AHB Bus Interface
-- Interrupt Generation
-- Priority Arbitration
-
-
+- Autonomous hardware data transfer
+- DMA control-register design
+- Source and destination address generation
+- Transfer-count management
+- FSM-based transaction sequencing
+- Modular RTL design
+- Hierarchical hardware integration
+- Dedicated RTL verification
+- Yosys synthesis
+- Synthesized netlist generation
+- RTL schematic analysis

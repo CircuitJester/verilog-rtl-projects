@@ -2,183 +2,191 @@
 
 ## Overview
 
-This project implements a modular **32-bit Pipelined Arithmetic Logic Unit (ALU)** in Verilog HDL. Unlike a conventional combinational ALU, this design introduces a pipeline register to synchronize computation results and processor status flags, closely resembling the execution stage of a pipelined processor.
+This project implements a modular 32-bit Pipelined Arithmetic Logic Unit (ALU) in Verilog HDL. The design demonstrates how arithmetic and logic operations can be organized into a pipelined execution datapath using dedicated control, execution, flag-generation, and pipeline-register stages.
 
-The design follows a hierarchical RTL architecture where each functional block is implemented, verified, and integrated independently before performing complete system-level verification.
+The architecture separates instruction control from ALU execution and status generation while using pipeline registers to establish a synchronous execution stage.
 
----
-
-# Architecture
-
-```
-                 Opcode
-                    │
-                    ▼
-          +------------------+
-          |   ALU Control    |
-          +------------------+
-                    │
-                    ▼
-Operand A ─────────►│
-                    │
-Operand B ─────────►│
-          +------------------+
-          |   ALU Execute    |
-          +------------------+
-                    │
-                    ▼
-          +------------------+
-          |  Flag Generator  |
-          +------------------+
-                    │
-                    ▼
-          +----------------------+
-          | Pipeline Register    |
-          +----------------------+
-                    │
-                    ▼
-        Registered Result & Flags
-```
-
----
+The project follows a structured RTL development methodology including modular RTL design, dedicated verification, hierarchical integration, Yosys synthesis, synthesized netlist generation, and RTL schematic analysis.
 
 
-# Features
 
-- 32-bit Parameterized ALU
-- Modular RTL Architecture
-- Opcode-Based ALU Control
-- Arithmetic Operations
-- Logical Operations
-- Shift Operations
-- Compare Operations
+## Features
+
+- 32-bit ALU Execution Unit
+- ALU Control Unit
+- Arithmetic and Logic Operations
 - Processor Status Flag Generation
 - Pipeline Register
-- Hierarchical Top-Level Integration
-- Complete Functional Verification
+- Synchronous Pipeline Architecture
+- Modular RTL Design
+- Top-Level Pipelined ALU Integration
+- Dedicated Verification Environment
+- System-Level Verification
+- Yosys RTL Synthesis
+- Synthesized Netlist Generation
+- RTL Schematic Generation
 
----
 
-# Supported Operations
 
-| Opcode | Operation |
-|---------|-----------|
-|000|Addition|
-|001|Subtraction|
-|010|AND|
-|011|OR|
-|100|XOR|
-|101|Logical Left Shift|
-|110|Logical Right Shift|
-|111|Compare|
 
----
+## ALU Processing Flow
 
-# Status Flags
+```text
+Instruction / Control
+        |
+        v
++------------------+
+|   ALU Control    |
++--------+---------+
+         |
+         v
++------------------+
+|   ALU Execute    |
++--------+---------+
+         |
+         +----------------+
+         |                |
+         v                v
++------------------+  +----------------+
+| ALU Pipeline Reg |  |   ALU Flags   |
++--------+---------+  +----------------+
+         |
+         v
+     ALU Result
+```
 
-The ALU generates the following processor status flags:
 
-- Zero Flag
-- Carry Flag
-- Negative Flag
-- Overflow Flag
 
----
+## Pipeline Architecture
 
-# Modules
+```text
+             Pipeline Execution Stage
+                       |
+                       v
+              +----------------+
+              |  ALU Control   |
+              +-------+--------+
+                      |
+                      v
+              +----------------+
+              |  ALU Execute   |
+              +-------+--------+
+                      |
+                +-----+-----+
+                |           |
+                v           v
+        +-------------+  +-------------+
+        |   Pipeline  |  |    Flags    |
+        |   Register  |  |   Generator |
+        +------+------+  +-------------+
+               |
+               v
+          Registered
+          ALU Result
+```
 
-## 1. ALU Control
 
-Converts instruction opcode into internal ALU control signals.
 
----
+## ALU Operations
 
-## 2. ALU Execute
+The execution unit supports the arithmetic and logical operations defined by the RTL control logic.
 
-Performs arithmetic and logical operations.
+Typical operation classes include:
 
----
+- Addition
+- Subtraction
+- Bitwise AND
+- Bitwise OR
+- Bitwise XOR
+- Comparison / relational operations
+- Logical operations
 
-## 3. ALU Flag Generator
+The exact operation encoding is defined by the ALU control module.
 
-Generates processor status flags from the ALU result.
 
----
 
-## 4. Pipeline Register
+## Verification
 
-Registers the ALU output and status flags using synchronous logic.
+The RTL modules are accompanied by dedicated Verilog testbenches.
 
----
+The verification environment covers:
 
-## 5. Top-Level Integration
+- ALU Control Operation
+- Arithmetic Operations
+- Logic Operations
+- ALU Result Generation
+- Status Flag Generation
+- Pipeline Register Operation
+- Clocked Pipeline Behavior
+- Top-Level Pipelined ALU Integration
 
-Integrates all submodules into a complete pipelined execution stage.
 
----
 
-# Verification
+## Synthesis
 
-Each module was verified independently before complete top-level integration.
+The RTL design was synthesized using Yosys.
 
-Verification includes:
+The synthesis workflow includes:
 
-- Individual Module Simulation
-- Top-Level Simulation
-- Analysis
-- Functional Verification
-- Pipeline Register Timing Verification
+- RTL elaboration
+- Hierarchy analysis
+- Process conversion
+- Logic optimization
+- Design statistics
+- Synthesized netlist generation
+- RTL schematic generation
 
----
 
-# Concepts Covered
 
-- Verilog HDL
-- RTL Design
-- Processor Datapath Design
-- ALU Architecture
-- Pipeline Registers
-- Control Path & Datapath Separation
-- Processor Status Flags
-- Hierarchical RTL Design
-- Functional Verification
+## Project Structure
 
----
+```text
+Verilog_Project21_Pipelined_ALU/
+│
+├── build/
+│
+├── RTL/
+│   ├── alu_control.v
+│   ├── alu_execute.v
+│   ├── alu_flags.v
+│   ├── alu_pipeline_register.v
+│   └── pipelined_alu_top.v
+│
+├── tb/
+│   ├── tb_alu_control.v
+│   ├── tb_alu_execute.v
+│   ├── tb_alu_flags.v
+│   ├── tb_alu_pipeline_register.v
+│   └── tb_pipelined_alu_top.v
+│
+├── Verification/
+│
+├── synth/
+│   ├── netlists/
+│   ├── schematics/
+│   └── scripts/
+│
+├── waves/
+│
+├── README.md
+└── command.md
+```
 
-# Learning Outcomes
 
-Through this project, the following concepts were implemented and verified:
+## Learning Outcomes
 
-- Modular RTL Development
-- Processor Execution Stage Design
-- Synchronous Sequential Logic
-- Combinational Logic Design
-- Pipeline Stage Implementation
-- System-Level Integration
-- Hardware Verification Methodology
+During this project I learned:
 
----
-
-# Future Improvements
-
-- Barrel Shifter
-- Arithmetic Shift Operations
-- Signed Overflow Detection
-- Multiply/Divide Unit
-- Forwarding Logic
-- Hazard Detection Unit
-- Multi-stage Pipeline Integration
-
----
-
-# Skills Demonstrated
-
-- RTL Design
-- Processor Architecture Fundamentals
-- ALU Design
-- Pipeline Design
-- FSM Understanding
-- Digital Logic Design
-- Hardware Verification
-- Hierarchical Design
-- Git & GitHub Workflow
+- Pipelined ALU architecture
+- 32-bit arithmetic and logic datapath design
+- ALU operation control
+- Arithmetic and logical execution
+- Processor flag generation
+- Pipeline register design
+- Synchronous datapath architecture
+- Modular RTL design
+- Hierarchical hardware integration
+- Dedicated RTL verification
+- Yosys synthesis
+- Synthesized netlist generation
+- RTL schematic analysis

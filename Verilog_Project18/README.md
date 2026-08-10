@@ -1,135 +1,169 @@
-# Programmable Interrupt Controller (PIC)
-
-A parameterized 8-channel Programmable Interrupt Controller (PIC) written in Verilog. This project demonstrates how modern processors receive, prioritize, mask, and service multiple interrupt requests using a modular RTL architecture.
-
-
+# Project 18 – Programmable Interrupt Controller
 
 ## Overview
 
-This project implements a complete interrupt controller capable of:
+This project implements a modular Programmable Interrupt Controller (PIC) in Verilog HDL. The design manages multiple interrupt sources, applies programmable masking, determines interrupt priority, and controls interrupt servicing using a dedicated finite state machine.
 
-- Capturing interrupt requests
-- Storing pending interrupts
-- Masking software-disabled interrupt sources
-- Selecting the highest-priority interrupt
-- Managing interrupt servicing using an FSM
-- Clearing serviced interrupts
+The project demonstrates how interrupt management logic can be organized into reusable RTL blocks and integrated into a complete hardware interrupt controller.
 
-The design follows a modular architecture similar to those used in commercial microcontrollers and SoCs.
-
-
+The design follows a structured RTL development methodology including modular implementation, individual module verification, system-level integration, GTKWave waveform analysis, and Yosys synthesis.
 
 ## Features
 
-- Parameterized interrupt width (default: 8 IRQs)
 - Interrupt Request Register
-- Interrupt Mask Register
-- Fixed Priority Encoder
+- Programmable Interrupt Mask Register
+- Fixed-Priority Interrupt Encoder
 - Interrupt Controller FSM
-- CPU Acknowledge Interface
-- One-Hot Interrupt Clear Logic
-- Fully verified
-
-
-## Modules
-
-### 1. Interrupt Request Register
-
-Stores all active interrupt requests until acknowledged by the CPU.
-
----
-
-### 2. Interrupt Mask Register
-
-Allows software to enable or disable individual interrupt sources.
+- Top-Level Interrupt Controller Integration
+- Multiple Interrupt Source Handling
+- Interrupt Masking
+- Priority-Based Interrupt Selection
+- Modular RTL Architecture
+- Individual Module Verification
+- System-Level Verification
+- GTKWave Waveform Analysis
+- Yosys RTL Synthesis
+- Synthesized Netlist Generation
+- RTL Schematic Generation
 
 
 
-### 3. Interrupt Priority Encoder
+## Interrupt Processing Flow
 
-Selects the highest-priority interrupt among all pending enabled interrupts.
-
-Priority Order:
-
-```
-IRQ7
-IRQ6
-IRQ5
-IRQ4
-IRQ3
-IRQ2
-IRQ1
-IRQ0
-```
-
-
-
-### 4. Interrupt Controller FSM
-
-Controls the complete interrupt servicing sequence.
-
-```
-IDLE
-
-↓
-
-ASSERT_INTERRUPT
-
-↓
-
-WAIT_ACK
-
-↓
-
-CLEAR_INTERRUPT
-
-↓
-
-IDLE
+```text
+Interrupt Sources
+        |
+        v
+Interrupt Request Register
+        |
+        v
+Interrupt Mask Register
+        |
+        v
+Priority Encoder
+        |
+        v
+Interrupt Controller FSM
+        |
+        v
+Interrupt Output
+        |
+        v
+CPU / Processor
 ```
 
+## Interrupt Handling
 
+The controller processes interrupt requests through the following stages:
 
-### 5. Interrupt Controller Top
-
-Integrates every module into one reusable interrupt controller IP.
-
+```text
+Interrupt Request
+        |
+        v
+Request Capture
+        |
+        v
+Apply Interrupt Mask
+        |
+        v
+Priority Selection
+        |
+        v
+Controller FSM
+        |
+        v
+Interrupt Assertion
+        |
+        v
+Interrupt Service
+        |
+        v
+Interrupt Completion
+```
 
 ## Verification
 
-Verified scenarios include:
+Each RTL module was verified using a dedicated Verilog testbench.
 
-- Reset operation
-- Interrupt request capture
-- Interrupt masking
-- Priority resolution
-- CPU interrupt generation
-- CPU acknowledge
-- Interrupt clearing
-- Multiple interrupt handling
-- Masked interrupt rejection
+System-level verification was performed using the complete interrupt controller top-level testbench.
 
+Verification covers:
+
+- Interrupt Request Capture
+- Interrupt Masking
+- Priority Selection
+- Controller FSM Operation
+- Interrupt Assertion
+- Interrupt Servicing
+- Top-Level Module Integration
+- GTKWave Waveform Analysis
+
+
+
+## Synthesis
+
+The RTL design was synthesized using Yosys.
+
+The synthesis workflow includes:
+
+- RTL elaboration
+- Hierarchy analysis
+- Process conversion
+- Logic optimization
+- Design statistics
+- Synthesized netlist generation
+- RTL schematic generation
+
+
+## Project Structure
+
+```text
+Verilog_Project18/
+│
+├── build/
+│
+├── RTL/
+│   ├── interrupt_controller_fsm.v
+│   ├── interrupt_controller_top.v
+│   ├── interrupt_mask_register.v
+│   ├── interrupt_priority_encoder.v
+│   └── interrupt_request_register.v
+│
+├── tb/
+│   ├── tb_interrupt_controller_fsm.v
+│   ├── tb_interrupt_controller_top.v
+│   ├── tb_interrupt_mask_register.v
+│   ├── tb_interrupt_priority_encoder.v
+│   └── tb_interrupt_request_register.v
+│
+├── synth/
+│   ├── netlists/
+│   ├── schematics/
+│   └── scripts/
+│
+├── waveforms/
+│   └── screenshots/
+│
+├── waves/
+│
+├── README.md
+└── command.md
+```
 
 ## Learning Outcomes
 
-This project demonstrates:
+During this project I learned:
 
-- Register design
-- Combinational logic
-- Priority encoders
-- Finite State Machines (FSMs)
-- Parameterized RTL
-- Modular hardware architecture
-- Interrupt controller design
-- RTL verification
-
-
-## Future Improvements
-
-- Nested Interrupt Support
-- Programmable Priority Levels
-- Interrupt Vector Table
-- Interrupt Preemption
-- Edge/Level Trigger Configuration
-- AXI/APB Register Interface
-
+- Programmable Interrupt Controller architecture
+- Interrupt request handling
+- Interrupt masking techniques
+- Fixed-priority interrupt encoding
+- FSM-based interrupt control
+- Modular RTL design
+- Hierarchical hardware integration
+- Processor interrupt interface concepts
+- Functional RTL verification
+- GTKWave waveform debugging
+- RTL synthesis using Yosys
+- Synthesized netlist generation
+- RTL schematic analysis

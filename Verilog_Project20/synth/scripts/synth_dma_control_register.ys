@@ -1,0 +1,12 @@
+read_verilog RTL/dma_control_register.v
+
+hierarchy -top dma_control_register
+
+proc
+opt
+stat
+
+select -module dma_control_register
+show -format svg -prefix synth/schematics/dma_control_register
+
+write_verilog synth/netlists/dma_control_register_netlist.v

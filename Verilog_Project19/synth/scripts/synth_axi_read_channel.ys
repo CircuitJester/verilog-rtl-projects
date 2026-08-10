@@ -1,0 +1,12 @@
+read_verilog RTL/axi_read_channel.v
+
+hierarchy -top axi_read_channel
+
+proc
+opt
+stat
+
+select -module axi_read_channel
+show -format svg -prefix synth/schematics/axi_read_channel
+
+write_verilog synth/netlists/axi_read_channel_netlist.v

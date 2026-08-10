@@ -1,0 +1,12 @@
+read_verilog RTL/dma_address_generator.v
+
+hierarchy -top dma_address_generator
+
+proc
+opt
+stat
+
+select -module dma_address_generator
+show -format svg -prefix synth/schematics/dma_address_generator
+
+write_verilog synth/netlists/dma_address_generator_netlist.v

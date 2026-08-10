@@ -1,0 +1,16 @@
+read_verilog RTL/alu_control.v
+read_verilog RTL/alu_execute.v
+read_verilog RTL/alu_flags.v
+read_verilog RTL/alu_pipeline_register.v
+read_verilog RTL/pipelined_alu_top.v
+
+hierarchy -top pipelined_alu_top
+
+proc
+opt
+stat
+
+select -module pipelined_alu_top
+show -format svg -prefix synth/schematics/pipelined_alu_top
+
+write_verilog synth/netlists/pipelined_alu_top_netlist.v

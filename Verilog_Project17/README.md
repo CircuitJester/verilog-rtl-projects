@@ -1,117 +1,69 @@
-# Project 17 – SPI Master Controller (Modular IP Design)
+# Project 17 – SPI Master IP Core
 
 ## Overview
 
-This project implemented a modular SPI (Serial Peripheral Interface) Master Controller in Verilog HDL.
+This project implements a modular SPI Master IP Core in Verilog HDL. The design provides a reusable SPI master architecture consisting of clock division, chip-select control, serial data shifting, and FSM-based transaction control.
 
-Unlike a basic SPI implementation where all functionality is placed inside a single module, this project follows a professional RTL design methodology by dividing the controller into reusable hardware IP blocks. Each block is independently designed, verified, and integrated into the final SPI Master.
-
-The design demonstrates hierarchical RTL development, modular verification, and system-level integration commonly used in FPGA and ASIC projects.
-
+The project follows a structured RTL development methodology where individual functional modules are implemented and verified independently before being integrated into the complete SPI Master IP.
 
 ## Features
 
-- Parameterized SPI Clock Divider
-- 8-bit Full-Duplex Data Transfer
-- Independent SPI Shift Register
-- Dedicated SPI Master FSM
-- Active-Low Chip Select Controller
-- Modular Top-Level Integration
-- Individual Testbenches for Every Module
-- Complete System-Level Verification
-- Timing Analysis
+- SPI Chip Select Controller
+- SPI Clock Divider
+- SPI Shift Register
+- SPI Master FSM
+- Top-Level SPI Master Integration
+- Modular RTL Architecture
+- Individual Module Verification
+- System-Level Verification
+- GTKWave Waveform Analysis
+- Yosys RTL Synthesis
+- Synthesized Netlist Generation
+- RTL Schematic Generation
 
+## Implemented Modules
 
-## Modules
+### SPI Chip Select
 
-### 1. SPI Clock Divider
+Controls the slave-select signal during an SPI transaction and manages the active transaction window.
 
-Generates the SPI serial clock from the system clock.
+### SPI Clock Divider
 
+Generates the SPI clock from the system clock according to the configured clock division logic.
 
-### 2. SPI Shift Register
+### SPI Shift Register
 
-Responsible for:
+Handles serial data transmission and reception by shifting data synchronously with the SPI clock.
 
-- Parallel-to-Serial Conversion
-- Serial-to-Parallel Conversion
-- Bit Counter
-- Shift Completion Detection
+### SPI Master FSM
 
+Controls the SPI transaction sequence including idle, transfer, clocking, and completion states.
 
-### 3. SPI Master FSM
+### SPI Master Top
 
-Controls the SPI transaction sequence.
+Integrates the clock divider, chip-select controller, shift register, and FSM into the complete SPI Master IP.
 
-State Flow:
+## SPI Transaction Flow
+
+```text
+Transaction Request
+        |
+        v
+   Master FSM
+        |
+        +------> Chip Select
+        |
+        +------> Clock Divider
+        |
+        +------> Shift Register
+        |
+        v
+    SPI Transfer
+        |
+        v
+ Transaction Complete
 
 ```
-IDLE
-
-↓
-
-LOAD
-
-↓
-
-TRANSFER
-
-↓
-
-COMPLETE
-
-↓
-
-IDLE
-```
-
-
-
-### 4. SPI Chip Select Controller
-
-Generates the active-low Chip Select signal (`CS_n`) for the selected SPI slave.
-
-
-### 5. SPI Master Top
-
-Integrates all submodules into one reusable SPI Master IP.
-
-
-## Verification
-
-Each module has been verified individually.
-
-- Clock Divider Testbench
-- Shift Register Testbench
-- FSM Testbench
-- Chip Select Testbench
-- Top-Level System Testbench
-
-
-## Skills Demonstrated
-
-- Verilog HDL
-- RTL Design
-- FSM Design
-- Shift Register Design
-- Clock Division
-- Modular IP Development
-- Hierarchical Design
-- Testbench Development
-- Functional Verification
-
-
-## Future Improvements
-
-- SPI Modes (CPOL/CPHA)
-- Variable Data Width
-- Configurable Clock Frequency
-- Multiple Chip Select Outputs
-- FIFO Support
-- Interrupt Generation
-- DMA Interface
-- AXI/APB Wrapper
-
 
 ## Learning Outcomes
 

@@ -1,0 +1,12 @@
+read_verilog RTL/address_decoder.v
+
+hierarchy -top address_decoder
+
+proc
+opt
+stat
+
+select -module address_decoder
+show -format svg -prefix synth/schematics/address_decoder
+
+write_verilog synth/netlists/address_decoder_netlist.v

@@ -1,0 +1,12 @@
+read_verilog RTL/alu_control.v
+
+hierarchy -top alu_control
+
+proc
+opt
+stat
+
+select -module alu_control
+show -format svg -prefix synth/schematics/alu_control
+
+write_verilog synth/netlists/alu_control_netlist.v
