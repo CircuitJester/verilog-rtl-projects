@@ -1,0 +1,16 @@
+read_verilog RTL/forwarding_comparator.v
+read_verilog RTL/forwarding_control_logic.v
+read_verilog RTL/forwarding_datapath.v
+read_verilog RTL/forwarding_mux.v
+read_verilog RTL/forwarding_unit.v
+
+hierarchy -top forwarding_unit
+
+proc
+opt
+stat
+
+select -module forwarding_unit
+show -format svg -prefix synth/schematics/forwarding_unit
+
+write_verilog synth/netlists/forwarding_unit_netlist.v

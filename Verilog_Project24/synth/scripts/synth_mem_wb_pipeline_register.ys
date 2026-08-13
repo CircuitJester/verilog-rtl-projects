@@ -1,0 +1,12 @@
+read_verilog RTL/mem_wb_pipeline_register.v
+
+hierarchy -top mem_wb_pipeline_register
+
+proc
+opt
+stat
+
+select -module mem_wb_pipeline_register
+show -format svg -prefix synth/schematics/mem_wb_pipeline_register
+
+write_verilog synth/netlists/mem_wb_pipeline_register_netlist.v

@@ -1,0 +1,12 @@
+read_verilog RTL/forwarding_mux.v
+
+hierarchy -top forwarding_mux
+
+proc
+opt
+stat
+
+select -module forwarding_mux
+show -format svg -prefix synth/schematics/forwarding_mux
+
+write_verilog synth/netlists/forwarding_mux_netlist.v

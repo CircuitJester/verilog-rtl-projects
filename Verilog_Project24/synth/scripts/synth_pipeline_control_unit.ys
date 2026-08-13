@@ -1,0 +1,12 @@
+read_verilog RTL/pipeline_control_unit.v
+
+hierarchy -top pipeline_control_unit
+
+proc
+opt
+stat
+
+select -module pipeline_control_unit
+show -format svg -prefix synth/schematics/pipeline_control_unit
+
+write_verilog synth/netlists/pipeline_control_unit_netlist.v

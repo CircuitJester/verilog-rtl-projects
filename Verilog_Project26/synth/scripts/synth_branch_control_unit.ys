@@ -1,0 +1,12 @@
+read_verilog RTL/branch_control_unit.v
+
+hierarchy -top branch_control_unit
+
+proc
+opt
+stat
+
+select -module branch_control_unit
+show -format svg -prefix synth/schematics/branch_control_unit
+
+write_verilog synth/netlists/branch_control_unit_netlist.v

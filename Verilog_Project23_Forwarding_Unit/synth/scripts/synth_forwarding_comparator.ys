@@ -1,0 +1,12 @@
+read_verilog RTL/forwarding_comparator.v
+
+hierarchy -top forwarding_comparator
+
+proc
+opt
+stat
+
+select -module forwarding_comparator
+show -format svg -prefix synth/schematics/forwarding_comparator
+
+write_verilog synth/netlists/forwarding_comparator_netlist.v

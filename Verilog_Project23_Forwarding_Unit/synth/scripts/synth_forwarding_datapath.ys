@@ -1,0 +1,12 @@
+read_verilog RTL/forwarding_datapath.v
+
+hierarchy -top forwarding_datapath
+
+proc
+opt
+stat
+
+select -module forwarding_datapath
+show -format svg -prefix synth/schematics/forwarding_datapath
+
+write_verilog synth/netlists/forwarding_datapath_netlist.v

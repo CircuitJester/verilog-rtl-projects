@@ -1,0 +1,12 @@
+read_verilog RTL/if_id_pipeline_register.v
+
+hierarchy -top if_id_pipeline_register
+
+proc
+opt
+stat
+
+select -module if_id_pipeline_register
+show -format svg -prefix synth/schematics/if_id_pipeline_register
+
+write_verilog synth/netlists/if_id_pipeline_register_netlist.v

@@ -1,0 +1,16 @@
+read_verilog RTL/register_comparator.v
+read_verilog RTL/hazard_detection_logic.v
+read_verilog RTL/pipeline_stall_generator.v
+read_verilog RTL/hazard_controller_fsm.v
+read_verilog RTL/hazard_detection_unit.v
+
+hierarchy -top hazard_detection_unit
+
+proc
+opt
+stat
+
+select -module hazard_detection_unit
+show -format svg -prefix synth/schematics/hazard_detection_unit
+
+write_verilog synth/netlists/hazard_detection_unit_netlist.v

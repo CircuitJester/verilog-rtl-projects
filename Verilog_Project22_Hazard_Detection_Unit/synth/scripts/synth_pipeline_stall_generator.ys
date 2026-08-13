@@ -1,0 +1,12 @@
+read_verilog RTL/pipeline_stall_generator.v
+
+hierarchy -top pipeline_stall_generator
+
+proc
+opt
+stat
+
+select -module pipeline_stall_generator
+show -format svg -prefix synth/schematics/pipeline_stall_generator
+
+write_verilog synth/netlists/pipeline_stall_generator_netlist.v

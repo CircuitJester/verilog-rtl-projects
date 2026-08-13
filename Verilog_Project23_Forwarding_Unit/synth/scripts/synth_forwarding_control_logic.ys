@@ -1,0 +1,12 @@
+read_verilog RTL/forwarding_control_logic.v
+
+hierarchy -top forwarding_control_logic
+
+proc
+opt
+stat
+
+select -module forwarding_control_logic
+show -format svg -prefix synth/schematics/forwarding_control_logic
+
+write_verilog synth/netlists/forwarding_control_logic_netlist.v

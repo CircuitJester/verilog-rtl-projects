@@ -1,0 +1,12 @@
+read_verilog RTL/id_ex_pipeline_register.v
+
+hierarchy -top id_ex_pipeline_register
+
+proc
+opt
+stat
+
+select -module id_ex_pipeline_register
+show -format svg -prefix synth/schematics/id_ex_pipeline_register
+
+write_verilog synth/netlists/id_ex_pipeline_register_netlist.v

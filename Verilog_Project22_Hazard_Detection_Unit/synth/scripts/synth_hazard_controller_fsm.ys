@@ -1,0 +1,12 @@
+read_verilog RTL/hazard_controller_fsm.v
+
+hierarchy -top hazard_controller_fsm
+
+proc
+opt
+stat
+
+select -module hazard_controller_fsm
+show -format svg -prefix synth/schematics/hazard_controller_fsm
+
+write_verilog synth/netlists/hazard_controller_fsm_netlist.v
