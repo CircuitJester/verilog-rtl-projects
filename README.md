@@ -270,9 +270,9 @@ More Complete Processor Architecture
 | [25](Verilog_Project25/) | Load-Use Hazard Detection |
 | [26](Verilog_Project26/) | Branch Control Unit |
 | [27](Verilog_Project27/) | RISC-V Pipeline Forwarding Unit |
-| 28 | Processor / RISC-V-Oriented RTL |
+| [28](Verilog_Project28/) | Processor / RISC-V-Oriented RTL |
 | [29](Verilog_Project29/) | Two-Bit Branch Predictor |
-| 30 | Processor / RISC-V-Oriented RTL |
+| [30](Verilog_Project30/) | Processor / RISC-V-Oriented RTL |
 
 Projects may revisit related concepts at a deeper architectural level. Each individual project README contains the implementation-specific details.
 
