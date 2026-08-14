@@ -1,188 +1,252 @@
 # Verilog RTL Design
 
-This repository is where I have been building my Verilog RTL skills through a growing set of digital design and hardware projects.
+This repository is a growing collection of **Verilog RTL, digital hardware and processor-oriented design projects** developed as part of my progression toward FPGA, ASIC and processor design.
 
-I started with basic combinational and sequential logic and gradually moved into FSMs, communication interfaces, memory systems, AXI4-Lite, DMA, interrupt control and processor-oriented RTL. As the projects became more involved, I also added simulation, waveform analysis and Yosys synthesis to the workflow.
+The projects started with basic combinational and sequential logic and gradually moved into FSMs, communication protocols, memory systems, AXI4-Lite, DMA, interrupt control, processor datapaths and pipeline control.
 
-The goal is simple: **write the RTL, verify it, inspect what the synthesis tool produces, and understand why the hardware looks the way it does.**
+As the designs became more complex, the development workflow also evolved from basic RTL simulation toward a more complete hardware-design flow involving **functional verification, waveform analysis and Yosys synthesis**.
 
----
+The goal is simple:
 
-## What is in the repository
-
-The repository currently contains **27 project directories** with:
-
-* **411 Verilog/SystemVerilog source files**
-* **143 testbench-related files**
-* **122 Yosys synthesis scripts**
-* **121 synthesized netlists**
-* **120 RTL schematics**
-* **143 waveform images**
-
-These counts are based on the current repository contents and include supporting RTL, verification and synthesis artifacts.
-
-The Yosys flow currently covers **Projects 01–21**. Projects 22–27 are focused on processor and pipeline concepts and have not yet been added to the repository's Yosys flow.
+> **Write the RTL, verify the behavior, synthesize the design, inspect the resulting hardware structure, and understand the relationship between RTL and implementation.**
 
 ---
 
-## Design Progression
 
-The projects follow a gradual progression rather than being treated as isolated Verilog exercises.
+## Repository Progress
+
+The repository currently contains **30 Verilog RTL projects** covering digital design, communication interfaces, system-level RTL and processor-oriented hardware.
+
+The projects are developed incrementally, with later designs building on concepts introduced in earlier projects.
+
+The current synthesis milestone is:
+
+```text
+Projects 01–26
+      │
+      ▼
+Yosys RTL Synthesis
+      │
+      ├── Synthesis Scripts
+      ├── Synthesized Netlists
+      └── RTL Schematics
+```
+
+Projects beyond the current Yosys milestone continue the processor and RISC-V-oriented development path and will be brought into the synthesis flow as the portfolio progresses.
+
+---
+
+
+# Design Progression
+
+The repository follows a gradual progression from fundamental digital logic toward processor and ASIC-oriented RTL.
 
 ```text
 Digital Logic
       ↓
 Sequential RTL
       ↓
-FSMs, Timers, PWM and FIFO
+FSMs and Control Logic
       ↓
-SPI / I²C / CAN
+Timers / PWM / FIFO
+      ↓
+SPI / I²C / UART / CAN
       ↓
 AXI4-Lite
       ↓
-Communication IP
+Memory Systems
       ↓
-SDRAM and Arbitration
+Interrupts / DMA
       ↓
-Interrupts / DMA / System IP
+RTL IP Development
       ↓
-Pipeline and Processor RTL
+Processor Datapath
       ↓
-RISC-V-oriented concepts
+Pipeline Architecture
+      ↓
+Hazard Detection
+      ↓
+Forwarding
+      ↓
+Branch Control
+      ↓
+Branch Prediction
+      ↓
+RISC-V-Oriented Hardware
+      ↓
+Yosys Synthesis
+      ↓
+Open-Source ASIC Flow
 ```
 
 ---
 
-## Project Areas
 
-### Digital Design Foundations
+# Project Areas
 
-The early projects cover the building blocks used throughout the later designs:
+## Digital Design Foundations
 
-* Combinational logic
-* Sequential logic
-* Registers
-* Counters
-* Adders
-* ALU logic
-* Priority encoders
+The early projects establish the fundamental RTL building blocks used throughout the repository.
 
-### FSM and Control Logic
+Topics include:
 
-The next stage moves into state-based hardware and timing-related blocks:
+- Combinational Logic
+- Sequential Logic
+- Registers
+- Counters
+- Adders
+- ALU Logic
+- Priority Encoders
+- Basic RTL structures
 
-* Finite State Machines
-* UART control
-* Timers
-* PWM
-* FIFO
-* Sequence detection
-* Control-oriented RTL
-
-### Communication Interfaces
-
-I implemented several common digital communication interfaces at the RTL level:
-
-* SPI Master
-* SPI Slave
-* I²C Master
-* I²C Slave
-* UART
-* CAN
-
-The projects include both protocol-level control logic and smaller supporting blocks such as counters, shift registers, clock generation and FSMs.
-
-### Bus and System Interfaces
-
-The repository then moves toward system-level interfaces:
-
-* AXI4-Lite Master
-* AXI4-Lite Slave
-* AXI4-Lite peripheral logic
-* Address decoding
-* Bus multiplexing
-
-### Memory and Data Movement
-
-The later system-oriented projects include:
-
-* SDRAM Controller
-* Multi-Port SDRAM Arbiter
-* DMA Controller
-* Request FIFO
-* Arbitration logic
-
-### Processor-Oriented RTL
-
-The most recent part of the repository focuses on pipeline and processor datapath concepts:
-
-* Pipelined ALU
-* Hazard Detection Unit
-* Forwarding Unit
-* 5-stage pipeline concepts
-* Branch Control
-* RISC-V-oriented forwarding logic
-
-These projects are helping me understand how individual RTL blocks fit together inside a pipelined processor.
+These projects establish the foundation for understanding synchronous digital hardware before moving into larger systems.
 
 ---
 
-## Verification Workflow
 
-For most projects, I follow a simple RTL development loop:
+## FSM and Control Logic
+
+The next group of projects introduces state-based hardware and timing-oriented control.
+
+Topics include:
+
+- Finite State Machines
+- UART Control
+- Timers
+- PWM
+- FIFO
+- Sequence Detection
+- Control-Oriented RTL
+
+These designs focus on understanding how state, timing and control signals interact inside synchronous hardware.
+
+---
+
+
+## Communication Interfaces
+
+The repository then moves into communication-oriented RTL.
+
+Implemented interfaces include:
+
+- SPI Master
+- SPI Slave
+- I²C Master
+- I²C Slave
+- UART
+- CAN
+
+The communication projects include both protocol-level control logic and supporting RTL such as:
+
+- Shift Registers
+- Clock Dividers
+- Counters
+- FSMs
+- Control Logic
+- Data Transfer Logic
+
+---
+
+
+## Bus and System Interfaces
+
+The next stage moves toward system-level hardware interfaces.
+
+Projects cover:
+
+- AXI4-Lite Master
+- AXI4-Lite Slave
+- AXI4-Lite Slave Peripheral
+- Register Files
+- Address Decoding
+- Bus Multiplexing
+- Memory-Mapped Interfaces
+
+These projects introduce the concepts required for connecting reusable RTL blocks into larger digital systems.
+
+---
+
+
+## Memory and Data Movement
+
+The repository also contains RTL focused on memory access and hardware data movement.
+
+Topics include:
+
+- SDRAM Controller
+- Multi-Port SDRAM Arbiter
+- DMA Controller
+- Request FIFOs
+- Arbitration
+- Address Generation
+- Transfer Control
+
+These projects move the portfolio from isolated RTL blocks toward system-level hardware architecture.
+
+---
+
+
+# Processor-Oriented RTL
+
+The later projects focus increasingly on processor microarchitecture.
+
+This part of the portfolio currently includes:
+
+- Pipelined ALU
+- Hazard Detection
+- Forwarding
+- 5-Stage Pipeline Architecture
+- Pipeline Control
+- Branch Control
+- Branch Prediction
+- RISC-V-oriented concepts
+- Pipeline Datapath Design
+
+The goal is to understand how individual RTL blocks combine to form the control and datapath portions of a pipelined processor.
+
+---
+
+
+# Processor Development Progression
+
+The processor-oriented projects are being developed as a connected learning path rather than isolated exercises.
 
 ```text
-RTL Design
-    ↓
-Testbench
-    ↓
-Simulation
-    ↓
-Waveform Analysis
-    ↓
-Synthesis
-    ↓
-Netlist / Schematic Inspection
+Pipelined ALU
+      │
+      ▼
+Forwarding Unit
+      │
+      ▼
+5-Stage Pipeline
+      │
+      ▼
+Hazard Detection
+      │
+      ▼
+Branch Control
+      │
+      ▼
+Branch Prediction
+      │
+      ▼
+RISC-V-Oriented Pipeline Logic
+      │
+      ▼
+More Complete Processor Architecture
 ```
 
-Simulation is mainly used to check functional behavior and understand timing and state transitions.
-
-The waveform artifacts are kept with the projects so that the verification process is visible instead of only showing the final RTL source.
-
 ---
 
-## Yosys Synthesis
 
-I use Yosys to synthesize the RTL in Projects 01–21 and inspect the resulting netlists and RTL schematics.
-
-The current synthesis work includes commands and flows around:
-
-* RTL elaboration
-* Hierarchy checking
-* Process conversion
-* Optimization
-* Technology mapping
-* Module selection
-* Statistics
-* Netlist generation
-* RTL schematic generation
-
-The repository currently contains Yosys scripts throughout Projects 01–21.
-
-For example, the synthesis directories contain generated Verilog netlists and schematic outputs alongside the scripts used to produce them.
-
-This has been useful for connecting the RTL I write with the hardware structure produced by synthesis.
-
----
-
-## Selected Project Progression
+# Selected Project Roadmap
 
 | Project | Focus |
-|---|---|
+|---:|---|
 | [01](Verilog_Project01/) | Combinational Logic |
 | [02](Verilog_Project02/) | Sequential Logic |
-| [03](Verilog_Project03/) | FSMs and UART Controllers |
-| [04](Verilog_Project04/) | Timers, PWM and FIFO |
+| [03](Verilog_Project03/) | FSM Fundamentals |
+| [04](Verilog_Project04/) | Utility RTL / Timers / PWM / FIFO |
 | [05](Verilog_Project05/) | SPI Master |
 | [06](Verilog_Project06/) | SPI Slave |
 | [07](Verilog_Project07/) | I²C Master |
@@ -203,113 +267,365 @@ This has been useful for connecting the RTL I write with the hardware structure 
 | [22](Verilog_Project22_Hazard_Detection_Unit/) | Hazard Detection Unit |
 | [23](Verilog_Project23_Forwarding_Unit/) | Processor Forwarding Unit |
 | [24](Verilog_Project24/) | 5-Stage Pipelined ALU |
-| [25](Verilog_Project25/) | Hazard Detection Unit |
+| [25](Verilog_Project25/) | Load-Use Hazard Detection |
 | [26](Verilog_Project26/) | Branch Control Unit |
 | [27](Verilog_Project27/) | RISC-V Pipeline Forwarding Unit |
+| 28 | Processor / RISC-V-Oriented RTL |
+| [29](Verilog_Project29/) | Two-Bit Branch Predictor |
+| 30 | Processor / RISC-V-Oriented RTL |
 
-Some later projects revisit related concepts from an architectural or processor-oriented perspective. The individual project READMEs contain the implementation details for each design.
+Projects may revisit related concepts at a deeper architectural level. Each individual project README contains the implementation-specific details.
 
 ---
 
-## Repository Structure
 
-Each project is kept separate so that the RTL, verification and synthesis work can be inspected independently.
+# Verification Workflow
 
-A typical project follows a structure similar to:
+The projects follow a progressively more complete RTL development workflow.
+
+```text
+Problem Definition
+        ↓
+RTL Architecture
+        ↓
+RTL Implementation
+        ↓
+Testbench Development
+        ↓
+Simulation
+        ↓
+Waveform Analysis
+        ↓
+Yosys Synthesis
+        ↓
+Netlist Generation
+        ↓
+RTL Schematic Inspection
+        ↓
+Documentation
+        ↓
+Git Version Control
+```
+
+Simulation is used to verify functional behavior, state transitions and control logic.
+
+Waveforms are used where timing and sequential behavior need to be inspected.
+
+For projects that have entered the Yosys workflow, synthesis artifacts are also retained so the generated hardware structure can be examined rather than treating synthesis as a black box.
+
+---
+
+
+# Yosys Synthesis
+
+Yosys is currently integrated into the workflow through **Project 26**.
+
+```text
+Projects 01–26
+      │
+      ▼
+    Yosys
+      │
+      ├── RTL Elaboration
+      ├── Hierarchy Analysis
+      ├── Process Conversion
+      ├── Optimization
+      ├── Design Statistics
+      ├── Netlist Generation
+      └── RTL Schematic Generation
+```
+
+The synthesis workflow is organized around individual Yosys scripts for the RTL modules and top-level designs.
+
+Generated artifacts include:
+
+```text
+synth/
+├── scripts/
+├── netlists/
+└── schematics/
+```
+
+The generated netlists provide a synthesized representation of the RTL, while the schematic outputs make the resulting hardware structure easier to inspect.
+
+The synthesis workflow is intentionally kept close to the RTL so that the relationship between:
+
+```text
+RTL
+ ↓
+Logic
+ ↓
+Synthesized Hardware
+```
+
+can be studied directly.
+
+---
+
+
+# Yosys Project Standard
+
+Projects that have been migrated into the Yosys workflow generally follow a structure similar to:
 
 ```text
 Verilog_ProjectXX/
+│
 ├── README.md
+├── command.md
 ├── RTL/
+│
 ├── tb/
+│
+├── verification/
+│
 ├── synth/
 │   ├── scripts/
 │   ├── netlists/
 │   └── schematics/
-└── waveforms/
+│
+└── waves/
 ```
 
-The exact structure varies between projects depending on what the design needs.
+The exact structure varies depending on the project.
 
 ---
 
-## Tools
 
-The main tools used across the repository are:
+# RTL Design Practices
 
-* Verilog HDL
-* SystemVerilog where applicable
-* Icarus Verilog
-* GTKWave
-* Yosys
-* Linux / WSL
-* Git and GitHub
+The projects are developed with an emphasis on:
 
-The toolchain is intentionally kept lightweight so that the designs can be written, simulated and synthesized locally.
+- Modular RTL
+- Clear module boundaries
+- Hierarchical integration
+- Synchronous design
+- Reusable hardware blocks
+- Explicit control logic
+- Parameterized designs where appropriate
+- Independent module verification
+- Top-level integration verification
+- Synthesis-aware RTL development
 
----
-
-## What I am learning through these projects
-
-The main thing I am trying to build is not just familiarity with Verilog syntax.
-
-I am working toward understanding the complete path from a hardware idea to an implementation that can be verified and synthesized.
-
-That means getting more comfortable with:
-
-* RTL architecture
-* Synchronous design
-* FSM design
-* Pipeline control
-* Protocol implementation
-* Memory interfaces
-* Bus protocols
-* Verification
-* Synthesis
-* Hardware structure after synthesis
+The objective is not simply to make the simulation pass, but to understand how the RTL translates into hardware.
 
 ---
 
-## Current Direction
 
-The next step is to move further from individual RTL blocks toward larger hardware systems.
+# Processor Microarchitecture
 
-My current learning path is moving toward:
+The recent projects increasingly focus on the interaction between processor datapath and control logic.
+
+Important concepts covered include:
+
+### Datapath
+
+- ALU Design
+- Pipeline Registers
+- Operand Routing
+- Execution Stages
+- Pipeline Data Flow
+
+### Hazard Handling
+
+- RAW Dependencies
+- Load-Use Hazards
+- Pipeline Stalls
+- Pipeline Bubbles
+- Forwarding
+- Operand Selection
+
+### Control Flow
+
+- Branch Decisions
+- Pipeline Flushing
+- Program Counter Redirection
+- Branch Target Calculation
+- Branch Prediction
+
+### Pipeline Control
+
+- IF/ID Control
+- ID/EX Control
+- EX/MEM Control
+- MEM/WB Control
+- Stall Control
+- Flush Control
+
+These concepts form the foundation for building a more complete pipelined processor.
+
+---
+
+
+
+# Tools
+
+The primary tools used across the repository are:
+
+- Verilog HDL
+- SystemVerilog where applicable
+- Icarus Verilog
+- GTKWave
+- Yosys
+- Visual Studio Code
+- Ubuntu / WSL
+- Git
+- GitHub
+
+The toolchain is intentionally lightweight and locally reproducible.
+
+---
+
+
+
+# What I am Learning
+
+The objective of this repository is not simply to learn Verilog syntax.
+
+The larger goal is to understand the complete hardware-development path:
 
 ```text
-RTL Design
-    ↓
-FPGA Design
-    ↓
-Yosys
-    ↓
-OpenROAD
-    ↓
-Open-Source ASIC Flow
-    ↓
-RISC-V Hardware
+Hardware Requirement
+        ↓
+Architecture
+        ↓
+RTL
+        ↓
+Verification
+        ↓
+Synthesis
+        ↓
+Hardware Structure
+        ↓
+Implementation
 ```
 
-This repository is the RTL foundation for that progression.
+Through the projects, I am developing practical understanding of:
+
+- Digital logic
+- RTL architecture
+- Synchronous design
+- FSM design
+- Protocol implementation
+- Memory interfaces
+- Bus protocols
+- Processor datapaths
+- Pipeline architecture
+- Hazard handling
+- Branch control
+- Verification
+- Synthesis
+- Hardware structure after synthesis
 
 ---
 
-## Explore the Projects
 
-If you are mainly interested in digital design, start with Projects 01–04.
 
-For communication RTL, look at Projects 05–09 and 12–14.
+# Repository Structure
 
-For system-level interfaces and memory, look at Projects 10–20.
+Each project is maintained independently so that its RTL, verification environment and synthesis results can be inspected without depending on other projects.
 
-For processor and pipeline concepts, start with Projects 21–27.
+A typical project contains:
 
-Each project contains its own README and implementation files so the design can be explored in more detail.
+```text
+Verilog_ProjectXX/
+├── README.md
+├── command.md
+├── RTL/
+├── tb/
+├── verification/
+├── synth/
+│   ├── scripts/
+│   ├── netlists/
+│   └── schematics/
+└── waves/
+```
+
+Earlier projects may use slightly different directory names because the repository is being progressively migrated toward the standardized RTL and Yosys workflow.
 
 ---
 
-## Notes
 
-This repository is an active learning and engineering portfolio. Some designs are more mature than others, and I am continuing to improve the verification and synthesis flow as I learn more.
+# Explore the Projects
 
-The later projects are also becoming a bridge toward my broader FPGA, ASIC and processor-design work.
+For digital-design fundamentals, start with:
+
+```text
+Projects 01–04
+```
+
+For communication RTL:
+
+```text
+Projects 05–09
+Projects 12–14
+```
+
+For system-level interfaces, memory and data movement:
+
+```text
+Projects 10–20
+```
+
+For processor and pipeline architecture:
+
+```text
+Projects 21–30
+```
+
+For Yosys synthesis and hardware-structure inspection:
+
+```text
+Projects 01–26
+```
+
+Each project contains its own documentation and implementation files.
+
+---
+
+
+# Current Milestone
+
+The repository has now progressed from basic RTL exercises into a broader processor-oriented RTL portfolio.
+
+```text
+30 RTL Projects
+      │
+      ▼
+Communication + Memory + System IP
+      │
+      ▼
+Processor Datapath
+      │
+      ▼
+Pipeline Architecture
+      │
+      ▼
+Hazard Detection
+      │
+      ▼
+Forwarding
+      │
+      ▼
+Branch Control
+      │
+      ▼
+Branch Prediction
+      │
+      ▼
+RISC-V-Oriented Hardware
+```
+
+At the same time, the Yosys workflow has been extended through **Project 26**, creating a bridge between RTL design and synthesis.
+
+---
+
+
+# Notes
+
+This repository is an active engineering and learning portfolio.
+
+Some projects are intentionally small because they establish concepts used by later designs, while the newer projects increasingly combine multiple RTL concepts into larger hardware subsystems.
+
+The verification and synthesis workflow is also continuously evolving as new tools and processor-design concepts are introduced.
+
+The later projects form a bridge toward broader work in **FPGA design, ASIC implementation, RISC-V architecture and hardware acceleration**.
