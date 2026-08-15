@@ -1,0 +1,257 @@
+#! /usr/bin/vvp
+:ivl_version "12.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 12;
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/system.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/v2005_math.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/va_math.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/v2009.vpi";
+S_0x603241f495e0 .scope package, "$unit" "$unit" 2 1;
+ .timescale 0 0;
+S_0x603241f49770 .scope module, "tb_return_address_stack" "tb_return_address_stack" 3 3;
+ .timescale -9 -12;
+v0x603241f6a290_0 .var "clk", 0 0;
+v0x603241f6a350_0 .net "empty", 0 0, L_0x603241f6a980;  1 drivers
+v0x603241f6a420_0 .net "full", 0 0, L_0x603241f7ac70;  1 drivers
+v0x603241f6a520_0 .var "pop", 0 0;
+v0x603241f6a5f0_0 .net "predicted_return_address", 31 0, L_0x603241f7b280;  1 drivers
+v0x603241f6a6e0_0 .var "push", 0 0;
+v0x603241f6a7b0_0 .var "return_address", 31 0;
+v0x603241f6a880_0 .var "rst", 0 0;
+S_0x603241f0b490 .scope module, "dut" "return_address_stack" 3 17, 4 1 0, S_0x603241f49770;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "clk";
+    .port_info 1 /INPUT 1 "rst";
+    .port_info 2 /INPUT 1 "push";
+    .port_info 3 /INPUT 1 "pop";
+    .port_info 4 /INPUT 32 "return_address";
+    .port_info 5 /OUTPUT 32 "predicted_return_address";
+    .port_info 6 /OUTPUT 1 "empty";
+    .port_info 7 /OUTPUT 1 "full";
+P_0x603241f0b620 .param/l "STACK_DEPTH" 0 4 2, +C4<00000000000000000000000000001000>;
+L_0x719f3386e018 .functor BUFT 1, C4<0000>, C4<0>, C4<0>, C4<0>;
+v0x603241f0b7e0_0 .net/2u *"_ivl_0", 3 0, L_0x719f3386e018;  1 drivers
+L_0x719f3386e0f0 .functor BUFT 1, C4<00000000000000000000000000000000>, C4<0>, C4<0>, C4<0>;
+v0x603241f68d50_0 .net/2u *"_ivl_12", 31 0, L_0x719f3386e0f0;  1 drivers
+v0x603241f68e30_0 .net *"_ivl_14", 31 0, L_0x603241f7ae00;  1 drivers
+L_0x719f3386e138 .functor BUFT 1, C4<0001>, C4<0>, C4<0>, C4<0>;
+v0x603241f68ef0_0 .net/2u *"_ivl_16", 3 0, L_0x719f3386e138;  1 drivers
+v0x603241f68fd0_0 .net *"_ivl_18", 3 0, L_0x603241f7af50;  1 drivers
+v0x603241f69100_0 .net *"_ivl_20", 4 0, L_0x603241f7b0b0;  1 drivers
+L_0x719f3386e180 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v0x603241f691e0_0 .net *"_ivl_23", 0 0, L_0x719f3386e180;  1 drivers
+v0x603241f692c0_0 .net *"_ivl_4", 31 0, L_0x603241f6aac0;  1 drivers
+L_0x719f3386e060 .functor BUFT 1, C4<0000000000000000000000000000>, C4<0>, C4<0>, C4<0>;
+v0x603241f693a0_0 .net *"_ivl_7", 27 0, L_0x719f3386e060;  1 drivers
+L_0x719f3386e0a8 .functor BUFT 1, C4<00000000000000000000000000001000>, C4<0>, C4<0>, C4<0>;
+v0x603241f69480_0 .net/2u *"_ivl_8", 31 0, L_0x719f3386e0a8;  1 drivers
+v0x603241f69560_0 .net "clk", 0 0, v0x603241f6a290_0;  1 drivers
+v0x603241f69620_0 .net "empty", 0 0, L_0x603241f6a980;  alias, 1 drivers
+v0x603241f696e0_0 .net "full", 0 0, L_0x603241f7ac70;  alias, 1 drivers
+v0x603241f697a0_0 .net "pop", 0 0, v0x603241f6a520_0;  1 drivers
+v0x603241f69860_0 .net "predicted_return_address", 31 0, L_0x603241f7b280;  alias, 1 drivers
+v0x603241f69940_0 .net "push", 0 0, v0x603241f6a6e0_0;  1 drivers
+v0x603241f69a00_0 .net "return_address", 31 0, v0x603241f6a7b0_0;  1 drivers
+v0x603241f69ae0 .array "return_stack", 7 0, 31 0;
+v0x603241f69ba0_0 .net "rst", 0 0, v0x603241f6a880_0;  1 drivers
+v0x603241f69c60_0 .var "stack_pointer", 3 0;
+E_0x603241f44bd0 .event posedge, v0x603241f69560_0;
+L_0x603241f6a980 .cmp/eq 4, v0x603241f69c60_0, L_0x719f3386e018;
+L_0x603241f6aac0 .concat [ 4 28 0 0], v0x603241f69c60_0, L_0x719f3386e060;
+L_0x603241f7ac70 .cmp/eq 32, L_0x603241f6aac0, L_0x719f3386e0a8;
+L_0x603241f7ae00 .array/port v0x603241f69ae0, L_0x603241f7b0b0;
+L_0x603241f7af50 .arith/sub 4, v0x603241f69c60_0, L_0x719f3386e138;
+L_0x603241f7b0b0 .concat [ 4 1 0 0], L_0x603241f7af50, L_0x719f3386e180;
+L_0x603241f7b280 .functor MUXZ 32, L_0x603241f7ae00, L_0x719f3386e0f0, L_0x603241f6a980, C4<>;
+S_0x603241f69e40 .scope task, "pop_return_address" "pop_return_address" 3 50, 3 50 0, S_0x603241f49770;
+ .timescale -9 -12;
+TD_tb_return_address_stack.pop_return_address ;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x603241f6a6e0_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x603241f6a520_0, 0, 1;
+    %delay 10000, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x603241f6a520_0, 0, 1;
+    %end;
+S_0x603241f69ff0 .scope task, "push_return_address" "push_return_address" 3 37, 3 37 0, S_0x603241f49770;
+ .timescale -9 -12;
+v0x603241f6a1d0_0 .var "address", 31 0;
+TD_tb_return_address_stack.push_return_address ;
+    %load/vec4 v0x603241f6a1d0_0;
+    %store/vec4 v0x603241f6a7b0_0, 0, 32;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x603241f6a6e0_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x603241f6a520_0, 0, 1;
+    %delay 10000, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x603241f6a6e0_0, 0, 1;
+    %end;
+    .scope S_0x603241f0b490;
+T_2 ;
+    %wait E_0x603241f44bd0;
+    %load/vec4 v0x603241f69ba0_0;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_2.0, 8;
+    %pushi/vec4 0, 0, 4;
+    %assign/vec4 v0x603241f69c60_0, 0;
+    %jmp T_2.1;
+T_2.0 ;
+    %load/vec4 v0x603241f69940_0;
+    %load/vec4 v0x603241f697a0_0;
+    %concat/vec4; draw_concat_vec4
+    %dup/vec4;
+    %pushi/vec4 2, 0, 2;
+    %cmp/u;
+    %jmp/1 T_2.2, 6;
+    %dup/vec4;
+    %pushi/vec4 1, 0, 2;
+    %cmp/u;
+    %jmp/1 T_2.3, 6;
+    %load/vec4 v0x603241f69c60_0;
+    %assign/vec4 v0x603241f69c60_0, 0;
+    %jmp T_2.5;
+T_2.2 ;
+    %load/vec4 v0x603241f696e0_0;
+    %nor/r;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_2.6, 8;
+    %load/vec4 v0x603241f69a00_0;
+    %load/vec4 v0x603241f69c60_0;
+    %pad/u 5;
+    %ix/vec4 3;
+    %ix/load 4, 0, 0; Constant delay
+    %assign/vec4/a/d v0x603241f69ae0, 0, 4;
+    %load/vec4 v0x603241f69c60_0;
+    %addi 1, 0, 4;
+    %assign/vec4 v0x603241f69c60_0, 0;
+T_2.6 ;
+    %jmp T_2.5;
+T_2.3 ;
+    %load/vec4 v0x603241f69620_0;
+    %nor/r;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_2.8, 8;
+    %load/vec4 v0x603241f69c60_0;
+    %subi 1, 0, 4;
+    %assign/vec4 v0x603241f69c60_0, 0;
+T_2.8 ;
+    %jmp T_2.5;
+T_2.5 ;
+    %pop/vec4 1;
+T_2.1 ;
+    %jmp T_2;
+    .thread T_2;
+    .scope S_0x603241f49770;
+T_3 ;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x603241f6a290_0, 0, 1;
+T_3.0 ;
+    %delay 5000, 0;
+    %load/vec4 v0x603241f6a290_0;
+    %inv;
+    %store/vec4 v0x603241f6a290_0, 0, 1;
+    %jmp T_3.0;
+    %end;
+    .thread T_3;
+    .scope S_0x603241f49770;
+T_4 ;
+    %vpi_call/w 3 64 "$dumpfile", "waves/return_address_stack.vcd" {0 0 0};
+    %vpi_call/w 3 65 "$dumpvars", 32'sb00000000000000000000000000000000, S_0x603241f49770 {0 0 0};
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x603241f6a880_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x603241f6a6e0_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x603241f6a520_0, 0, 1;
+    %pushi/vec4 0, 0, 32;
+    %store/vec4 v0x603241f6a7b0_0, 0, 32;
+    %delay 12000, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x603241f6a880_0, 0, 1;
+    %pushi/vec4 4096, 0, 32;
+    %store/vec4 v0x603241f6a1d0_0, 0, 32;
+    %fork TD_tb_return_address_stack.push_return_address, S_0x603241f69ff0;
+    %join;
+    %pushi/vec4 8192, 0, 32;
+    %store/vec4 v0x603241f6a1d0_0, 0, 32;
+    %fork TD_tb_return_address_stack.push_return_address, S_0x603241f69ff0;
+    %join;
+    %pushi/vec4 12288, 0, 32;
+    %store/vec4 v0x603241f6a1d0_0, 0, 32;
+    %fork TD_tb_return_address_stack.push_return_address, S_0x603241f69ff0;
+    %join;
+    %fork TD_tb_return_address_stack.pop_return_address, S_0x603241f69e40;
+    %join;
+    %fork TD_tb_return_address_stack.pop_return_address, S_0x603241f69e40;
+    %join;
+    %fork TD_tb_return_address_stack.pop_return_address, S_0x603241f69e40;
+    %join;
+    %pushi/vec4 16384, 0, 32;
+    %store/vec4 v0x603241f6a1d0_0, 0, 32;
+    %fork TD_tb_return_address_stack.push_return_address, S_0x603241f69ff0;
+    %join;
+    %pushi/vec4 20480, 0, 32;
+    %store/vec4 v0x603241f6a1d0_0, 0, 32;
+    %fork TD_tb_return_address_stack.push_return_address, S_0x603241f69ff0;
+    %join;
+    %pushi/vec4 24576, 0, 32;
+    %store/vec4 v0x603241f6a1d0_0, 0, 32;
+    %fork TD_tb_return_address_stack.push_return_address, S_0x603241f69ff0;
+    %join;
+    %pushi/vec4 28672, 0, 32;
+    %store/vec4 v0x603241f6a1d0_0, 0, 32;
+    %fork TD_tb_return_address_stack.push_return_address, S_0x603241f69ff0;
+    %join;
+    %pushi/vec4 32768, 0, 32;
+    %store/vec4 v0x603241f6a1d0_0, 0, 32;
+    %fork TD_tb_return_address_stack.push_return_address, S_0x603241f69ff0;
+    %join;
+    %pushi/vec4 36864, 0, 32;
+    %store/vec4 v0x603241f6a1d0_0, 0, 32;
+    %fork TD_tb_return_address_stack.push_return_address, S_0x603241f69ff0;
+    %join;
+    %pushi/vec4 40960, 0, 32;
+    %store/vec4 v0x603241f6a1d0_0, 0, 32;
+    %fork TD_tb_return_address_stack.push_return_address, S_0x603241f69ff0;
+    %join;
+    %pushi/vec4 45056, 0, 32;
+    %store/vec4 v0x603241f6a1d0_0, 0, 32;
+    %fork TD_tb_return_address_stack.push_return_address, S_0x603241f69ff0;
+    %join;
+    %pushi/vec4 3735928559, 0, 32;
+    %store/vec4 v0x603241f6a1d0_0, 0, 32;
+    %fork TD_tb_return_address_stack.push_return_address, S_0x603241f69ff0;
+    %join;
+    %fork TD_tb_return_address_stack.pop_return_address, S_0x603241f69e40;
+    %join;
+    %fork TD_tb_return_address_stack.pop_return_address, S_0x603241f69e40;
+    %join;
+    %fork TD_tb_return_address_stack.pop_return_address, S_0x603241f69e40;
+    %join;
+    %fork TD_tb_return_address_stack.pop_return_address, S_0x603241f69e40;
+    %join;
+    %fork TD_tb_return_address_stack.pop_return_address, S_0x603241f69e40;
+    %join;
+    %fork TD_tb_return_address_stack.pop_return_address, S_0x603241f69e40;
+    %join;
+    %fork TD_tb_return_address_stack.pop_return_address, S_0x603241f69e40;
+    %join;
+    %fork TD_tb_return_address_stack.pop_return_address, S_0x603241f69e40;
+    %join;
+    %fork TD_tb_return_address_stack.pop_return_address, S_0x603241f69e40;
+    %join;
+    %delay 10000, 0;
+    %vpi_call/w 3 105 "$finish" {0 0 0};
+    %end;
+    .thread T_4;
+# The file index is used to find the file name in the following table.
+:file_names 5;
+    "N/A";
+    "<interactive>";
+    "-";
+    "tb/tb_return_address_stack.v";
+    "verilogcode/return_address_stack.v";
