@@ -2,3 +2,9 @@
 sim
 *.out
 *.log
+
+# Verilog simulation outputs
+**/build/
+**/waves/
+*.vvp
+*.vcd
