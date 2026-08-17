@@ -1,0 +1,12 @@
+read_verilog RTL/two_bit_branch_predictor.v
+
+hierarchy -top two_bit_branch_predictor
+
+proc
+opt
+stat
+
+select -module two_bit_branch_predictor
+show -format svg -prefix synth/schematics/two_bit_branch_predictor
+
+write_verilog synth/netlists/two_bit_branch_predictor_netlist.v

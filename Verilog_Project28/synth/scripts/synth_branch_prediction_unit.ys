@@ -1,0 +1,12 @@
+read_verilog RTL/branch_prediction_unit.v
+
+hierarchy -top branch_prediction_unit
+
+proc
+opt
+stat
+
+select -module branch_prediction_unit
+show -format svg -prefix synth/schematics/branch_prediction_unit
+
+write_verilog synth/netlists/branch_prediction_unit_netlist.v

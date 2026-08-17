@@ -2,159 +2,556 @@
 
 ## Overview
 
-This project implements a small Branch Target Buffer (BTB) in Verilog.
+This project implements a small **Branch Target Buffer (BTB)** in Verilog HDL.
 
-The purpose of the BTB is to remember the target address of previously encountered branch instructions. During instruction fetch, the processor can look up the current PC in the BTB and, when a matching entry is found, obtain the previously stored branch target without waiting for the branch instruction to reach the later pipeline stages.
+A BTB stores the target addresses of previously encountered branch instructions so that the processor can obtain a predicted branch destination during instruction fetch without waiting for the branch instruction to reach a later pipeline stage.
 
-This project builds on the branch prediction concepts introduced in Project 29. The branch predictor determines whether a branch is expected to be taken, while the BTB provides the target address that can be used when the branch is predicted taken.
+The project builds on the branch-prediction concepts introduced in **Project 29**.
 
-The design uses a small direct-mapped table with four entries. Each entry stores a valid bit, a PC tag, and the corresponding branch target address.
+While the branch predictor determines **whether a branch is expected to be taken**, the BTB provides the **target address** that can be used when the branch is predicted taken.
 
+The design implements a small **4-entry direct-mapped BTB**.
 
-## Architecture
+Each entry stores:
 
-                    Lookup PC
-                        |
-                        v
-                +---------------+
-                | Extract Index |
-                |    and Tag    |
-                +-------+-------+
-                        |
-                 +------+------+
-                 |             |
-                 v             v
-              Index           Tag
-                 |             |
-                 v             v
-          Select BTB Entry   Compare Tag
-                 |             |
-                 +------+------+
-                        |
-                 Valid + Tag Match
-                        |
-                +-------+-------+
-                |               |
-              HIT             MISS
-                |               |
-                v               v
-          Target Address      No Target
+```text
+Valid Bit
+PC Tag
+Target Address
+```
+
+During a lookup, the current PC is divided into an index and tag. The index selects one BTB entry, while the tag and valid bit determine whether the selected entry contains a matching branch target.
+
+---
 
 
-Each BTB entry contains:
+# Objective
 
-    +-------+-------------+----------------+
-    | Valid | PC Tag      | Target Address |
-    +-------+-------------+----------------+
+The main objective is to understand how a processor can store and retrieve previously observed branch target addresses using a small tagged lookup structure.
+
+The BTB demonstrates:
+
+- PC indexing
+- PC tag extraction
+- Tagged lookup
+- Valid-bit checking
+- Target-address storage
+- Hit detection
+- Miss detection
+- Entry replacement
+- Reset-based invalidation
+- Combinational lookup
+- Sequential BTB updates
+
+The design is intentionally small so that the underlying hardware structure can be understood before moving toward larger branch-prediction and instruction-fetch architectures.
+
+---
+
+
+# Branch Target Buffer Concept
+
+A processor that predicts a branch as taken needs two pieces of information:
+
+```text
+1. Is the branch taken?
+2. Where is the branch target?
+```
+
+The branch predictor and BTB provide these pieces separately.
+
+```text
+        Current PC
+            │
+      ┌─────┴─────┐
+      │           │
+      ▼           ▼
+Branch Predictor  BTB
+      │           │
+      ▼           ▼
+ Taken/Not Taken Target Address
+      │           │
+      └─────┬─────┘
+            │
+            ▼
+         Next PC
+```
+
+Project 29 provides the branch-direction prediction.
+
+Project 30 provides the target-address lookup.
+
+---
+
+
+# Architecture
+
+```text
+                     Lookup PC
+                         │
+                         ▼
+                ┌─────────────────┐
+                │ Extract Index    │
+                │      + Tag       │
+                └────────┬────────┘
+                         │
+                  ┌──────┴──────┐
+                  │             │
+                  ▼             ▼
+                Index           Tag
+                  │             │
+                  ▼             ▼
+           Select BTB Entry   Compare Tag
+                  │             │
+                  └──────┬──────┘
+                         │
+                    Valid + Match
+                         │
+                  ┌──────┴──────┐
+                  │             │
+                 HIT           MISS
+                  │             │
+                  ▼             ▼
+           Target Address    No Target
+```
+
+The lookup therefore follows:
+
+```text
+Lookup PC
+   │
+   ▼
+Extract Index + Tag
+   │
+   ▼
+Select Entry
+   │
+   ▼
+Check Valid Bit
+   │
+   ▼
+Compare Tag
+   │
+   ├── Match → BTB Hit → Target Address
+   │
+   └── No Match → BTB Miss
+```
+
+---
+
+
+# BTB Entry Structure
+
+Each entry contains:
+
+```text
++-------+-------------+----------------+
+| Valid | PC Tag      | Target Address |
++-------+-------------+----------------+
+```
+
+The valid bit indicates whether the entry contains meaningful information.
+
+The PC tag identifies which instruction address is associated with the entry.
+
+The target address stores the destination of the previously observed branch.
+
+---
+
+
+# Address Mapping
 
 The design uses the PC bits as follows:
 
-    31                         4 3    2 1    0
-    +---------------------------+------+------+
-    |           PC Tag          |Index |Offset|
-    +---------------------------+------+------+
-              28 bits             2      2
+```text
+31                         4 3    2 1    0
++---------------------------+------+------+
+|           PC Tag          |Index |Offset|
++---------------------------+------+------+
+            28 bits            2      2
+```
+
+The two index bits select one of the four BTB entries:
+
+```text
+00 → Entry 0
+01 → Entry 1
+10 → Entry 2
+11 → Entry 3
+```
+
+The upper PC bits are stored as the tag and compared during lookup.
+
+The lowest two bits are ignored because instruction addresses are assumed to be word aligned.
+
+---
 
 
-The two index bits select one of the four entries. The upper PC bits are stored as the tag and compared during a lookup. The lowest two bits are ignored because instruction addresses are assumed to be word aligned.
+# Module
+
+## `branch_target_buffer.v`
+
+The main RTL module implements the BTB storage and lookup logic.
+
+Its responsibilities include:
+
+1. Extracting the PC index
+2. Extracting the PC tag
+3. Selecting the corresponding BTB entry
+4. Checking the valid bit
+5. Comparing the stored tag
+6. Detecting BTB hits
+7. Returning the stored target address
+8. Updating BTB entries
+9. Invalidating entries during reset
+
+The design uses RTL arrays to model the small table of BTB entries.
+
+---
 
 
+# Features
 
-## Project Structure
+- 4-Entry Branch Target Buffer
+- Direct-Mapped Organization
+- PC Index Extraction
+- PC Tag Extraction
+- Valid-Bit Checking
+- Tag Comparison
+- BTB Hit Detection
+- BTB Miss Detection
+- Target Address Storage
+- Entry Replacement
+- Reset-Based Invalidation
+- Combinational Lookup Logic
+- Sequential Update Logic
+- RTL Array Modeling
+- Directed Functional Verification
+- VCD Waveform Generation
+- Yosys RTL Synthesis
+- Synthesized Netlist Generation
+- RTL Schematic Generation
 
-    Verilog_Project30/
-    ├── build/
+---
+
+
+# Verification
+
+The BTB is verified using a dedicated Verilog testbench.
+
+The verification focuses on the basic behavior of the lookup and update mechanism.
+
+Important scenarios include:
+
+- Reset invalidation
+- Lookup of an invalid entry
+- BTB miss
+- Writing a branch target
+- Lookup of a previously stored branch
+- Matching PC tag
+- Matching index
+- BTB hit
+- Target address retrieval
+- Different PCs mapping to different entries
+- Entry replacement when indexes collide
+
+The generated waveform is maintained under:
+
+```text
+waves/branch_target_buffer.vcd
+```
+
+The waveform can be inspected to observe the relationship between the lookup PC, valid state, tag comparison, hit detection, and target address.
+
+---
+
+
+# Verification Flow
+
+```text
+RTL Design
     │
-    ├── tb/
-    │   └── tb_branch_target_buffer.v
+    ▼
+Testbench Development
     │
-    ├── verification/
+    ▼
+Icarus Verilog Simulation
     │
-    ├── verilogcode/
-    │   └── branch_target_buffer.v
+    ▼
+Functional Verification
     │
-    ├── waves/
-    │   └── branch_target_buffer.vcd
+    ▼
+VCD Waveform Generation
     │
-    └── README.md
+    ▼
+Waveform Analysis
+```
+
+---
 
 
-## Tools Used
+# Yosys Synthesis
+
+The RTL is synthesized using **Yosys** to inspect how the BTB RTL is transformed into a synthesized hardware representation.
+
+The synthesis flow includes:
+
+- RTL elaboration
+- Hierarchy analysis
+- Process conversion
+- Logic optimization
+- Design statistics
+- Netlist generation
+- RTL schematic generation
+
+The top-level module is explicitly selected during schematic generation.
+
+---
+
+
+# Project Structure
+
+```text
+Verilog_Project30/
+│
+├── README.md
+│
+├── RTL/
+│   └── branch_target_buffer.v
+│
+├── tb/
+│   └── tb_branch_target_buffer.v
+│
+├── verification/
+│   └── ...
+│
+├── waves/
+│   └── branch_target_buffer.vcd
+│
+├── build/
+│   └── ...
+│
+└── synth/
+    ├── netlists/
+    │   └── branch_target_buffer_netlist.v
+    │
+    ├── schematics/
+    │   └── branch_target_buffer.svg
+    │
+    └── scripts/
+        └── synth_branch_target_buffer.ys
+```
+
+---
+
+
+# Concepts Covered
+
+- Verilog HDL
+- RTL Design
+- Branch Target Buffers
+- Branch Target Prediction
+- Direct-Mapped Tables
+- Tagged Lookup Structures
+- PC Indexing
+- PC Tag Extraction
+- Valid Bits
+- Tag Comparison
+- BTB Hit Detection
+- BTB Miss Detection
+- Target Address Storage
+- Entry Replacement
+- Reset Invalidation
+- RTL Array Modeling
+- Combinational Lookup Logic
+- Sequential Update Logic
+- Functional Verification
+- VCD Waveform Analysis
+- RTL Synthesis
+- Yosys
+- Netlist Inspection
+- RTL Schematic Analysis
+
+---
+
+
+# Applications
+
+A BTB can be used as a building block for:
+
+- RISC-V Processors
+- Pipelined CPU Designs
+- Instruction Fetch Units
+- Branch Prediction Systems
+- FPGA Processor Designs
+- Educational CPU Architectures
+- Custom Processor Datapaths
+- ASIC Processor Designs
+
+---
+
+
+# Tools Used
 
 - Verilog HDL
 - Icarus Verilog
-- GTKWave
-- Linux / WSL
-- VS Code
+- Yosys
+- Visual Studio Code
+- Ubuntu / WSL
 - Git
 - GitHub
 
+---
 
-## Learning Outcomes
 
-This project provided practical experience with the hardware structure used to remember branch target addresses.
+# Learning Outcomes
 
-The main concepts covered were:
+This project provided practical experience with:
 
-- Branch target prediction
-- Branch Target Buffers
-- Direct-mapped lookup structures
-- Valid bits
+- Branch target storage
+- Branch target lookup
+- Direct-mapped hardware structures
 - PC indexing
 - PC tag extraction
-- Tag comparison
+- Tagged comparisons
+- Valid-bit management
+- Hit and miss detection
 - Target address storage
-- BTB hit detection
-- BTB miss detection
-- Synchronous state updates
 - Entry replacement
 - Reset-based invalidation
-- Tagged lookup structures
+- RTL array modeling
 - Combinational lookup logic
 - Sequential update logic
-- RTL array modeling
-- Directed Verilog testbench development
-- VCD waveform generation
-- GTKWave waveform analysis
+- Functional verification
+- VCD waveform analysis
+- Yosys synthesis
+- Netlist inspection
+- RTL schematic analysis
+
+An important architectural lesson from this project is that branch prediction requires more than determining whether a branch is likely to be taken.
+
+The processor also needs the **destination address** of the predicted branch. The BTB provides this information by remembering target addresses from previously encountered branches.
+
+---
 
 
+# Connection With Project 29
 
-## Connection With Project 29
+Project 29 introduced a **2-bit dynamic branch predictor**.
 
-Project 29 implemented a 2-bit dynamic branch predictor using a saturating state machine.
+Its responsibility is to predict:
 
-Project 30 adds the target-address storage required to make branch prediction more useful.
+```text
+Taken
+   or
+Not Taken
+```
 
-The combined concept is:
+Project 30 introduces the BTB, whose responsibility is to provide:
 
+```text
+Branch Target Address
+```
+
+The two structures can therefore operate together:
+
+```text
                      Current PC
-                         |
-              +----------+----------+
-              |                     |
-              v                     v
-        2-Bit Predictor             BTB
-         Project 29             Project 30
-              |                     |
-              v                     v
+                         │
+              ┌──────────┴──────────┐
+              │                     │
+              ▼                     ▼
+      2-Bit Branch Predictor       BTB
+           Project 29           Project 30
+              │                     │
+              ▼                     ▼
        Taken / Not Taken       Target Address
-              |                     |
-              +----------+----------+
-                         |
-                         v
+              │                     │
+              └──────────┬──────────┘
+                         │
+                         ▼
                       Next PC
+```
 
-The predictor provides the direction decision, while the BTB provides the destination address.
+The predictor provides the **direction**, while the BTB provides the **destination**.
 
-This separation also keeps the RTL modular and makes both blocks easier to verify independently.
+Keeping these functions separate also makes the processor architecture more modular and easier to verify.
+
+---
 
 
-## What I Learned
+# Processor Branch-Control Progression
 
-The main lesson from this project was that branch prediction involves more than simply predicting whether a branch will be taken.
+The processor projects now demonstrate an increasingly complete branch-control path:
 
-A processor also needs to know where execution should continue if the prediction is taken. A BTB provides that information by remembering branch target addresses from previous executions.
+```text
+Project 26
+Branch Control
+      │
+      ▼
+Project 27
+Data Forwarding
+      │
+      ▼
+Project 28
+Static Branch Prediction
+      │
+      ▼
+Project 29
+2-Bit Dynamic Prediction
+      │
+      ▼
+Project 30
+Branch Target Buffer
+```
 
-Another important concept was the use of tags and valid bits. The index alone is not enough to determine whether a branch is present in the table because different PCs can map to the same entry. The tag comparison provides the additional check needed to identify the correct branch.
+The progression moves from reacting to branch decisions toward predicting both:
 
-The project also reinforced the connection between BTBs and other tagged hardware structures such as caches, where an index selects an entry and a tag determines whether that entry corresponds to the requested address.
+```text
+Branch Direction
+        +
+Branch Target
+```
+
+before the branch reaches the later stages of the pipeline.
+
+---
+
+
+# BTB and Cache-Like Structures
+
+One of the important hardware concepts reinforced by this project is the similarity between a BTB and other tagged lookup structures.
+
+The lookup process is:
+
+```text
+Address
+   │
+   ▼
+Extract Index
+   │
+   ▼
+Select Entry
+   │
+   ▼
+Compare Tag
+   │
+   ▼
+Check Valid
+   │
+   ▼
+Hit / Miss
+```
+
+This same general structure appears in several hardware systems, including cache-like lookup mechanisms.
+
+The BTB therefore provides useful experience with:
+
+- Indexed tables
+- Tags
+- Valid bits
+- Hit detection
+- Replacement
+- Stored metadata
+
+---
 

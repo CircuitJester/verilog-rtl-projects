@@ -1,397 +1,1010 @@
-# Verilog RTL Design
+# 🚀 Verilog RTL Design
 
-This repository is a growing collection of **Verilog RTL, digital hardware and processor-oriented design projects** developed as part of my progression toward FPGA, ASIC and processor design.
+A continuously growing collection of **Verilog HDL projects** focused on **RTL Design, Digital System Design, Processor Microarchitecture, FPGA Development, and ASIC Design Fundamentals**.
 
-The projects started with basic combinational and sequential logic and gradually moved into FSMs, communication protocols, memory systems, AXI4-Lite, DMA, interrupt control, processor datapaths and pipeline control.
+This repository documents a progressive journey from basic digital logic to communication protocols, memory controllers, bus architectures, DMA engines, interrupt controllers, processor datapaths, pipeline control, branch prediction, cache architecture, and RTL synthesis using **Yosys**.
 
-As the designs became more complex, the development workflow also evolved from basic RTL simulation toward a more complete hardware-design flow involving **functional verification, waveform analysis and Yosys synthesis**.
+The portfolio is built around a practical engineering workflow:
 
-The goal is simple:
+> **Define the architecture → Write the RTL → Verify the behavior → Analyze waveforms → Synthesize the design → Inspect the hardware structure → Document the result**
 
-> **Write the RTL, verify the behavior, synthesize the design, inspect the resulting hardware structure, and understand the relationship between RTL and implementation.**
+The objective is not only to learn Verilog syntax, but to understand how RTL represents real digital hardware and how that RTL progresses toward synthesized hardware.
 
 ---
 
+# 📊 Repository Progress
 
-## Repository Progress
+The repository currently contains **33 completed Verilog RTL projects**.
 
-The repository currently contains **30 Verilog RTL projects** covering digital design, communication interfaces, system-level RTL and processor-oriented hardware.
+The projects cover:
 
-The projects are developed incrementally, with later designs building on concepts introduced in earlier projects.
+- Digital logic design
+- Sequential logic
+- FSM design
+- Timers and PWM
+- FIFO architecture
+- SPI
+- I²C
+- UART
+- CAN
+- AXI4-Lite
+- SDRAM
+- DMA
+- Interrupt controllers
+- Processor datapaths
+- Pipeline architecture
+- Hazard detection
+- Data forwarding
+- Branch control
+- Branch prediction
+- Branch target prediction
+- Return address prediction
+- Instruction caches
+- Data caches
+- RTL synthesis using Yosys
+
+The current Yosys synthesis workflow has been extended through **Project 31**.
+
+Projects 32 and 33 continue the processor memory-hierarchy development path and will be integrated into the Yosys workflow as the synthesis work progresses.
+
+---
+
+# 🛠 Engineering Workflow
+
+The projects follow a progressively more complete hardware-development methodology.
+
+For RTL projects:
+
+    Problem Definition
+            │
+            ▼
+    Architecture
+            │
+            ▼
+    RTL Implementation
+            │
+            ▼
+    Testbench Development
+            │
+            ▼
+    Functional Simulation
+            │
+            ▼
+    GTKWave Analysis
+            │
+            ▼
+    Documentation
+            │
+            ▼
+    Git Version Control
+
+For projects that have entered the Yosys workflow:
+
+    Problem Definition
+            │
+            ▼
+    RTL Architecture
+            │
+            ▼
+    RTL Implementation
+            │
+            ▼
+    Module Verification
+            │
+            ▼
+    System Integration
+            │
+            ▼
+    Yosys RTL Synthesis
+            │
+            ▼
+    Netlist Generation
+            │
+            ▼
+    RTL Schematic Analysis
+            │
+            ▼
+    Documentation
+            │
+            ▼
+    Git Version Control
+
+This workflow keeps verification and synthesis connected directly to the RTL rather than treating them as separate activities.
+
+---
+
+# 💻 Technology Stack
+
+## RTL Language
+
+- Verilog HDL
+- SystemVerilog where applicable
+
+## Simulation & Verification
+
+- Icarus Verilog
+- GTKWave
+- Verilog testbenches
+- Behavioral models
+- VCD waveform analysis
+
+## RTL Synthesis
+
+- Yosys
+- Synthesized Verilog netlists
+- RTL schematic generation
+- Design statistics
+- Logic optimization
+- RTL hierarchy analysis
+
+## Development Environment
+
+- Visual Studio Code
+- Ubuntu / WSL
+- Git
+- GitHub
+
+---
+
+# 📚 Project Roadmap
+
+| Project | Topic | Status |
+| ------: | ------------------------------------------ | :----: |
+| 01 | Combinational Logic | ✅ |
+| 02 | Sequential Logic | ✅ |
+| 03 | FSM Fundamentals | ✅ |
+| 04 | Utility RTL IPs | ✅ |
+| 05 | SPI Master | ✅ |
+| 06 | SPI Slave | ✅ |
+| 07 | I²C Master Controller | ✅ |
+| 08 | I²C Slave Controller | ✅ |
+| 09 | CAN Bus Controller | ✅ |
+| 10 | AXI4-Lite Master IP | ✅ |
+| 11 | AXI4-Lite Slave IP | ✅ |
+| 12 | RTL Integration Fundamentals | ✅ |
+| 13 | I²C Master Controller | ✅ |
+| 14 | UART Controller | ✅ |
+| 15 | SDRAM Controller | ✅ |
+| 16 | Multi-Port SDRAM Arbiter | ✅ |
+| 17 | SPI Master IP Core | ✅ |
+| 18 | Programmable Interrupt Controller | ✅ |
+| 19 | AXI4-Lite Slave Peripheral | ✅ |
+| 20 | DMA Controller | ✅ |
+| 21 | Pipelined ALU | ✅ |
+| 22 | Hazard Detection Unit | ✅ |
+| 23 | Forwarding Unit | ✅ |
+| 24 | 5-Stage Pipelined ALU | ✅ |
+| 25 | Load-Use Hazard Detection | ✅ |
+| 26 | Branch Control Unit | ✅ |
+| 27 | RISC-V Pipeline Forwarding Unit | ✅ |
+| 28 | Processor / RISC-V-Oriented RTL | ✅ |
+| 29 | Two-Bit Branch Predictor | ✅ |
+| 30 | Branch Target Buffer | ✅ |
+| 31 | Return Address Stack | ✅ |
+| 32 | Instruction Cache | ✅ |
+| 33 | Write-Back Data Cache | ✅ |
+
+Each project contains its own implementation and verification documentation. Projects that have entered the Yosys workflow additionally contain synthesis-related documentation and artifacts.
+
+---
+
+# 🧭 Design Progression
+
+The overall learning progression is:
+
+    Digital Logic
+          ↓
+    Sequential RTL
+          ↓
+    FSMs and Control Logic
+          ↓
+    Timers / PWM / FIFO
+          ↓
+    SPI / I²C / UART / CAN
+          ↓
+    AXI4-Lite
+          ↓
+    Memory Systems
+          ↓
+    Interrupts / DMA
+          ↓
+    Reusable RTL IP
+          ↓
+    Processor Datapath
+          ↓
+    Pipeline Architecture
+          ↓
+    Hazard Detection
+          ↓
+    Forwarding
+          ↓
+    Branch Control
+          ↓
+    Branch Prediction
+          ↓
+    Return Address Prediction
+          ↓
+    Instruction Cache
+          ↓
+    Data Cache
+          ↓
+    Yosys Synthesis
+          ↓
+    Open-Source ASIC Flow
+
+---
+
+# 🔬 Yosys RTL Synthesis
+
+Yosys is now integrated into the portfolio through **Project 31**.
 
 The current synthesis milestone is:
 
-```text
-Projects 01–26
-      │
-      ▼
-Yosys RTL Synthesis
-      │
-      ├── Synthesis Scripts
-      ├── Synthesized Netlists
-      └── RTL Schematics
-```
+    Projects 01–31
+            │
+            ▼
+          Yosys
+            │
+            ├── RTL Parsing
+            ├── Hierarchy Analysis
+            ├── Process Conversion
+            ├── Logic Optimization
+            ├── Design Statistics
+            ├── Synthesized Netlist
+            └── RTL Schematic
 
-Projects beyond the current Yosys milestone continue the processor and RISC-V-oriented development path and will be brought into the synthesis flow as the portfolio progresses.
+The synthesis workflow demonstrates the transition from behavioral RTL toward a synthesized hardware representation.
+
+The general flow is:
+
+    Verilog RTL
+         ↓
+    RTL Parsing
+         ↓
+    Hierarchy Analysis
+         ↓
+    Process Conversion
+         ↓
+    Logic Optimization
+         ↓
+    Technology-Independent Synthesis
+         ↓
+    Synthesized Netlist
+         ↓
+    RTL / Logic Schematic
+
+---
+
+# 🧪 Yosys-Enabled Projects
+
+The current Yosys milestone covers:
+
+| Project | Design | Yosys |
+| ------: | ------------------------------------------ | :---: |
+| 01 | Combinational Logic | ✅ |
+| 02 | Sequential Logic | ✅ |
+| 03 | FSM Fundamentals | ✅ |
+| 04 | Utility RTL IPs | ✅ |
+| 05 | SPI Master | ✅ |
+| 06 | SPI Slave | ✅ |
+| 07 | I²C Master | ✅ |
+| 08 | I²C Slave | ✅ |
+| 09 | CAN Bus Controller | ✅ |
+| 10 | AXI4-Lite Master IP | ✅ |
+| 11 | AXI4-Lite Slave IP | ✅ |
+| 12 | RTL Integration Fundamentals | ✅ |
+| 13 | I²C Master Controller | ✅ |
+| 14 | UART Controller | ✅ |
+| 15 | SDRAM Controller | ✅ |
+| 16 | Multi-Port SDRAM Arbiter | ✅ |
+| 17 | SPI Master IP Core | ✅ |
+| 18 | Programmable Interrupt Controller | ✅ |
+| 19 | AXI4-Lite Slave Peripheral | ✅ |
+| 20 | DMA Controller | ✅ |
+| 21 | Pipelined ALU | ✅ |
+| 22 | Hazard Detection Unit | ✅ |
+| 23 | Forwarding Unit | ✅ |
+| 24 | 5-Stage Pipelined ALU | ✅ |
+| 25 | Load-Use Hazard Detection | ✅ |
+| 26 | Branch Control Unit | ✅ |
+| 27 | RISC-V Pipeline Forwarding Unit | ✅ |
+| 28 | Processor / RISC-V-Oriented RTL | ✅ |
+| 29 | Two-Bit Branch Predictor | ✅ |
+| 30 | Branch Target Buffer | ✅ |
+| 31 | Return Address Stack | ✅ |
+
+Each Yosys-enabled project focuses on connecting the original RTL with the resulting synthesized hardware structure.
+
+Typical synthesis artifacts include:
+
+    synth/
+    ├── scripts/
+    ├── netlists/
+    └── schematics/
+
+The exact directory structure varies between projects as the repository is progressively standardized.
 
 ---
 
 
-# Design Progression
+# 🧠 Processor-Oriented RTL
 
-The repository follows a gradual progression from fundamental digital logic toward processor and ASIC-oriented RTL.
+The later projects increasingly focus on processor microarchitecture.
 
-```text
-Digital Logic
-      ↓
-Sequential RTL
-      ↓
-FSMs and Control Logic
-      ↓
-Timers / PWM / FIFO
-      ↓
-SPI / I²C / UART / CAN
-      ↓
-AXI4-Lite
-      ↓
-Memory Systems
-      ↓
-Interrupts / DMA
-      ↓
-RTL IP Development
-      ↓
-Processor Datapath
-      ↓
-Pipeline Architecture
-      ↓
-Hazard Detection
-      ↓
-Forwarding
-      ↓
-Branch Control
-      ↓
-Branch Prediction
-      ↓
-RISC-V-Oriented Hardware
-      ↓
-Yosys Synthesis
-      ↓
-Open-Source ASIC Flow
-```
+The processor development path currently covers:
+
+- ALU execution
+- Pipeline registers
+- Processor datapaths
+- Pipeline control
+- RAW dependency detection
+- Load-use hazards
+- Data forwarding
+- Branch decisions
+- Pipeline flushing
+- Branch prediction
+- Branch target prediction
+- Return address prediction
+- Instruction caching
+- Data caching
+
+The goal is to understand how individual RTL blocks interact inside a pipelined processor.
 
 ---
 
 
-# Project Areas
+# 🏗 Processor Development Progression
 
-## Digital Design Foundations
+The processor-oriented progression is:
 
-The early projects establish the fundamental RTL building blocks used throughout the repository.
+    Pipelined ALU
+          │
+          ▼
+    Hazard Detection
+          │
+          ▼
+    Forwarding Unit
+          │
+          ▼
+    5-Stage Pipeline
+          │
+          ▼
+    Load-Use Hazard Handling
+          │
+          ▼
+    Branch Control
+          │
+          ▼
+    RISC-V-Oriented RTL
+          │
+          ▼
+    Two-Bit Branch Predictor
+          │
+          ▼
+    Branch Target Buffer
+          │
+          ▼
+    Return Address Stack
+          │
+          ▼
+    Instruction Cache
+          │
+          ▼
+    Data Cache
+          │
+          ▼
+    More Complete Processor Memory Hierarchy
 
-Topics include:
+---
+
+
+# 🧩 Processor Microarchitecture Concepts
+
+## Datapath
+
+- ALU Design
+- Processor Datapath
+- Pipeline Registers
+- Operand Routing
+- Execution Stages
+- Pipeline Data Flow
+- Cache Data Paths
+
+## Hazard Handling
+
+- RAW Dependencies
+- Load-Use Hazards
+- Pipeline Stalls
+- Pipeline Bubbles
+- Forwarding
+- Operand Selection
+
+## Control Flow
+
+- Branch Decisions
+- Pipeline Flushing
+- Program Counter Redirection
+- Branch Target Calculation
+- Branch Prediction
+- Branch Target Prediction
+- Return Address Prediction
+
+## Pipeline Control
+
+- IF/ID Control
+- ID/EX Control
+- EX/MEM Control
+- MEM/WB Control
+- Stall Control
+- Flush Control
+
+---
+
+
+# 🧠 Processor Prediction
+
+Projects 29–31 introduce hardware structures that improve processor control-flow prediction.
+
+## Project 29 — Two-Bit Branch Predictor
+
+The project implements a two-bit saturating prediction mechanism.
+
+Concepts include:
+
+- Prediction states
+- Strongly Taken
+- Weakly Taken
+- Weakly Not Taken
+- Strongly Not Taken
+- Prediction updates
+- Saturating transitions
+- Branch outcome tracking
+
+The project demonstrates how recent branch behavior can be used to improve future predictions.
+
+## Project 30 — Branch Target Buffer
+
+The branch target buffer extends branch prediction by storing predicted branch targets.
+
+Concepts include:
+
+- Branch PC lookup
+- Target storage
+- Hit detection
+- Target prediction
+- Table updates
+- PC-to-target association
+
+This demonstrates how a processor can predict both branch direction and the destination address of a predicted branch.
+
+
+## Project 31 — Return Address Stack
+
+The return address stack provides hardware support for predicting function return addresses.
+
+Concepts include:
+
+- Push operations
+- Pop operations
+- Stack management
+- Empty detection
+- Full detection
+- Return-address tracking
+- Call / return behavior
+- Sequential stack control
+
+Project 31 is also the current endpoint of the Yosys synthesis workflow.
+
+---
+
+
+# 💾 Processor Memory Hierarchy
+
+Projects 32 and 33 extend the processor work into caching.
+
+    Project 32
+    Instruction Cache
+          │
+          ▼
+    Project 33
+    Write-Back Data Cache
+
+These projects introduce:
+
+- Cache indexing
+- Tags
+- Valid bits
+- Dirty bits
+- Cache hits
+- Cache misses
+- Memory refill
+- Cache replacement
+- Write allocation
+- Write-back behavior
+
+---
+
+
+# Project 32 — Instruction Cache
+
+Project 32 introduces an instruction cache into the processor instruction-fetch path.
+
+The design focuses on:
+
+- Direct-mapped cache organization
+- Cache lines
+- Address indexing
+- Tag comparison
+- Valid bits
+- Cache hits
+- Cache misses
+- Instruction refill
+- Memory interface behavior
+- Cache lookup logic
+
+The project establishes the basic cache architecture required before introducing writable data caching.
+
+---
+
+
+# Project 33 — Write-Back Data Cache
+
+Project 33 extends caching into the processor data path.
+
+The project implements a small direct-mapped data cache with:
+
+- 32-bit addresses
+- 32-bit data
+- 8 cache lines
+- Valid bits
+- Dirty bits
+- Tag storage
+- Data storage
+- Read hits
+- Read misses
+- Write hits
+- Write misses
+- Write allocation
+- Write-back behavior
+- Dirty-line eviction
+- Cache refill
+- Cache replacement
+- Cache controller FSM
+
+The important architectural flow is:
+
+    CPU Request
+         │
+         ▼
+    Cache Lookup
+         │
+         ▼
+       HIT?
+       /   \
+     YES    NO
+      │      │
+      │    Dirty?
+      │     /   \
+      │   YES    NO
+      │    │      │
+      │    ▼      │
+      │ WRITE     │
+      │  BACK     │
+      │    │      │
+      │    └──────┘
+      │       │
+      │       ▼
+      │     REFILL
+      │       │
+      └───────┘
+          │
+          ▼
+      CPU Ready
+
+The project was verified using:
+
+- Verilog testbench
+- Behavioral backing memory
+- Icarus Verilog
+- GTKWave
+- VCD waveform analysis
+
+The project demonstrates the difference between cached data and main-memory data and introduces dirty-line handling for write-back caching.
+
+---
+
+
+# ⭐ Featured Projects
+
+## Pipelined ALU
+
+A modular 32-bit pipelined execution stage implementing arithmetic and logic operations together with pipeline registers and processor-oriented control.
+
+Highlights:
+
+- ALU Control
+- ALU Execution
+- Processor Flags
+- Pipeline Register
+- Hierarchical RTL
+- Functional Verification
+
+
+## Hazard Detection Unit
+
+A processor pipeline control subsystem designed to detect RAW dependencies and generate pipeline stall behavior.
+
+Highlights:
+
+- Register Comparison
+- Hazard Detection Logic
+- Stall Generation
+- Controller FSM
+- Pipeline Control
+- Functional Verification
+
+
+## Forwarding Unit
+
+A processor datapath subsystem designed to reduce RAW hazards by forwarding results from later pipeline stages to dependent operands.
+
+Highlights:
+
+- Register Dependency Comparison
+- EX/MEM Hazard Detection
+- MEM/WB Hazard Detection
+- Forward-A Control
+- Forward-B Control
+- Operand Selection
+- Functional Verification
+
+
+## DMA Controller
+
+A modular memory-to-memory DMA engine demonstrating autonomous hardware data movement.
+
+Highlights:
+
+- DMA Control
+- Address Generation
+- Transfer Counter
+- DMA Controller FSM
+- Top-Level Integration
+- Functional Verification
+
+
+## AXI4-Lite Slave Peripheral
+
+A memory-mapped RTL peripheral demonstrating bus transactions and register-based control.
+
+Highlights:
+
+- Register File
+- Address Decoder
+- AXI Read Channel
+- AXI Write Channel
+- Top-Level Integration
+- Functional Verification
+
+
+## Programmable Interrupt Controller
+
+A hardware interrupt-management block demonstrating interrupt prioritization and masking.
+
+Highlights:
+
+- Interrupt Sources
+- Interrupt Masking
+- Priority Encoder
+- Interrupt Controller FSM
+- CPU Interface
+
+
+## SDRAM Controller
+
+A memory controller implementing the basic control structure required for SDRAM operation.
+
+Highlights:
+
+- Initialization FSM
+- Refresh Control
+- Read Controller
+- Write Controller
+- Timing Generation
+
+
+## Multi-Port SDRAM Arbiter
+
+A shared-memory arbitration system designed to coordinate multiple memory request sources.
+
+Highlights:
+
+- Round-Robin Arbitration
+- FIFO Scheduling
+- Shared Memory Access
+- Bus Multiplexing
+- Arbitration FSM
+
+
+## Instruction Cache
+
+A direct-mapped instruction cache demonstrating basic cache lookup and refill behavior.
+
+Highlights:
+
+- Cache Indexing
+- Tag Storage
+- Valid Bits
+- Hit Detection
+- Miss Detection
+- Instruction Refill
+- Memory Interface
+
+
+## Write-Back Data Cache
+
+A direct-mapped writable data cache demonstrating cache hits, misses, dirty-line tracking, write allocation, write-back, and cache replacement.
+
+Highlights:
+
+- Direct-Mapped Cache
+- Valid Bits
+- Dirty Bits
+- Tag Comparison
+- Read Hits
+- Read Misses
+- Write Hits
+- Write Misses
+- Write Allocation
+- Write-Back
+- Dirty-Line Eviction
+- Cache Refill
+- Cache Controller FSM
+
+---
+
+
+# 📖 Major Concepts Covered
+
+## RTL Design
 
 - Combinational Logic
 - Sequential Logic
-- Registers
-- Counters
-- Adders
-- ALU Logic
-- Priority Encoders
-- Basic RTL structures
-
-These projects establish the foundation for understanding synchronous digital hardware before moving into larger systems.
-
----
-
-
-## FSM and Control Logic
-
-The next group of projects introduces state-based hardware and timing-oriented control.
-
-Topics include:
-
-- Finite State Machines
-- UART Control
-- Timers
-- PWM
-- FIFO
-- Sequence Detection
+- Parameterized RTL
+- Modular Design
+- Hierarchical Design
+- Reusable RTL IP
+- RTL Integration
+- Synchronous Design
 - Control-Oriented RTL
 
-These designs focus on understanding how state, timing and control signals interact inside synchronous hardware.
 
----
+## Processor Architecture
+
+- ALU Design
+- Processor Datapath
+- Pipeline Registers
+- Execution Stage Design
+- Pipeline Control
+- Hazard Detection
+- Data Forwarding
+- Branch Control
+- Branch Prediction
+- Branch Target Prediction
+- Return Address Prediction
+- Instruction Cache
+- Data Cache
 
 
-## Communication Interfaces
+## Control Logic
 
-The repository then moves into communication-oriented RTL.
+- Finite State Machines
+- Arbitration
+- Scheduling
+- Interrupt Handling
+- DMA Control
+- Hazard Detection
+- Pipeline Stall Control
+- Forwarding Control
+- Cache Control
+- Memory Transaction Control
 
-Implemented interfaces include:
 
-- SPI Master
-- SPI Slave
-- I²C Master
-- I²C Slave
+## Memory Systems
+
+- Register Files
+- FIFO Buffers
+- SDRAM Controllers
+- DMA Address Generation
+- Memory-Mapped Registers
+- Memory Arbitration
+- Instruction Caches
+- Data Caches
+- Cache Tags
+- Valid Bits
+- Dirty Bits
+- Cache Refill
+- Write-Back
+
+
+## Communication Protocols
+
 - UART
+- SPI
+- I²C
 - CAN
-
-The communication projects include both protocol-level control logic and supporting RTL such as:
-
-- Shift Registers
-- Clock Dividers
-- Counters
-- FSMs
-- Control Logic
-- Data Transfer Logic
-
----
+- AXI4-Lite
 
 
-## Bus and System Interfaces
-
-The next stage moves toward system-level hardware interfaces.
-
-Projects cover:
+## Bus & System Architecture
 
 - AXI4-Lite Master
 - AXI4-Lite Slave
-- AXI4-Lite Slave Peripheral
-- Register Files
 - Address Decoding
-- Bus Multiplexing
-- Memory-Mapped Interfaces
+- Multi-Port Arbitration
+- DMA Architecture
+- Memory-Mapped Peripheral Design
 
-These projects introduce the concepts required for connecting reusable RTL blocks into larger digital systems.
+
+## Verification
+
+- Verilog Testbenches
+- Functional Verification
+- Behavioral Models
+- GTKWave Analysis
+- VCD Generation
+- Top-Level Integration
+- System-Level Verification
+- Waveform Debugging
+
+
+## Synthesis
+
+- Yosys RTL Synthesis
+- RTL Hierarchy Analysis
+- Process Conversion
+- Logic Optimization
+- Cell Statistics
+- Synthesized Netlist Generation
+- RTL Schematic Generation
+- Technology-Independent Synthesis
+- Hardware Structure Analysis
 
 ---
 
 
-## Memory and Data Movement
+# 🎯 Skills Developed
 
-The repository also contains RTL focused on memory access and hardware data movement.
-
-Topics include:
-
-- SDRAM Controller
-- Multi-Port SDRAM Arbiter
-- DMA Controller
-- Request FIFOs
-- Arbitration
-- Address Generation
-- Transfer Control
-
-These projects move the portfolio from isolated RTL blocks toward system-level hardware architecture.
-
----
-
-
-# Processor-Oriented RTL
-
-The later projects focus increasingly on processor microarchitecture.
-
-This part of the portfolio currently includes:
-
-- Pipelined ALU
+- Verilog HDL
+- RTL Design
+- Digital Logic Design
+- Processor Datapath Design
+- ALU Design
+- Pipeline Architecture
+- Forwarding Logic
 - Hazard Detection
-- Forwarding
-- 5-Stage Pipeline Architecture
-- Pipeline Control
-- Branch Control
 - Branch Prediction
-- RISC-V-oriented concepts
-- Pipeline Datapath Design
-
-The goal is to understand how individual RTL blocks combine to form the control and datapath portions of a pipelined processor.
-
----
-
-
-# Processor Development Progression
-
-The processor-oriented projects are being developed as a connected learning path rather than isolated exercises.
-
-```text
-Pipelined ALU
-      │
-      ▼
-Forwarding Unit
-      │
-      ▼
-5-Stage Pipeline
-      │
-      ▼
-Hazard Detection
-      │
-      ▼
-Branch Control
-      │
-      ▼
-Branch Prediction
-      │
-      ▼
-RISC-V-Oriented Pipeline Logic
-      │
-      ▼
-More Complete Processor Architecture
-```
+- Branch Target Prediction
+- Return Address Prediction
+- Cache Architecture
+- Data Cache Design
+- Instruction Cache Design
+- Finite State Machine Design
+- Memory Controller Design
+- DMA Controller Design
+- Interrupt Controller Design
+- Communication Protocol Design
+- Bus Interface Design
+- RTL Verification
+- Hierarchical Hardware Design
+- Modular IP Development
+- Processor Microarchitecture
+- Hardware Debugging
+- RTL Synthesis
+- Yosys
+- Netlist Analysis
+- Git & GitHub Workflow
 
 ---
 
 
-# Selected Project Roadmap
+# 🔍 Verification Philosophy
 
-| Project | Focus |
-|---:|---|
-| [01](Verilog_Project01/) | Combinational Logic |
-| [02](Verilog_Project02/) | Sequential Logic |
-| [03](Verilog_Project03/) | FSM Fundamentals |
-| [04](Verilog_Project04/) | Utility RTL / Timers / PWM / FIFO |
-| [05](Verilog_Project05/) | SPI Master |
-| [06](Verilog_Project06/) | SPI Slave |
-| [07](Verilog_Project07/) | I²C Master |
-| [08](Verilog_Project08/) | I²C Slave |
-| [09](Verilog_Project09/) | CAN Controller |
-| [10](Verilog_Project10/) | AXI4-Lite Master |
-| [11](Verilog_Project11/) | AXI4-Lite Slave |
-| [12](Verilog_Project12/) | SPI Master |
-| [13](Verilog_Project13/) | I²C Master |
-| [14](Verilog_Project14/) | UART Controller |
-| [15](Verilog_Project15/) | SDRAM Controller |
-| [16](Verilog_Project16/) | Multi-Port SDRAM Arbiter |
-| [17](Verilog_Project17/) | SPI Master IP |
-| [18](Verilog_Project18/) | Programmable Interrupt Controller |
-| [19](Verilog_Project19/) | AXI4-Lite Slave Peripheral |
-| [20](Verilog_Project20/) | DMA Controller |
-| [21](Verilog_Project21_Pipelined_ALU/) | Pipelined ALU |
-| [22](Verilog_Project22_Hazard_Detection_Unit/) | Hazard Detection Unit |
-| [23](Verilog_Project23_Forwarding_Unit/) | Processor Forwarding Unit |
-| [24](Verilog_Project24/) | 5-Stage Pipelined ALU |
-| [25](Verilog_Project25/) | Load-Use Hazard Detection |
-| [26](Verilog_Project26/) | Branch Control Unit |
-| [27](Verilog_Project27/) | RISC-V Pipeline Forwarding Unit |
-| [28](Verilog_Project28/) | Processor / RISC-V-Oriented RTL |
-| [29](Verilog_Project29/) | Two-Bit Branch Predictor |
-| [30](Verilog_Project30/) | Processor / RISC-V-Oriented RTL |
+Verification is treated as part of the design process rather than something added after RTL development.
 
-Projects may revisit related concepts at a deeper architectural level. Each individual project README contains the implementation-specific details.
+The general approach is:
+
+    Design
+      ↓
+    Identify Expected Behavior
+      ↓
+    Build Testbench
+      ↓
+    Run Simulation
+      ↓
+    Inspect Waveform
+      ↓
+    Debug
+      ↓
+    Re-verify
+
+For more complex projects, verification focuses on both individual blocks and top-level behavior.
+
+Important verification targets include:
+
+- Reset behavior
+- State transitions
+- Control signals
+- Data movement
+- Boundary conditions
+- Protocol timing
+- Pipeline dependencies
+- Cache hit/miss behavior
+- Memory transactions
+- Integration behavior
 
 ---
 
 
-# Verification Workflow
+# 📁 Repository Structure
 
-The projects follow a progressively more complete RTL development workflow.
+Each project is maintained independently so that its RTL, verification environment, and synthesis results can be inspected without unnecessarily depending on other projects.
 
-```text
-Problem Definition
-        ↓
-RTL Architecture
-        ↓
-RTL Implementation
-        ↓
-Testbench Development
-        ↓
-Simulation
-        ↓
-Waveform Analysis
-        ↓
-Yosys Synthesis
-        ↓
-Netlist Generation
-        ↓
-RTL Schematic Inspection
-        ↓
-Documentation
-        ↓
-Git Version Control
-```
+A typical project may contain:
 
-Simulation is used to verify functional behavior, state transitions and control logic.
+    Verilog_ProjectXX/
+    ├── README.md
+    ├── command.md
+    ├── verilogcode/
+    ├── tb/
+    ├── verification/
+    ├── synth/
+    │   ├── scripts/
+    │   ├── netlists/
+    │   └── schematics/
+    └── waves/
 
-Waveforms are used where timing and sequential behavior need to be inspected.
+The exact directory structure varies depending on the project and the stage at which it entered the standardized workflow.
 
-For projects that have entered the Yosys workflow, synthesis artifacts are also retained so the generated hardware structure can be examined rather than treating synthesis as a black box.
+Generated simulation artifacts such as VCD files and compiled simulation binaries are kept outside version control where appropriate.
+
 
 ---
 
 
-# Yosys Synthesis
+# 🧪 Simulation and Waveform Analysis
 
-Yosys is currently integrated into the workflow through **Project 26**.
+Simulation is primarily performed using:
 
-```text
-Projects 01–26
-      │
-      ▼
-    Yosys
-      │
-      ├── RTL Elaboration
-      ├── Hierarchy Analysis
-      ├── Process Conversion
-      ├── Optimization
-      ├── Design Statistics
-      ├── Netlist Generation
-      └── RTL Schematic Generation
-```
+    Icarus Verilog
+          ↓
+    VCD Generation
+          ↓
+    GTKWave
+          ↓
+    Waveform Analysis
 
-The synthesis workflow is organized around individual Yosys scripts for the RTL modules and top-level designs.
+GTKWave is used to inspect:
 
-Generated artifacts include:
+- Clock behavior
+- Reset behavior
+- FSM transitions
+- Data paths
+- Control signals
+- Pipeline timing
+- Memory transactions
+- Cache hits
+- Cache misses
+- Write-back operations
+- Refill behavior
 
-```text
-synth/
-├── scripts/
-├── netlists/
-└── schematics/
-```
+Waveform analysis is particularly important for sequential RTL because many hardware problems are related to timing and state transitions rather than simple combinational correctness.
 
-The generated netlists provide a synthesized representation of the RTL, while the schematic outputs make the resulting hardware structure easier to inspect.
-
-The synthesis workflow is intentionally kept close to the RTL so that the relationship between:
-
-```text
-RTL
- ↓
-Logic
- ↓
-Synthesized Hardware
-```
-
-can be studied directly.
 
 ---
 
 
-# Yosys Project Standard
-
-Projects that have been migrated into the Yosys workflow generally follow a structure similar to:
-
-```text
-Verilog_ProjectXX/
-│
-├── README.md
-├── command.md
-├── RTL/
-│
-├── tb/
-│
-├── verification/
-│
-├── synth/
-│   ├── scripts/
-│   ├── netlists/
-│   └── schematics/
-│
-└── waves/
-```
-
-The exact structure varies depending on the project.
-
----
-
-
-# RTL Design Practices
+# 🧱 RTL Design Practices
 
 The projects are developed with an emphasis on:
 
@@ -405,101 +1018,99 @@ The projects are developed with an emphasis on:
 - Independent module verification
 - Top-level integration verification
 - Synthesis-aware RTL development
+- Readable and maintainable hardware descriptions
 
-The objective is not simply to make the simulation pass, but to understand how the RTL translates into hardware.
+The RTL is written with the intention of making the hardware behavior understandable to another engineer.
 
----
+The goal is not simply:
 
+    "Make the simulation pass."
 
-# Processor Microarchitecture
+The goal is:
 
-The recent projects increasingly focus on the interaction between processor datapath and control logic.
-
-Important concepts covered include:
-
-### Datapath
-
-- ALU Design
-- Pipeline Registers
-- Operand Routing
-- Execution Stages
-- Pipeline Data Flow
-
-### Hazard Handling
-
-- RAW Dependencies
-- Load-Use Hazards
-- Pipeline Stalls
-- Pipeline Bubbles
-- Forwarding
-- Operand Selection
-
-### Control Flow
-
-- Branch Decisions
-- Pipeline Flushing
-- Program Counter Redirection
-- Branch Target Calculation
-- Branch Prediction
-
-### Pipeline Control
-
-- IF/ID Control
-- ID/EX Control
-- EX/MEM Control
-- MEM/WB Control
-- Stall Control
-- Flush Control
-
-These concepts form the foundation for building a more complete pipelined processor.
+    "Understand what hardware the RTL describes."
 
 ---
 
 
+# 📈 Current Learning Journey
 
-# Tools
+The current learning progression can be summarized as:
 
-The primary tools used across the repository are:
-
-- Verilog HDL
-- SystemVerilog where applicable
-- Icarus Verilog
-- GTKWave
-- Yosys
-- Visual Studio Code
-- Ubuntu / WSL
-- Git
-- GitHub
-
-The toolchain is intentionally lightweight and locally reproducible.
+    Digital Logic
+          │
+          ▼
+    RTL Design
+          │
+          ▼
+    Communication Protocols
+          │
+          ▼
+    Memory Systems
+          │
+          ▼
+    Bus Architectures
+          │
+          ▼
+    RTL IP Development
+          │
+          ▼
+    Processor Datapath Design
+          │
+          ▼
+    Pipeline Architecture
+          │
+          ▼
+    Hazard Detection
+          │
+          ▼
+    Data Forwarding
+          │
+          ▼
+    Branch Control
+          │
+          ▼
+    Branch Prediction
+          │
+          ▼
+    Return Address Prediction
+          │
+          ▼
+    Instruction Cache
+          │
+          ▼
+    Data Cache
+          │
+          ▼
+    RTL Synthesis
+          │
+          ▼
+    ASIC Design
 
 ---
 
 
-
-# What I am Learning
+# 🧠 What I Am Learning
 
 The objective of this repository is not simply to learn Verilog syntax.
 
-The larger goal is to understand the complete hardware-development path:
+The larger goal is to understand the complete digital hardware-development path:
 
-```text
-Hardware Requirement
-        ↓
-Architecture
-        ↓
-RTL
-        ↓
-Verification
-        ↓
-Synthesis
-        ↓
-Hardware Structure
-        ↓
-Implementation
-```
+    Hardware Requirement
+            ↓
+    Architecture
+            ↓
+    RTL
+            ↓
+    Verification
+            ↓
+    Synthesis
+            ↓
+    Hardware Structure
+            ↓
+    Implementation
 
-Through the projects, I am developing practical understanding of:
+Through these projects, I am developing practical understanding of:
 
 - Digital logic
 - RTL architecture
@@ -511,121 +1122,200 @@ Through the projects, I am developing practical understanding of:
 - Processor datapaths
 - Pipeline architecture
 - Hazard handling
+- Forwarding
 - Branch control
-- Verification
-- Synthesis
+- Branch prediction
+- Return address prediction
+- Cache architecture
+- Memory hierarchy
+- RTL verification
+- Waveform debugging
+- RTL synthesis
 - Hardware structure after synthesis
 
 ---
 
 
+# 🗺️ Explore the Projects
 
-# Repository Structure
+For digital-design fundamentals:
 
-Each project is maintained independently so that its RTL, verification environment and synthesis results can be inspected without depending on other projects.
-
-A typical project contains:
-
-```text
-Verilog_ProjectXX/
-├── README.md
-├── command.md
-├── RTL/
-├── tb/
-├── verification/
-├── synth/
-│   ├── scripts/
-│   ├── netlists/
-│   └── schematics/
-└── waves/
-```
-
-Earlier projects may use slightly different directory names because the repository is being progressively migrated toward the standardized RTL and Yosys workflow.
-
----
-
-
-# Explore the Projects
-
-For digital-design fundamentals, start with:
-
-```text
-Projects 01–04
-```
+    Projects 01–04
 
 For communication RTL:
 
-```text
-Projects 05–09
-Projects 12–14
-```
+    Projects 05–09
+    Projects 12–14
 
-For system-level interfaces, memory and data movement:
+For system-level interfaces, memory, interrupts, and data movement:
 
-```text
-Projects 10–20
-```
+    Projects 10–20
 
 For processor and pipeline architecture:
 
-```text
-Projects 21–30
-```
+    Projects 21–28
 
-For Yosys synthesis and hardware-structure inspection:
+For processor prediction and memory hierarchy:
 
-```text
-Projects 01–26
-```
+    Projects 29–33
 
-Each project contains its own documentation and implementation files.
+For Yosys synthesis:
 
----
+    Projects 01–31
 
-
-# Current Milestone
-
-The repository has now progressed from basic RTL exercises into a broader processor-oriented RTL portfolio.
-
-```text
-30 RTL Projects
-      │
-      ▼
-Communication + Memory + System IP
-      │
-      ▼
-Processor Datapath
-      │
-      ▼
-Pipeline Architecture
-      │
-      ▼
-Hazard Detection
-      │
-      ▼
-Forwarding
-      │
-      ▼
-Branch Control
-      │
-      ▼
-Branch Prediction
-      │
-      ▼
-RISC-V-Oriented Hardware
-```
-
-At the same time, the Yosys workflow has been extended through **Project 26**, creating a bridge between RTL design and synthesis.
+Each project contains its own documentation, RTL, verification environment, and relevant implementation artifacts.
 
 ---
 
 
-# Notes
+# 🏁 Current Milestone
 
-This repository is an active engineering and learning portfolio.
+The repository has now progressed from basic RTL exercises into a processor-oriented hardware portfolio.
 
-Some projects are intentionally small because they establish concepts used by later designs, while the newer projects increasingly combine multiple RTL concepts into larger hardware subsystems.
+    33 RTL Projects
+          │
+          ▼
+    Digital Logic
+          │
+          ▼
+    Communication + System IP
+          │
+          ▼
+    Memory + DMA
+          │
+          ▼
+    Processor Datapath
+          │
+          ▼
+    Pipeline Architecture
+          │
+          ▼
+    Hazard Detection
+          │
+          ▼
+    Forwarding
+          │
+          ▼
+    Branch Control
+          │
+          ▼
+    Branch Prediction
+          │
+          ▼
+    Return Address Prediction
+          │
+          ▼
+    Instruction Cache
+          │
+          ▼
+    Write-Back Data Cache
 
-The verification and synthesis workflow is also continuously evolving as new tools and processor-design concepts are introduced.
+At the same time, the synthesis workflow has progressed through **Project 31 using Yosys**, creating a bridge between RTL design and synthesized hardware.
 
-The later projects form a bridge toward broader work in **FPGA design, ASIC implementation, RISC-V architecture and hardware acceleration**.
+The portfolio is therefore developing along two connected tracks:
+
+    RTL / Processor Architecture
+                │
+                ├───────────────┐
+                │               │
+                ▼               ▼
+        Processor Design      Yosys
+                │               │
+                ▼               ▼
+        Memory Hierarchy    Synthesis
+                │               │
+                └───────┬───────┘
+                        ▼
+              Open-Source ASIC Flow
+
+---
+
+
+# 🔭 Current Architecture Direction
+
+The recent projects are moving toward a more complete processor subsystem.
+
+The current direction is:
+
+    Pipeline Datapath
+          ↓
+    Hazard Detection
+          ↓
+    Forwarding
+          ↓
+    Branch Control
+          ↓
+    Branch Prediction
+          ↓
+    Return Address Prediction
+          ↓
+    Instruction Cache
+          ↓
+    Data Cache
+          ↓
+    Processor Memory Hierarchy
+          ↓
+    More Complete RISC-V-Oriented Processor
+
+This creates a foundation for future work involving:
+
+- More complete RISC-V processor architecture
+- Larger cache structures
+- Set-associative caches
+- Multi-word cache lines
+- Memory hierarchy design
+- More advanced bus interfaces
+- FPGA implementation
+- Open-source ASIC implementation
+- RISC-V integration
+- Hardware acceleration
+
+---
+
+
+# 👨‍💻 Author
+
+**Omm Prakash Sahoo**
+
+**B.Tech | Electronics & Communication Engineering**
+
+## Core Engineering Domains
+
+- RTL Design & Verification
+- FPGA Design
+- Processor Microarchitecture
+- Digital Hardware Architecture
+- Memory Controller Design
+- Cache Architecture
+- Bus Interface Design
+- DMA & Interrupt Controller Design
+- Pipeline & Hazard Control
+- ASIC Design Fundamentals
+- Embedded Systems
+- Edge AI Hardware
+
+---
+
+# 🌟 Repository Vision
+
+This repository is being developed as a long-term collection of reusable RTL IP cores, processor subsystems, and digital hardware projects.
+
+The emphasis is on:
+
+- Modularity
+- Verification
+- Documentation
+- Synthesis
+- Hardware understanding
+- Continuous improvement
+- Practical engineering workflows
+
+Each completed project strengthens the foundation for more advanced topics including FPGA systems, SoC architecture, RISC-V processor design, ASIC implementation, and hardware acceleration.
+
+The portfolio is progressively moving from:
+
+**Digital RTL → System RTL → Processor RTL → Memory Hierarchy → Yosys Synthesis → ASIC-Oriented Hardware Design**
+
+---
+
+⭐ **If you find this repository useful, consider giving it a star!**

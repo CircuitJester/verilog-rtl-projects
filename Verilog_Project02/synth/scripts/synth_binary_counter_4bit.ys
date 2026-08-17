@@ -1,0 +1,19 @@
+#=========================================================
+# Project      : Verilog Project 02
+# Design       : 4-bit Binary Counter
+# Tool         : Yosys RTL Synthesis
+#=========================================================
+
+read_verilog RTL/binary_counter_4bit.v
+
+hierarchy -top binary_counter_4bit
+
+proc
+
+opt
+
+stat
+
+show -format svg -prefix synth/schematics/binary_counter_4bit
+
+write_verilog synth/netlists/binary_counter_4bit_netlist.v

@@ -2,117 +2,194 @@
 
 ## Overview
 
-This project implements a simple static branch prediction unit in Verilog HDL for a pipelined processor datapath.
+This project implements a simple **static branch prediction unit** for a pipelined processor datapath using Verilog HDL.
 
-The purpose of the design is to determine the next program counter value before the actual branch outcome is resolved. This allows instruction fetch to continue using a predicted path instead of waiting for the branch decision.
+The predictor determines the next program counter value before the actual branch outcome is resolved. This allows the instruction-fetch stage to continue using a predicted execution path instead of waiting for the branch decision.
 
-The predictor used in this project follows a simple static policy:
+The project introduces the basic relationship between **branch prediction, program-counter selection, branch target calculation, and control hazards**.
 
-* Non-branch instruction → predict not taken
-* Branch instruction → predict taken
+It provides a foundation for later processor designs involving more advanced dynamic branch prediction techniques.
 
-When a branch is detected, the predicted program counter is calculated using the current PC and the supplied branch offset. For a normal instruction, execution continues sequentially using `PC + 4`.
-
-The project is intentionally kept simple so that the fundamental relationship between branch prediction, program-counter selection, and control hazards can be understood before moving toward more advanced dynamic prediction techniques.
+---
 
 
+# Objective
 
-## Architecture
+The main objective is to implement a lightweight branch prediction block that can provide a predicted program counter before the actual branch result is available.
 
-```text
-                 Current PC
-                     |
-                     v
-              +--------------+
-              |    Branch    |
-              |  Prediction  |
-              |     Unit     |
-              +------+-------+
-                     |
-          +----------+----------+
-          |                     |
-          v                     v
-    Sequential Path        Branch Target
-       PC + 4             PC + Offset
-          |                     |
-          +----------+----------+
-                     |
-                     v
-              Predicted PC
-```
+The unit receives:
+
+- Current program counter
+- Branch-valid indication
+- Branch offset
+
+and generates:
+
+- Predicted program counter
+
+The predictor follows a static prediction policy rather than maintaining prediction history.
+
+---
 
 
-
-## Verification
-
-The design was verified using a dedicated Verilog testbench and GTKWave waveform analysis.
-
-The testbench checks:
-
-* Normal sequential instruction flow
-* Taken branch prediction
-* Positive branch offsets
-* Negative branch offsets
-* Forward branch targets
-* Backward branch targets
-* Predicted program counter generation
-
-The simulation generates:
+# Architecture
 
 ```text
-waves/branch_prediction_unit.vcd
+                     Current PC
+                         │
+                         ▼
+                ┌──────────────────┐
+                │ Static Branch    │
+                │ Prediction Unit  │
+                └────────┬─────────┘
+                         │
+              ┌──────────┴──────────┐
+              │                     │
+              ▼                     ▼
+       Non-Branch Path         Branch Path
+              │                     │
+              ▼                     ▼
+           PC + 4             PC + Offset
+              │                     │
+              └──────────┬──────────┘
+                         │
+                         ▼
+                  Predicted PC
 ```
 
+---
 
 
-## Testbench
+# Control Hazard Context
 
-### `tb_branch_prediction_unit.v`
+Branch instructions introduce a control hazard because the processor may fetch subsequent instructions before knowing whether the branch should redirect execution.
 
-The testbench drives different PC values, branch offsets, and branch-valid conditions into the predictor.
+The prediction does not determine whether the branch is actually taken. It provides an early estimate of the next instruction address.
 
-It generates a VCD file for waveform inspection:
+If the prediction is later determined to be incorrect, additional pipeline-control logic would be required to recover from the misprediction.
+
+---
+
+
+# Module
+
+## branch_prediction_unit.v
+
+The `branch_prediction_unit` is the primary RTL module.
+
+It performs:
+
+1. Branch detection
+2. Sequential PC generation
+3. Branch target calculation
+4. Predicted PC selection
+
+The module is designed as a standalone processor-control block so that it can later be integrated with a larger instruction-fetch and pipeline-control architecture.
+
+---
+
+
+# Features
+
+- Static Branch Prediction
+- Predict-Taken Branch Policy
+- Sequential PC Generation
+- Branch Target Calculation
+- Positive Branch Offset Support
+- Negative Branch Offset Support
+- Forward Branch Handling
+- Backward Branch Handling
+- Program Counter Selection
+- Combinational RTL Logic
+- Processor Fetch Control
+- Dedicated Functional Verification
+- VCD Waveform Generation
+- Yosys RTL Synthesis
+- Synthesized Netlist Generation
+- RTL Schematic Generation
+
+---
+
+
+# Verification Flow
 
 ```text
-waves/branch_prediction_unit.vcd
+RTL Design
+    │
+    ▼
+Testbench Development
+    │
+    ▼
+Icarus Verilog Simulation
+    │
+    ▼
+Functional Verification
+    │
+    ▼
+VCD Waveform
+    │
+    ▼
+Waveform Analysis
 ```
 
-The verification is directed toward functional behavior rather than performance measurement because this project implements a standalone static predictor.
+---
 
 
+# Yosys Synthesis
 
-## Simulation
+The RTL is also synthesized using **Yosys** to connect the behavioral RTL implementation with the resulting hardware structure.
 
-Compile the RTL and testbench using Icarus Verilog:
+The synthesis flow includes:
 
-```bash
-iverilog -g2012 \
--o build/branch_prediction_unit_tb.vvp \
-verilogcode/branch_prediction_unit.v \
-tb/tb_branch_prediction_unit.v
+- RTL elaboration
+- Hierarchy analysis
+- Process conversion
+- Logic optimization
+- Design statistics
+- Netlist generation
+- RTL schematic generation
+
+The top-level module is explicitly selected during schematic generation.
+
+---
+
+
+# Synthesis Flow
+
+```text
+branch_prediction_unit.v
+            │
+            ▼
+          Yosys
+            │
+            ▼
+     Hierarchy Analysis
+            │
+            ▼
+     Process Conversion
+            │
+            ▼
+      Logic Optimization
+            │
+            ▼
+       Design Statistics
+            │
+       ┌────┴────┐
+       ▼         ▼
+    Netlist   Schematic
+       │         │
+       ▼         ▼
+      .v        .svg
 ```
 
-Run the simulation:
-
-```bash
-vvp build/branch_prediction_unit_tb.vvp
-```
-
-Open the waveform:
-
-```bash
-gtkwave waves/branch_prediction_unit.vcd
-```
-
-
-## Project Structure
+# Project Structure
 
 ```text
 Verilog_Project28/
 │
 ├── README.md
 │
-├── verilogcode/
+├── RTL/
 │   └── branch_prediction_unit.v
 │
 ├── tb/
@@ -123,78 +200,161 @@ Verilog_Project28/
 ├── waves/
 │   └── branch_prediction_unit.vcd
 │
-└── build/
-    └── branch_prediction_unit_tb.vvp
+├── build/
+│
+└── synth/
+    ├── netlists/
+    │   └── branch_prediction_unit_netlist.v
+    │
+    ├── schematics/
+    │   └── branch_prediction_unit.svg
+    │
+    └── scripts/
+        └── synth_branch_prediction_unit.ys
 ```
 
+---
 
 
-## Tools Used
+# Concepts Covered
 
-* Verilog HDL
-* Icarus Verilog
-* GTKWave
-* VS Code
-* Ubuntu / WSL
-* Git
-* GitHub
+- Verilog HDL
+- RTL Design
+- Static Branch Prediction
+- Control Hazards
+- Program Counter Selection
+- Branch Target Calculation
+- Sequential Instruction Flow
+- Signed Branch Offsets
+- Two's-Complement Arithmetic
+- Forward Branch Handling
+- Backward Branch Handling
+- Processor Fetch Control
+- Combinational RTL
+- Functional Verification
+- VCD Waveforms
+- RTL Synthesis
+- Yosys
+- Synthesized Netlists
+- RTL Schematic Analysis
+
+---
 
 
+# Applications
 
-## Learning Outcomes
+The branch prediction unit can be used as a building block for:
+
+- RISC-V Processors
+- Pipelined CPU Designs
+- Instruction Fetch Units
+- FPGA Processor Designs
+- Educational CPU Architectures
+- Custom Processor Datapaths
+- ASIC Processor Designs
+
+---
+
+
+# Tools Used
+
+- Verilog HDL
+- Icarus Verilog
+- Yosys
+- Visual Studio Code
+- Ubuntu / WSL
+- Git
+- GitHub
+
+---
+
+
+# Learning Outcomes
 
 This project provided practical experience with:
 
-* Static branch prediction
-* Control hazards
-* Program counter selection
-* Branch target calculation
-* Sequential instruction flow
-* Branch offset arithmetic
-* Two's complement branch offsets
-* Forward branch handling
-* Backward branch handling
-* Combinational RTL design
-* Processor fetch control
-* Verilog testbench development
-* VCD waveform generation
-* GTKWave waveform analysis
-* RTL debugging
+- Static branch prediction
+- Control-flow prediction
+- Program counter selection
+- Branch target calculation
+- Signed offset arithmetic
+- Forward and backward branch handling
+- Control hazard concepts
+- Processor fetch control
+- Combinational RTL design
+- Verilog testbench development
+- Functional verification
+- RTL synthesis
+- Yosys synthesis scripting
+- Netlist inspection
+- RTL schematic analysis
 
-The project also establishes the basic foundation required to understand more advanced branch prediction mechanisms.
+More importantly, the project demonstrates how a processor can determine a likely next instruction address before the actual branch result is available.
+
+---
 
 
+# Relation to Previous Projects
 
-## Project Significance
+Project 24 established the basic **5-stage pipelined datapath**.
 
-This project extends the processor pipeline work developed in the previous projects.
+Project 25 introduced **load-use hazard detection** and pipeline stall/bubble control.
 
-The progression is:
+Project 26 introduced **branch control**, including branch target handling and pipeline flushing.
+
+Project 27 introduced **data forwarding** to reduce unnecessary stalls caused by RAW dependencies.
+
+Project 28 adds **static branch prediction** to the processor control path.
 
 ```text
 Project 24
-5-Stage Pipelined ALU
-        |
-        v
+5-Stage Pipeline
+       │
+       ▼
 Project 25
 Hazard Detection
-        |
-        v
+       │
+       ▼
 Project 26
 Branch Control
-        |
-        v
+       │
+       ▼
 Project 27
 Data Forwarding
-        |
-        v
+       │
+       ▼
 Project 28
 Static Branch Prediction
 ```
 
-The earlier projects focused on detecting and resolving pipeline hazards. Project 28 adds the predicting control flow before the branch outcome is known.
+The progression moves from basic pipeline structure toward increasingly realistic processor-control mechanisms.
 
-This moves the processor architecture toward more realistic instruction-fetch and pipeline-control behavior.
+---
 
 
+# Processor Control Progression
+
+The processor-oriented projects can now be viewed as a connected architecture:
+
+```text
+                5-Stage Pipeline
+                       │
+          ┌────────────┼────────────┐
+          │            │            │
+          ▼            ▼            ▼
+     Data Hazards  Control Hazards  Data Forwarding
+          │            │            │
+          ▼            ▼            ▼
+       Project 25   Project 26    Project 27
+                       │
+                       ▼
+                Branch Prediction
+                       │
+                       ▼
+                   Project 28
+```
+
+These mechanisms form important pieces of a practical pipelined processor.
+
+---
 

@@ -1,0 +1,12 @@
+read_verilog RTL/branch_target_buffer.v
+
+hierarchy -top branch_target_buffer
+
+proc
+opt
+stat
+
+select -module branch_target_buffer
+show -format svg -prefix synth/schematics/branch_target_buffer
+
+write_verilog synth/netlists/branch_target_buffer_netlist.v

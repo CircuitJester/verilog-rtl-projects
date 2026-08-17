@@ -1,0 +1,12 @@
+read_verilog RTL/return_address_stack.v
+
+hierarchy -top return_address_stack
+
+proc
+opt
+stat
+
+select -module return_address_stack
+show -format svg -prefix synth/schematics/return_address_stack
+
+write_verilog synth/netlists/return_address_stack_netlist.v
