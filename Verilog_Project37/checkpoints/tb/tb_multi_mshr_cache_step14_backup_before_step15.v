@@ -229,191 +229,423 @@ module tb_multi_mshr_cache;
         fail_count = 0;
         memory_request_count = 0;
 
+
+        /*
+         * ========================================================
+         * RESET
+         * ========================================================
+         */
+
         rst = 1'b1;
-        repeat (3) @(posedge clk);
+
+        repeat (3)
+            @(posedge clk);
+
         rst = 1'b0;
+
         @(posedge clk);
+
 
         $display("");
         $display("================================================");
         $display("PROJECT 37 - MULTI-MSHR NON-BLOCKING CACHE");
-        $display("STEP 23 - OUT-OF-ORDER CPU RESPONSE DATA");
+        $display("STEP 14 - MSHR FULL BACKPRESSURE");
         $display("================================================");
 
-        $display("");
-        $display("TEST 1: Allocate two outstanding read misses");
-        $display("Expected: MSHR 0=0x100, MSHR 1=0x140");
 
-        submit_request(32'h00000100, 1'b0, 32'h00000000);
-        submit_request(32'h00000140, 1'b0, 32'h00000000);
+        /*
+         * ========================================================
+         * TEST 1
+         * ========================================================
+         */
+
+        $display("");
+        $display("TEST 1: Allocate 0x100");
+        $display("Expected: MSHR 0");
+
+        submit_request(
+            32'h00000100,
+            1'b0,
+            32'h00000000
+        );
 
         #1;
 
         if (mshr_valid_debug[0] &&
-            mshr_valid_debug[1] &&
-            mshr_addr_debug[0] == 32'h00000100 &&
-            mshr_addr_debug[1] == 32'h00000140) begin
-            $display("PASS: MSHR 0=0x100 and MSHR 1=0x140");
+            mshr_addr_debug[0] == 32'h00000100) begin
+
+            $display("PASS: MSHR 0 owns 0x100");
             pass_count = pass_count + 1;
+
         end
         else begin
-            $display("FAIL: MSHR allocation incorrect");
+
+            $display(
+                "FAIL: MSHR 0 allocation valid=%b addr=%h",
+                mshr_valid_debug,
+                mshr_addr_debug[0]
+            );
+
             fail_count = fail_count + 1;
+
         end
 
-        $display("");
-        $display("TEST 2: Verify two memory requests");
-        $display("Expected: two memory transactions");
 
-        repeat (5) @(posedge clk);
+        /*
+         * ========================================================
+         * TEST 2
+         * ========================================================
+         */
+
+        $display("");
+        $display("TEST 2: Allocate 0x140");
+        $display("Expected: MSHR 1");
+
+        submit_request(
+            32'h00000140,
+            1'b0,
+            32'h00000000
+        );
+
         #1;
 
-        if (memory_request_count == 2) begin
-            $display("PASS: exactly two memory requests observed");
+        if (mshr_valid_debug[1] &&
+            mshr_addr_debug[1] == 32'h00000140) begin
+
+            $display("PASS: MSHR 1 owns 0x140");
             pass_count = pass_count + 1;
+
         end
         else begin
-            $display("FAIL: expected 2 memory requests, observed %0d",
-                     memory_request_count);
+
+            $display(
+                "FAIL: MSHR 1 allocation valid=%b addr=%h",
+                mshr_valid_debug,
+                mshr_addr_debug[1]
+            );
+
             fail_count = fail_count + 1;
+
         end
 
+
+        /*
+         * ========================================================
+         * TEST 3
+         * ========================================================
+         */
+
         $display("");
-        $display("TEST 3: Complete MSHR 1 first");
-        $display("Expected: CPU response = AAAA0140");
+        $display("TEST 3: Allocate 0x180");
+        $display("Expected: MSHR 2");
+
+        submit_request(
+            32'h00000180,
+            1'b0,
+            32'h00000000
+        );
+
+        #1;
+
+        if (mshr_valid_debug[2] &&
+            mshr_addr_debug[2] == 32'h00000180) begin
+
+            $display("PASS: MSHR 2 owns 0x180");
+            pass_count = pass_count + 1;
+
+        end
+        else begin
+
+            $display(
+                "FAIL: MSHR 2 allocation valid=%b addr=%h",
+                mshr_valid_debug,
+                mshr_addr_debug[2]
+            );
+
+            fail_count = fail_count + 1;
+
+        end
+
+
+        /*
+         * ========================================================
+         * TEST 4
+         * ========================================================
+         */
+
+        $display("");
+        $display("TEST 4: Allocate 0x1C0");
+        $display("Expected: MSHR 3");
+
+        submit_request(
+            32'h000001C0,
+            1'b0,
+            32'h00000000
+        );
+
+        #1;
+
+        if (mshr_valid_debug[3] &&
+            mshr_addr_debug[3] == 32'h000001C0) begin
+
+            $display("PASS: MSHR 3 owns 0x1C0");
+            pass_count = pass_count + 1;
+
+        end
+        else begin
+
+            $display(
+                "FAIL: MSHR 3 allocation valid=%b addr=%h",
+                mshr_valid_debug,
+                mshr_addr_debug[3]
+            );
+
+            fail_count = fail_count + 1;
+
+        end
+
+
+        /*
+         * ========================================================
+         * TEST 5
+         * ========================================================
+         */
+
+        $display("");
+        $display("TEST 5: Verify MSHR table is full");
+        $display("Expected: valid=1111");
+
+        #1;
+
+        if (mshr_valid_debug == 4'b1111) begin
+
+            $display("PASS: all four MSHRs are active");
+            pass_count = pass_count + 1;
+
+        end
+        else begin
+
+            $display(
+                "FAIL: MSHR table valid=%b",
+                mshr_valid_debug
+            );
+
+            fail_count = fail_count + 1;
+
+        end
+
+
+        /*
+         * ========================================================
+         * TEST 6
+         * ========================================================
+         */
+
+        $display("");
+        $display("TEST 6: Submit fifth outstanding miss 0x200");
+        $display("Expected: REQUEST BLOCKED");
+
+        @(negedge clk);
+
+        req_addr  = 32'h00000200;
+        req_write = 1'b0;
+        req_wdata = 32'b0;
+        req_valid = 1'b1;
+
+        #1;
+
+        if (!req_ready) begin
+
+            $display("PASS: 0x200 blocked because all MSHRs are full");
+            pass_count = pass_count + 1;
+
+        end
+        else begin
+
+            $display("FAIL: 0x200 incorrectly accepted");
+            fail_count = fail_count + 1;
+
+        end
+
+        @(posedge clk);
+
+        #1;
+
+        req_valid = 1'b0;
+
+
+        /*
+         * ========================================================
+         * TEST 7
+         * ========================================================
+         */
+
+        $display("");
+        $display("TEST 7: Verify blocked request did not allocate");
+        $display("Expected: valid=1111");
+
+        #1;
+
+        if (mshr_valid_debug == 4'b1111) begin
+
+            $display("PASS: blocked request created no fifth MSHR");
+            pass_count = pass_count + 1;
+
+        end
+        else begin
+
+            $display(
+                "FAIL: MSHR state changed unexpectedly valid=%b",
+                mshr_valid_debug
+            );
+
+            fail_count = fail_count + 1;
+
+        end
+
+
+        /*
+         * ========================================================
+         * TEST 8
+         * ========================================================
+         */
+
+        $display("");
+        $display("TEST 8: Release MSHR 0");
+        $display("Expected: MSHR 0 becomes free");
+
+        @(negedge clk);
+
+        mshr_release_valid = 1'b1;
+        mshr_release_index = 2'd0;
+
+        @(posedge clk);
+
+        #1;
+
+        mshr_release_valid = 1'b0;
+
+        if (!mshr_valid_debug[0] &&
+            mshr_valid_debug[3:1] == 3'b111) begin
+
+            $display("PASS: MSHR 0 released");
+            pass_count = pass_count + 1;
+
+        end
+        else begin
+
+            $display(
+                "FAIL: release state valid=%b",
+                mshr_valid_debug
+            );
+
+            fail_count = fail_count + 1;
+
+        end
+
+
+        /*
+         * ========================================================
+         * TEST 9
+         * ========================================================
+         */
+
+        $display("");
+        $display("TEST 9: Retry 0x200");
+        $display("Expected: request accepted into MSHR 0");
+
+        submit_request(
+            32'h00000200,
+            1'b0,
+            32'h00000000
+        );
+
+        #1;
+
+        if (mshr_valid_debug[0] &&
+            mshr_addr_debug[0] == 32'h00000200) begin
+
+            $display("PASS: 0x200 allocated after MSHR became free");
+            pass_count = pass_count + 1;
+
+        end
+        else begin
+
+            $display(
+                "FAIL: 0x200 allocation valid=%b addr=%h",
+                mshr_valid_debug,
+                mshr_addr_debug[0]
+            );
+
+            fail_count = fail_count + 1;
+
+        end
+
+
+        /*
+         * ========================================================
+         * TEST 10
+         * ========================================================
+         */
+
+        $display("");
+        $display("TEST 10: Complete all outstanding MSHRs");
+        $display("Expected: all MSHRs released");
 
         complete_mshr(2'd1, 32'hAAAA0140);
-        #1;
-
-        if (resp_valid &&
-            !resp_hit &&
-            resp_rdata == 32'hAAAA0140) begin
-            $display("PASS: out-of-order response contains AAAA0140");
-            pass_count = pass_count + 1;
-        end
-        else begin
-            $display("FAIL: response data = %h", resp_rdata);
-            fail_count = fail_count + 1;
-        end
-
-        $display("");
-        $display("TEST 4: Verify 0x140 became a CACHE HIT");
-        $display("Expected: CACHE HIT");
-
-        @(negedge clk);
-        req_addr = 32'h00000140;
-        req_valid = 1'b0;
-        #1;
-
-        if (req_class_debug == 2'b00) begin
-            $display("PASS: 0x140 is a CACHE HIT");
-            pass_count = pass_count + 1;
-        end
-        else begin
-            $display("FAIL: 0x140 class=%b", req_class_debug);
-            fail_count = fail_count + 1;
-        end
-
-        $display("");
-        $display("TEST 5: Verify 0x100 remains outstanding");
-        $display("Expected: DUPLICATE / MSHR 0");
-
-        @(negedge clk);
-        req_addr = 32'h00000100;
-        #1;
-
-        if (req_mshr_match_debug &&
-            req_mshr_index_debug == 2'd0) begin
-            $display("PASS: 0x100 remains owned by MSHR 0");
-            pass_count = pass_count + 1;
-        end
-        else begin
-            $display("FAIL: 0x100 owner lookup incorrect");
-            fail_count = fail_count + 1;
-        end
-
-        $display("");
-        $display("TEST 6: Complete MSHR 0");
-        $display("Expected: CPU response = AAAA0100");
-
-        complete_mshr(2'd0, 32'hAAAA0100);
-        #1;
-
-        if (resp_valid &&
-            !resp_hit &&
-            resp_rdata == 32'hAAAA0100) begin
-            $display("PASS: second response contains AAAA0100");
-            pass_count = pass_count + 1;
-        end
-        else begin
-            $display("FAIL: response data = %h", resp_rdata);
-            fail_count = fail_count + 1;
-        end
-
-        $display("");
-        $display("TEST 7: Verify newest colliding line remains cached");
-        $display("Expected: 0x140 CACHE HIT, 0x100 NEW MISS");
-
-        @(negedge clk);
-        req_addr = 32'h00000140;
-        #1;
-
-        if (req_class_debug == 2'b00) begin
-            $display("PASS: 0x140 remains a CACHE HIT");
-            pass_count = pass_count + 1;
-        end
-        else begin
-            $display("FAIL: 0x140 class=%b", req_class_debug);
-            fail_count = fail_count + 1;
-        end
-
-        @(negedge clk);
-        req_addr = 32'h00000100;
-        #1;
-
-        if (req_class_debug == 2'b01) begin
-            $display("PASS: 0x100 is correctly a NEW MISS");
-            pass_count = pass_count + 1;
-        end
-        else begin
-            $display("FAIL: 0x100 class=%b", req_class_debug);
-            fail_count = fail_count + 1;
-        end
-
-        $display("");
-        $display("TEST 8: Verify all MSHRs are released");
-        $display("Expected: valid=0000");
+        complete_mshr(2'd2, 32'hAAAA0180);
+        complete_mshr(2'd3, 32'hAAAA01C0);
+        complete_mshr(2'd0, 32'hAAAA0200);
 
         #1;
 
         if (mshr_valid_debug == 4'b0000) begin
+
             $display("PASS: all MSHRs released");
             pass_count = pass_count + 1;
+
         end
         else begin
-            $display("FAIL: MSHR valid state=%b", mshr_valid_debug);
+
+            $display(
+                "FAIL: stale MSHR remains valid=%b",
+                mshr_valid_debug
+            );
+
             fail_count = fail_count + 1;
+
         end
+
+
+        /*
+         * ========================================================
+         * SUMMARY
+         * ========================================================
+         */
 
         $display("");
         $display("================================================");
-        $display("PROJECT 37 STEP 23 VERIFICATION SUMMARY");
+        $display("PROJECT 37 STEP 14 VERIFICATION SUMMARY");
         $display("================================================");
+
         $display("PASS COUNT = %0d", pass_count);
         $display("FAIL COUNT = %0d", fail_count);
         $display("MEMORY REQUESTS = %0d", memory_request_count);
 
-        if (fail_count == 0)
-            $display("PROJECT 37 STEP 23 VERIFICATION: PASS");
-        else
-            $display("PROJECT 37 STEP 23 VERIFICATION: FAIL");
+        $display("");
+
+        if (fail_count == 0) begin
+            $display("PROJECT 37 STEP 14 VERIFICATION: PASS");
+        end
+        else begin
+            $display("PROJECT 37 STEP 14 VERIFICATION: FAIL");
+        end
 
         $display("================================================");
+
         $finish;
+
     end
-
-
-
     /*
      * ============================================================
      * MEMORY REQUEST MONITOR

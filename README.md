@@ -14,7 +14,7 @@ The objective is not only to learn Verilog syntax, but to understand how RTL rep
 
 # 📊 Repository Progress
 
-The repository currently contains **33 completed Verilog RTL projects**.
+The repository currently contains **37 completed Verilog RTL projects**.
 
 The projects cover:
 
@@ -41,11 +41,13 @@ The projects cover:
 - Return address prediction
 - Instruction caches
 - Data caches
+- Advanced cache architecture
+- Multi-MSHR non-blocking cache
 - RTL synthesis using Yosys
 
 The current Yosys synthesis workflow has been extended through **Project 31**.
 
-Projects 32 and 33 continue the processor memory-hierarchy development path and will be integrated into the Yosys workflow as the synthesis work progresses.
+Projects beyond Project 31 continue the processor memory-hierarchy development path, moving from conventional cache architecture toward more advanced memory-system designs.
 
 ---
 
@@ -56,57 +58,105 @@ The projects follow a progressively more complete hardware-development methodolo
 For RTL projects:
 
     Problem Definition
+
             │
+
             ▼
+
     Architecture
+
             │
+
             ▼
+
     RTL Implementation
+
             │
+
             ▼
+
     Testbench Development
+
             │
+
             ▼
+
     Functional Simulation
+
             │
+
             ▼
+
     GTKWave Analysis
+
             │
+
             ▼
+
     Documentation
+
             │
+
             ▼
+
     Git Version Control
 
 For projects that have entered the Yosys workflow:
 
     Problem Definition
+
             │
+
             ▼
+
     RTL Architecture
+
             │
+
             ▼
+
     RTL Implementation
+
             │
+
             ▼
+
     Module Verification
+
             │
+
             ▼
+
     System Integration
+
             │
+
             ▼
+
     Yosys RTL Synthesis
+
             │
+
             ▼
+
     Netlist Generation
+
             │
+
             ▼
+
     RTL Schematic Analysis
+
             │
+
             ▼
+
     Documentation
+
             │
+
             ▼
+
     Git Version Control
 
 This workflow keeps verification and synthesis connected directly to the RTL rather than treating them as separate activities.
@@ -183,6 +233,10 @@ This workflow keeps verification and synthesis connected directly to the RTL rat
 | 31 | Return Address Stack | ✅ |
 | 32 | Instruction Cache | ✅ |
 | 33 | Write-Back Data Cache | ✅ |
+| 34 | Advanced Cache / Memory-Hierarchy Development | ✅ |
+| 35 | Advanced Cache / Memory-Hierarchy Development | ✅ |
+| 36 | Advanced Cache / Memory-Hierarchy Development | ✅ |
+| 37 | Multi-MSHR Non-Blocking Cache | ✅ |
 
 Each project contains its own implementation and verification documentation. Projects that have entered the Yosys workflow additionally contain synthesis-related documentation and artifacts.
 
@@ -193,43 +247,89 @@ Each project contains its own implementation and verification documentation. Pro
 The overall learning progression is:
 
     Digital Logic
+
           ↓
+
     Sequential RTL
+
           ↓
+
     FSMs and Control Logic
+
           ↓
+
     Timers / PWM / FIFO
+
           ↓
+
     SPI / I²C / UART / CAN
+
           ↓
+
     AXI4-Lite
+
           ↓
+
     Memory Systems
+
           ↓
+
     Interrupts / DMA
+
           ↓
+
     Reusable RTL IP
+
           ↓
+
     Processor Datapath
+
           ↓
+
     Pipeline Architecture
+
           ↓
+
     Hazard Detection
+
           ↓
+
     Forwarding
+
           ↓
+
     Branch Control
+
           ↓
+
     Branch Prediction
+
           ↓
+
     Return Address Prediction
+
           ↓
+
     Instruction Cache
+
           ↓
+
     Data Cache
+
           ↓
+
+    Advanced Cache Architecture
+
+          ↓
+
+    Multi-MSHR Non-Blocking Cache
+
+          ↓
+
     Yosys Synthesis
+
           ↓
+
     Open-Source ASIC Flow
 
 ---
@@ -241,16 +341,27 @@ Yosys is now integrated into the portfolio through **Project 31**.
 The current synthesis milestone is:
 
     Projects 01–31
+
             │
+
             ▼
+
           Yosys
+
             │
+
             ├── RTL Parsing
+
             ├── Hierarchy Analysis
+
             ├── Process Conversion
+
             ├── Logic Optimization
+
             ├── Design Statistics
+
             ├── Synthesized Netlist
+
             └── RTL Schematic
 
 The synthesis workflow demonstrates the transition from behavioral RTL toward a synthesized hardware representation.
@@ -258,19 +369,33 @@ The synthesis workflow demonstrates the transition from behavioral RTL toward a 
 The general flow is:
 
     Verilog RTL
+
          ↓
+
     RTL Parsing
+
          ↓
+
     Hierarchy Analysis
+
          ↓
+
     Process Conversion
+
          ↓
+
     Logic Optimization
+
          ↓
+
     Technology-Independent Synthesis
+
          ↓
+
     Synthesized Netlist
+
          ↓
+
     RTL / Logic Schematic
 
 ---
@@ -318,14 +443,16 @@ Each Yosys-enabled project focuses on connecting the original RTL with the resul
 Typical synthesis artifacts include:
 
     synth/
+
     ├── scripts/
+
     ├── netlists/
+
     └── schematics/
 
 The exact directory structure varies between projects as the repository is progressively standardized.
 
 ---
-
 
 # 🧠 Processor-Oriented RTL
 
@@ -347,56 +474,98 @@ The processor development path currently covers:
 - Return address prediction
 - Instruction caching
 - Data caching
+- Advanced cache architecture
+- Multiple outstanding cache transactions
 
-The goal is to understand how individual RTL blocks interact inside a pipelined processor.
+The goal is to understand how individual RTL blocks interact inside a pipelined processor and its memory hierarchy.
 
 ---
-
 
 # 🏗 Processor Development Progression
 
 The processor-oriented progression is:
 
     Pipelined ALU
+
           │
+
           ▼
+
     Hazard Detection
+
           │
+
           ▼
+
     Forwarding Unit
+
           │
+
           ▼
+
     5-Stage Pipeline
+
           │
+
           ▼
+
     Load-Use Hazard Handling
+
           │
+
           ▼
+
     Branch Control
+
           │
+
           ▼
+
     RISC-V-Oriented RTL
+
           │
+
           ▼
+
     Two-Bit Branch Predictor
+
           │
+
           ▼
+
     Branch Target Buffer
+
           │
+
           ▼
+
     Return Address Stack
+
           │
+
           ▼
+
     Instruction Cache
+
           │
+
           ▼
+
     Data Cache
+
           │
+
           ▼
-    More Complete Processor Memory Hierarchy
+
+    Advanced Cache Architecture
+
+          │
+
+          ▼
+
+    Multi-MSHR Non-Blocking Cache
 
 ---
-
 
 # 🧩 Processor Microarchitecture Concepts
 
@@ -440,7 +609,6 @@ The processor-oriented progression is:
 
 ---
 
-
 # 🧠 Processor Prediction
 
 Projects 29–31 introduce hardware structures that improve processor control-flow prediction.
@@ -477,7 +645,6 @@ Concepts include:
 
 This demonstrates how a processor can predict both branch direction and the destination address of a predicted branch.
 
-
 ## Project 31 — Return Address Stack
 
 The return address stack provides hardware support for predicting function return addresses.
@@ -497,17 +664,37 @@ Project 31 is also the current endpoint of the Yosys synthesis workflow.
 
 ---
 
-
 # 💾 Processor Memory Hierarchy
 
-Projects 32 and 33 extend the processor work into caching.
+Projects 32 onward extend the processor work into increasingly advanced cache and memory-hierarchy designs.
 
     Project 32
+
     Instruction Cache
+
           │
+
           ▼
+
     Project 33
+
     Write-Back Data Cache
+
+          │
+
+          ▼
+
+    Projects 34–36
+
+    Advanced Cache Development
+
+          │
+
+          ▼
+
+    Project 37
+
+    Multi-MSHR Non-Blocking Cache
 
 These projects introduce:
 
@@ -521,9 +708,10 @@ These projects introduce:
 - Cache replacement
 - Write allocation
 - Write-back behavior
+- Multiple outstanding requests
+- MSHR-based tracking
 
 ---
-
 
 # Project 32 — Instruction Cache
 
@@ -545,7 +733,6 @@ The design focuses on:
 The project establishes the basic cache architecture required before introducing writable data caching.
 
 ---
-
 
 # Project 33 — Write-Back Data Cache
 
@@ -571,48 +758,41 @@ The project implements a small direct-mapped data cache with:
 - Cache replacement
 - Cache controller FSM
 
-The important architectural flow is:
-
-    CPU Request
-         │
-         ▼
-    Cache Lookup
-         │
-         ▼
-       HIT?
-       /   \
-     YES    NO
-      │      │
-      │    Dirty?
-      │     /   \
-      │   YES    NO
-      │    │      │
-      │    ▼      │
-      │ WRITE     │
-      │  BACK     │
-      │    │      │
-      │    └──────┘
-      │       │
-      │       ▼
-      │     REFILL
-      │       │
-      └───────┘
-          │
-          ▼
-      CPU Ready
-
-The project was verified using:
-
-- Verilog testbench
-- Behavioral backing memory
-- Icarus Verilog
-- GTKWave
-- VCD waveform analysis
-
 The project demonstrates the difference between cached data and main-memory data and introduces dirty-line handling for write-back caching.
 
 ---
 
+# Project 37 — Multi-MSHR Non-Blocking Cache
+
+Project 37 extends the cache architecture toward a **multi-MSHR non-blocking cache**.
+
+The project focuses on:
+
+- Multiple outstanding cache misses
+- MSHR allocation
+- MSHR ownership
+- MSHR reuse
+- Duplicate request detection
+- Memory request tracking
+- Out-of-order memory responses
+- Cache-index generation tracking
+- Stale response protection
+- Write-miss data retention
+- CPU-side response handling
+
+The project was developed incrementally through multiple verification steps, with the latest verified milestone covering **Step 23 — Out-of-Order CPU Response Data**.
+
+The final Step 23 verification completed successfully with:
+
+    PASS COUNT = 9
+    FAIL COUNT = 0
+    MEMORY REQUESTS = 2
+
+    PROJECT 37 STEP 23 VERIFICATION: PASS
+
+Project 37 represents the next stage of cache development beyond a conventional write-back cache, introducing the ability to track multiple outstanding memory transactions.
+
+---
 
 # ⭐ Featured Projects
 
@@ -629,7 +809,6 @@ Highlights:
 - Hierarchical RTL
 - Functional Verification
 
-
 ## Hazard Detection Unit
 
 A processor pipeline control subsystem designed to detect RAW dependencies and generate pipeline stall behavior.
@@ -642,7 +821,6 @@ Highlights:
 - Controller FSM
 - Pipeline Control
 - Functional Verification
-
 
 ## Forwarding Unit
 
@@ -658,7 +836,6 @@ Highlights:
 - Operand Selection
 - Functional Verification
 
-
 ## DMA Controller
 
 A modular memory-to-memory DMA engine demonstrating autonomous hardware data movement.
@@ -671,7 +848,6 @@ Highlights:
 - DMA Controller FSM
 - Top-Level Integration
 - Functional Verification
-
 
 ## AXI4-Lite Slave Peripheral
 
@@ -686,7 +862,6 @@ Highlights:
 - Top-Level Integration
 - Functional Verification
 
-
 ## Programmable Interrupt Controller
 
 A hardware interrupt-management block demonstrating interrupt prioritization and masking.
@@ -698,7 +873,6 @@ Highlights:
 - Priority Encoder
 - Interrupt Controller FSM
 - CPU Interface
-
 
 ## SDRAM Controller
 
@@ -712,7 +886,6 @@ Highlights:
 - Write Controller
 - Timing Generation
 
-
 ## Multi-Port SDRAM Arbiter
 
 A shared-memory arbitration system designed to coordinate multiple memory request sources.
@@ -724,7 +897,6 @@ Highlights:
 - Shared Memory Access
 - Bus Multiplexing
 - Arbitration FSM
-
 
 ## Instruction Cache
 
@@ -739,7 +911,6 @@ Highlights:
 - Miss Detection
 - Instruction Refill
 - Memory Interface
-
 
 ## Write-Back Data Cache
 
@@ -761,8 +932,24 @@ Highlights:
 - Cache Refill
 - Cache Controller FSM
 
----
+## Multi-MSHR Non-Blocking Cache
 
+An advanced cache architecture designed to track multiple outstanding memory transactions using multiple Miss Status Holding Registers.
+
+Highlights:
+
+- Multiple Outstanding Misses
+- MSHR Allocation
+- MSHR Ownership
+- MSHR Reuse
+- Duplicate Detection
+- Out-of-Order Responses
+- Cache Generation Tracking
+- Stale Response Protection
+- Write-Miss Data Retention
+- Functional Verification
+
+---
 
 # 📖 Major Concepts Covered
 
@@ -777,7 +964,6 @@ Highlights:
 - RTL Integration
 - Synchronous Design
 - Control-Oriented RTL
-
 
 ## Processor Architecture
 
@@ -794,7 +980,7 @@ Highlights:
 - Return Address Prediction
 - Instruction Cache
 - Data Cache
-
+- Non-Blocking Cache Architecture
 
 ## Control Logic
 
@@ -808,7 +994,6 @@ Highlights:
 - Forwarding Control
 - Cache Control
 - Memory Transaction Control
-
 
 ## Memory Systems
 
@@ -825,7 +1010,7 @@ Highlights:
 - Dirty Bits
 - Cache Refill
 - Write-Back
-
+- MSHR Tracking
 
 ## Communication Protocols
 
@@ -835,7 +1020,6 @@ Highlights:
 - CAN
 - AXI4-Lite
 
-
 ## Bus & System Architecture
 
 - AXI4-Lite Master
@@ -844,7 +1028,6 @@ Highlights:
 - Multi-Port Arbitration
 - DMA Architecture
 - Memory-Mapped Peripheral Design
-
 
 ## Verification
 
@@ -856,7 +1039,6 @@ Highlights:
 - Top-Level Integration
 - System-Level Verification
 - Waveform Debugging
-
 
 ## Synthesis
 
@@ -871,7 +1053,6 @@ Highlights:
 - Hardware Structure Analysis
 
 ---
-
 
 # 🎯 Skills Developed
 
@@ -889,6 +1070,8 @@ Highlights:
 - Cache Architecture
 - Data Cache Design
 - Instruction Cache Design
+- Non-Blocking Cache Design
+- MSHR Architecture
 - Finite State Machine Design
 - Memory Controller Design
 - DMA Controller Design
@@ -907,7 +1090,6 @@ Highlights:
 
 ---
 
-
 # 🔍 Verification Philosophy
 
 Verification is treated as part of the design process rather than something added after RTL development.
@@ -915,17 +1097,29 @@ Verification is treated as part of the design process rather than something adde
 The general approach is:
 
     Design
+
       ↓
+
     Identify Expected Behavior
+
       ↓
+
     Build Testbench
+
       ↓
+
     Run Simulation
+
       ↓
+
     Inspect Waveform
+
       ↓
+
     Debug
+
       ↓
+
     Re-verify
 
 For more complex projects, verification focuses on both individual blocks and top-level behavior.
@@ -953,21 +1147,30 @@ Each project is maintained independently so that its RTL, verification environme
 A typical project may contain:
 
     Verilog_ProjectXX/
+
     ├── README.md
+
     ├── command.md
-    ├── verilogcode/
+
+    ├── RTL/
+
     ├── tb/
+
     ├── verification/
+
     ├── synth/
+
     │   ├── scripts/
+
     │   ├── netlists/
+
     │   └── schematics/
+
     └── waves/
 
 The exact directory structure varies depending on the project and the stage at which it entered the standardized workflow.
 
 Generated simulation artifacts such as VCD files and compiled simulation binaries are kept outside version control where appropriate.
-
 
 ---
 
@@ -977,11 +1180,17 @@ Generated simulation artifacts such as VCD files and compiled simulation binarie
 Simulation is primarily performed using:
 
     Icarus Verilog
+
           ↓
+
     VCD Generation
+
           ↓
+
     GTKWave
+
           ↓
+
     Waveform Analysis
 
 GTKWave is used to inspect:
@@ -1000,9 +1209,7 @@ GTKWave is used to inspect:
 
 Waveform analysis is particularly important for sequential RTL because many hardware problems are related to timing and state transitions rather than simple combinational correctness.
 
-
 ---
-
 
 # 🧱 RTL Design Practices
 
@@ -1022,73 +1229,123 @@ The projects are developed with an emphasis on:
 
 The RTL is written with the intention of making the hardware behavior understandable to another engineer.
 
-The goal is not simply:
-
-    "Make the simulation pass."
-
-The goal is:
-
-    "Understand what hardware the RTL describes."
-
 ---
-
 
 # 📈 Current Learning Journey
 
 The current learning progression can be summarized as:
 
     Digital Logic
+
           │
+
           ▼
+
     RTL Design
+
           │
+
           ▼
+
     Communication Protocols
+
           │
+
           ▼
+
     Memory Systems
+
           │
+
           ▼
+
     Bus Architectures
+
           │
+
           ▼
+
     RTL IP Development
+
           │
+
           ▼
+
     Processor Datapath Design
+
           │
+
           ▼
+
     Pipeline Architecture
+
           │
+
           ▼
+
     Hazard Detection
+
           │
+
           ▼
+
     Data Forwarding
+
           │
+
           ▼
+
     Branch Control
+
           │
+
           ▼
+
     Branch Prediction
+
           │
+
           ▼
+
     Return Address Prediction
+
           │
+
           ▼
+
     Instruction Cache
+
           │
+
           ▼
+
     Data Cache
+
           │
+
           ▼
+
+    Advanced Cache Architecture
+
+          │
+
+          ▼
+
+    Multi-MSHR Non-Blocking Cache
+
+          │
+
+          ▼
+
     RTL Synthesis
+
           │
+
           ▼
+
     ASIC Design
 
 ---
-
 
 # 🧠 What I Am Learning
 
@@ -1097,17 +1354,29 @@ The objective of this repository is not simply to learn Verilog syntax.
 The larger goal is to understand the complete digital hardware-development path:
 
     Hardware Requirement
+
             ↓
+
     Architecture
+
             ↓
+
     RTL
+
             ↓
+
     Verification
+
             ↓
+
     Synthesis
+
             ↓
+
     Hardware Structure
+
             ↓
+
     Implementation
 
 Through these projects, I am developing practical understanding of:
@@ -1128,13 +1397,13 @@ Through these projects, I am developing practical understanding of:
 - Return address prediction
 - Cache architecture
 - Memory hierarchy
+- Non-blocking cache concepts
 - RTL verification
 - Waveform debugging
 - RTL synthesis
 - Hardware structure after synthesis
 
 ---
-
 
 # 🗺️ Explore the Projects
 
@@ -1145,6 +1414,7 @@ For digital-design fundamentals:
 For communication RTL:
 
     Projects 05–09
+
     Projects 12–14
 
 For system-level interfaces, memory, interrupts, and data movement:
@@ -1155,9 +1425,13 @@ For processor and pipeline architecture:
 
     Projects 21–28
 
-For processor prediction and memory hierarchy:
+For processor prediction:
 
-    Projects 29–33
+    Projects 29–31
+
+For processor memory hierarchy:
+
+    Projects 32–37
 
 For Yosys synthesis:
 
@@ -1167,108 +1441,125 @@ Each project contains its own documentation, RTL, verification environment, and 
 
 ---
 
-
 # 🏁 Current Milestone
 
 The repository has now progressed from basic RTL exercises into a processor-oriented hardware portfolio.
 
-    33 RTL Projects
+    37 RTL Projects
+
           │
+
           ▼
+
     Digital Logic
+
           │
+
           ▼
+
     Communication + System IP
+
           │
+
           ▼
+
     Memory + DMA
+
           │
+
           ▼
+
     Processor Datapath
+
           │
+
           ▼
+
     Pipeline Architecture
+
           │
+
           ▼
+
     Hazard Detection
+
           │
+
           ▼
+
     Forwarding
+
           │
+
           ▼
+
     Branch Control
+
           │
+
           ▼
+
     Branch Prediction
+
           │
+
           ▼
+
     Return Address Prediction
+
           │
+
           ▼
+
     Instruction Cache
+
           │
+
           ▼
+
     Write-Back Data Cache
+
+          │
+
+          ▼
+
+    Advanced Cache Architecture
+
+          │
+
+          ▼
+
+    Multi-MSHR Non-Blocking Cache
 
 At the same time, the synthesis workflow has progressed through **Project 31 using Yosys**, creating a bridge between RTL design and synthesized hardware.
 
 The portfolio is therefore developing along two connected tracks:
 
     RTL / Processor Architecture
+
                 │
+
                 ├───────────────┐
+
                 │               │
+
                 ▼               ▼
+
         Processor Design      Yosys
+
                 │               │
+
                 ▼               ▼
+
         Memory Hierarchy    Synthesis
+
                 │               │
+
                 └───────┬───────┘
+
                         ▼
+
               Open-Source ASIC Flow
-
----
-
-
-# 🔭 Current Architecture Direction
-
-The recent projects are moving toward a more complete processor subsystem.
-
-The current direction is:
-
-    Pipeline Datapath
-          ↓
-    Hazard Detection
-          ↓
-    Forwarding
-          ↓
-    Branch Control
-          ↓
-    Branch Prediction
-          ↓
-    Return Address Prediction
-          ↓
-    Instruction Cache
-          ↓
-    Data Cache
-          ↓
-    Processor Memory Hierarchy
-          ↓
-    More Complete RISC-V-Oriented Processor
-
-This creates a foundation for future work involving:
-
-- More complete RISC-V processor architecture
-- Larger cache structures
-- Set-associative caches
-- Multi-word cache lines
-- Memory hierarchy design
-- More advanced bus interfaces
-- FPGA implementation
-- Open-source ASIC implementation
-- RISC-V integration
-- Hardware acceleration
 
 ---
 
@@ -1314,7 +1605,7 @@ Each completed project strengthens the foundation for more advanced topics inclu
 
 The portfolio is progressively moving from:
 
-**Digital RTL → System RTL → Processor RTL → Memory Hierarchy → Yosys Synthesis → ASIC-Oriented Hardware Design**
+**Digital RTL → System RTL → Processor RTL → Memory Hierarchy → Non-Blocking Cache Architecture → Yosys Synthesis → ASIC-Oriented Hardware Design**
 
 ---
 

@@ -229,187 +229,300 @@ module tb_multi_mshr_cache;
         fail_count = 0;
         memory_request_count = 0;
 
+
+        /*
+         * ========================================================
+         * RESET
+         * ========================================================
+         */
+
         rst = 1'b1;
-        repeat (3) @(posedge clk);
+
+        repeat (3)
+            @(posedge clk);
+
         rst = 1'b0;
+
         @(posedge clk);
+
 
         $display("");
         $display("================================================");
         $display("PROJECT 37 - MULTI-MSHR NON-BLOCKING CACHE");
-        $display("STEP 23 - OUT-OF-ORDER CPU RESPONSE DATA");
+        $display("STEP 22 - WRITE MISS DATA RETENTION");
         $display("================================================");
 
-        $display("");
-        $display("TEST 1: Allocate two outstanding read misses");
-        $display("Expected: MSHR 0=0x100, MSHR 1=0x140");
 
-        submit_request(32'h00000100, 1'b0, 32'h00000000);
-        submit_request(32'h00000140, 1'b0, 32'h00000000);
+        /*
+         * ========================================================
+         * TEST 1
+         * ========================================================
+         */
+
+        $display("");
+        $display("TEST 1: Allocate write miss 0x100");
+        $display("Expected: MSHR 0 stores write request");
+
+        submit_request(
+            32'h00000100,
+            1'b1,
+            32'hDEADBEEF
+        );
 
         #1;
 
         if (mshr_valid_debug[0] &&
-            mshr_valid_debug[1] &&
-            mshr_addr_debug[0] == 32'h00000100 &&
-            mshr_addr_debug[1] == 32'h00000140) begin
-            $display("PASS: MSHR 0=0x100 and MSHR 1=0x140");
+            mshr_write_debug[0] &&
+            mshr_addr_debug[0] == 32'h00000100) begin
+
+            $display(
+                "PASS: MSHR 0 owns write miss 0x100"
+            );
+
             pass_count = pass_count + 1;
+
         end
         else begin
-            $display("FAIL: MSHR allocation incorrect");
+
+            $display(
+                "FAIL: write MSHR state invalid"
+            );
+
             fail_count = fail_count + 1;
+
         end
+
+
+        /*
+         * ========================================================
+         * TEST 2
+         * ========================================================
+         */
 
         $display("");
-        $display("TEST 2: Verify two memory requests");
-        $display("Expected: two memory transactions");
+        $display("TEST 2: Verify memory request");
+        $display("Expected: one memory transaction");
 
-        repeat (5) @(posedge clk);
+        repeat (4)
+            @(posedge clk);
+
         #1;
 
-        if (memory_request_count == 2) begin
-            $display("PASS: exactly two memory requests observed");
+        if (memory_request_count == 1) begin
+
+            $display(
+                "PASS: exactly one memory request observed"
+            );
+
             pass_count = pass_count + 1;
+
         end
         else begin
-            $display("FAIL: expected 2 memory requests, observed %0d",
-                     memory_request_count);
+
+            $display(
+                "FAIL: expected 1 memory request, observed %0d",
+                memory_request_count
+            );
+
             fail_count = fail_count + 1;
+
         end
+
+
+        /*
+         * ========================================================
+         * TEST 3
+         * ========================================================
+         *
+         * Memory deliberately returns different data.
+         * The cache must use DEADBEEF from the CPU write.
+         */
 
         $display("");
-        $display("TEST 3: Complete MSHR 1 first");
-        $display("Expected: CPU response = AAAA0140");
+        $display("TEST 3: Complete write miss");
+        $display("Expected: CPU write data DEADBEEF is retained");
 
-        complete_mshr(2'd1, 32'hAAAA0140);
-        #1;
-
-        if (resp_valid &&
-            !resp_hit &&
-            resp_rdata == 32'hAAAA0140) begin
-            $display("PASS: out-of-order response contains AAAA0140");
-            pass_count = pass_count + 1;
-        end
-        else begin
-            $display("FAIL: response data = %h", resp_rdata);
-            fail_count = fail_count + 1;
-        end
-
-        $display("");
-        $display("TEST 4: Verify 0x140 became a CACHE HIT");
-        $display("Expected: CACHE HIT");
-
-        @(negedge clk);
-        req_addr = 32'h00000140;
-        req_valid = 1'b0;
-        #1;
-
-        if (req_class_debug == 2'b00) begin
-            $display("PASS: 0x140 is a CACHE HIT");
-            pass_count = pass_count + 1;
-        end
-        else begin
-            $display("FAIL: 0x140 class=%b", req_class_debug);
-            fail_count = fail_count + 1;
-        end
-
-        $display("");
-        $display("TEST 5: Verify 0x100 remains outstanding");
-        $display("Expected: DUPLICATE / MSHR 0");
-
-        @(negedge clk);
-        req_addr = 32'h00000100;
-        #1;
-
-        if (req_mshr_match_debug &&
-            req_mshr_index_debug == 2'd0) begin
-            $display("PASS: 0x100 remains owned by MSHR 0");
-            pass_count = pass_count + 1;
-        end
-        else begin
-            $display("FAIL: 0x100 owner lookup incorrect");
-            fail_count = fail_count + 1;
-        end
-
-        $display("");
-        $display("TEST 6: Complete MSHR 0");
-        $display("Expected: CPU response = AAAA0100");
-
-        complete_mshr(2'd0, 32'hAAAA0100);
-        #1;
-
-        if (resp_valid &&
-            !resp_hit &&
-            resp_rdata == 32'hAAAA0100) begin
-            $display("PASS: second response contains AAAA0100");
-            pass_count = pass_count + 1;
-        end
-        else begin
-            $display("FAIL: response data = %h", resp_rdata);
-            fail_count = fail_count + 1;
-        end
-
-        $display("");
-        $display("TEST 7: Verify newest colliding line remains cached");
-        $display("Expected: 0x140 CACHE HIT, 0x100 NEW MISS");
-
-        @(negedge clk);
-        req_addr = 32'h00000140;
-        #1;
-
-        if (req_class_debug == 2'b00) begin
-            $display("PASS: 0x140 remains a CACHE HIT");
-            pass_count = pass_count + 1;
-        end
-        else begin
-            $display("FAIL: 0x140 class=%b", req_class_debug);
-            fail_count = fail_count + 1;
-        end
-
-        @(negedge clk);
-        req_addr = 32'h00000100;
-        #1;
-
-        if (req_class_debug == 2'b01) begin
-            $display("PASS: 0x100 is correctly a NEW MISS");
-            pass_count = pass_count + 1;
-        end
-        else begin
-            $display("FAIL: 0x100 class=%b", req_class_debug);
-            fail_count = fail_count + 1;
-        end
-
-        $display("");
-        $display("TEST 8: Verify all MSHRs are released");
-        $display("Expected: valid=0000");
+        complete_mshr(
+            0,
+            32'hAAAA0000
+        );
 
         #1;
 
         if (mshr_valid_debug == 4'b0000) begin
-            $display("PASS: all MSHRs released");
+
+            $display(
+                "PASS: write MSHR completed and released"
+            );
+
             pass_count = pass_count + 1;
+
         end
         else begin
-            $display("FAIL: MSHR valid state=%b", mshr_valid_debug);
+
+            $display(
+                "FAIL: MSHR state after completion = %b",
+                mshr_valid_debug
+            );
+
             fail_count = fail_count + 1;
+
         end
+
+
+        /*
+         * ========================================================
+         * TEST 4
+         * ========================================================
+         */
+
+        $display("");
+        $display("TEST 4: Verify written address is cached");
+        $display("Expected: CACHE HIT");
+
+        @(negedge clk);
+
+        req_addr  = 32'h00000100;
+        req_write = 1'b0;
+        req_wdata = 32'b0;
+        req_valid = 1'b0;
+
+        #1;
+
+        if (req_class_debug == 2'b00) begin
+
+            $display(
+                "PASS: 0x100 is a CACHE HIT"
+            );
+
+            pass_count = pass_count + 1;
+
+        end
+        else begin
+
+            $display(
+                "FAIL: 0x100 class=%b",
+                req_class_debug
+            );
+
+            fail_count = fail_count + 1;
+
+        end
+
+
+        /*
+         * ========================================================
+         * TEST 5
+         * ========================================================
+         *
+         * Verify the CPU response contains the write data.
+         */
+
+        $display("");
+        $display("TEST 5: Verify write response data");
+        $display("Expected: DEADBEEF");
+
+        if (resp_rdata == 32'hDEADBEEF) begin
+
+            $display(
+                "PASS: response data = DEADBEEF"
+            );
+
+            pass_count = pass_count + 1;
+
+        end
+        else begin
+
+            $display(
+                "FAIL: response data = %h",
+                resp_rdata
+            );
+
+            fail_count = fail_count + 1;
+
+        end
+
+
+        /*
+         * ========================================================
+         * TEST 6
+         * ========================================================
+         *
+         * Verify the memory response data did not become the
+         * cache value.
+         */
+
+        $display("");
+        $display("TEST 6: Verify memory response was not installed");
+        $display("Expected: DEADBEEF remains the CPU-side result");
+
+        if (resp_rdata != 32'hAAAA0000) begin
+
+            $display(
+                "PASS: memory response data was not used as write data"
+            );
+
+            pass_count = pass_count + 1;
+
+        end
+        else begin
+
+            $display(
+                "FAIL: response incorrectly contains memory data"
+            );
+
+            fail_count = fail_count + 1;
+
+        end
+
+
+        /*
+         * ========================================================
+         * SUMMARY
+         * ========================================================
+         */
 
         $display("");
         $display("================================================");
-        $display("PROJECT 37 STEP 23 VERIFICATION SUMMARY");
+        $display("PROJECT 37 STEP 22 VERIFICATION SUMMARY");
         $display("================================================");
-        $display("PASS COUNT = %0d", pass_count);
-        $display("FAIL COUNT = %0d", fail_count);
-        $display("MEMORY REQUESTS = %0d", memory_request_count);
 
-        if (fail_count == 0)
-            $display("PROJECT 37 STEP 23 VERIFICATION: PASS");
-        else
-            $display("PROJECT 37 STEP 23 VERIFICATION: FAIL");
+        $display(
+            "PASS COUNT = %0d",
+            pass_count
+        );
+
+        $display(
+            "FAIL COUNT = %0d",
+            fail_count
+        );
+
+        $display(
+            "MEMORY REQUESTS = %0d",
+            memory_request_count
+        );
+
+        if (fail_count == 0) begin
+
+            $display("");
+            $display(
+                "PROJECT 37 STEP 22 VERIFICATION: PASS"
+            );
+
+        end
+        else begin
+
+            $display("");
+            $display(
+                "PROJECT 37 STEP 22 VERIFICATION: FAIL"
+            );
+
+        end
 
         $display("================================================");
+
         $finish;
+
     end
 
 
