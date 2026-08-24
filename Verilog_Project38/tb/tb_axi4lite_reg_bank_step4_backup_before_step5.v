@@ -1,0 +1,441 @@
+`timescale 1ns/1ps
+
+module tb_axi4lite_reg_bank;
+
+    reg         aclk;
+    reg         aresetn;
+
+    reg  [31:0] s_axi_awaddr;
+    reg         s_axi_awvalid;
+    wire        s_axi_awready;
+
+    reg  [31:0] s_axi_wdata;
+    reg  [3:0]  s_axi_wstrb;
+    reg         s_axi_wvalid;
+    wire        s_axi_wready;
+
+    wire [1:0]  s_axi_bresp;
+    wire        s_axi_bvalid;
+    reg         s_axi_bready;
+
+    reg  [31:0] s_axi_araddr;
+    reg         s_axi_arvalid;
+    wire        s_axi_arready;
+
+    wire [31:0] s_axi_rdata;
+    wire [1:0]  s_axi_rresp;
+    wire        s_axi_rvalid;
+    reg         s_axi_rready;
+
+    integer pass_count;
+    integer fail_count;
+
+
+    axi4lite_reg_bank dut (
+        .aclk(aclk),
+        .aresetn(aresetn),
+
+        .s_axi_awaddr(s_axi_awaddr),
+        .s_axi_awvalid(s_axi_awvalid),
+        .s_axi_awready(s_axi_awready),
+
+        .s_axi_wdata(s_axi_wdata),
+        .s_axi_wstrb(s_axi_wstrb),
+        .s_axi_wvalid(s_axi_wvalid),
+        .s_axi_wready(s_axi_wready),
+
+        .s_axi_bresp(s_axi_bresp),
+        .s_axi_bvalid(s_axi_bvalid),
+        .s_axi_bready(s_axi_bready),
+
+        .s_axi_araddr(s_axi_araddr),
+        .s_axi_arvalid(s_axi_arvalid),
+        .s_axi_arready(s_axi_arready),
+
+        .s_axi_rdata(s_axi_rdata),
+        .s_axi_rresp(s_axi_rresp),
+        .s_axi_rvalid(s_axi_rvalid),
+        .s_axi_rready(s_axi_rready)
+    );
+
+
+    /*
+     * Clock.
+     */
+
+    initial begin
+        aclk = 1'b0;
+        forever #5 aclk = ~aclk;
+    end
+
+
+    /*
+     * AXI4-Lite write helper.
+     */
+
+    task write_register;
+        input [31:0] address;
+        input [31:0] data;
+        input [3:0]  strobe;
+
+        begin
+
+            @(negedge aclk);
+
+            s_axi_awaddr  = address;
+            s_axi_awvalid = 1'b1;
+
+            s_axi_wdata   = data;
+            s_axi_wstrb   = strobe;
+            s_axi_wvalid  = 1'b1;
+
+            wait (s_axi_awready && s_axi_wready);
+
+            @(posedge aclk);
+            #1;
+
+            s_axi_awvalid = 1'b0;
+            s_axi_wvalid  = 1'b0;
+
+            wait (s_axi_bvalid);
+
+            s_axi_bready = 1'b1;
+
+            @(posedge aclk);
+            #1;
+
+            s_axi_bready = 1'b0;
+
+        end
+    endtask
+
+
+    /*
+     * AXI4-Lite read helper.
+     */
+
+    task read_register;
+        input [31:0] address;
+
+        begin
+
+            @(negedge aclk);
+
+            s_axi_araddr  = address;
+            s_axi_arvalid = 1'b1;
+
+            wait (s_axi_arready);
+
+            @(posedge aclk);
+            #1;
+
+            s_axi_arvalid = 1'b0;
+
+            wait (s_axi_rvalid);
+
+        end
+    endtask
+
+
+    initial begin
+
+        pass_count = 0;
+        fail_count = 0;
+
+        aresetn = 1'b0;
+
+        s_axi_awaddr  = 32'b0;
+        s_axi_awvalid = 1'b0;
+
+        s_axi_wdata   = 32'b0;
+        s_axi_wstrb   = 4'b0;
+        s_axi_wvalid  = 1'b0;
+
+        s_axi_bready  = 1'b0;
+
+        s_axi_araddr  = 32'b0;
+        s_axi_arvalid = 1'b0;
+        s_axi_rready  = 1'b0;
+
+
+        #20;
+        aresetn = 1'b1;
+
+
+        /*
+         * Put known values into the readable registers.
+         */
+
+        write_register(
+            32'h00000000,
+            32'hDEADBEEF,
+            4'b1111
+        );
+
+        write_register(
+            32'h00000008,
+            32'h12345678,
+            4'b1111
+        );
+
+        write_register(
+            32'h0000000C,
+            32'hA5A5A5A5,
+            4'b1111
+        );
+
+
+        /*
+         * TEST 1
+         */
+
+        $display("");
+        $display("TEST 1: Read CONTROL register");
+        $display("Expected: DEADBEEF");
+
+        read_register(32'h00000000);
+
+        if (s_axi_rdata == 32'hDEADBEEF) begin
+            $display("PASS: CONTROL read returned DEADBEEF");
+            pass_count = pass_count + 1;
+        end
+        else begin
+            $display(
+                "FAIL: CONTROL read returned %h",
+                s_axi_rdata
+            );
+            fail_count = fail_count + 1;
+        end
+
+        if (s_axi_rresp == 2'b00) begin
+            $display("PASS: CONTROL read response is OKAY");
+            pass_count = pass_count + 1;
+        end
+        else begin
+            $display(
+                "FAIL: CONTROL response = %b",
+                s_axi_rresp
+            );
+            fail_count = fail_count + 1;
+        end
+
+
+        /*
+         * Complete the read response.
+         */
+
+        s_axi_rready = 1'b1;
+
+        @(posedge aclk);
+        #1;
+
+        if (!s_axi_rvalid) begin
+            $display("PASS: CONTROL read response completed");
+            pass_count = pass_count + 1;
+        end
+        else begin
+            $display("FAIL: CONTROL RVALID did not clear");
+            fail_count = fail_count + 1;
+        end
+
+        s_axi_rready = 1'b0;
+
+
+        /*
+         * TEST 2
+         */
+
+        $display("");
+        $display("TEST 2: Read STATUS register");
+        $display("Expected: 00000000");
+
+        read_register(32'h00000004);
+
+        if (s_axi_rdata == 32'h00000000) begin
+            $display("PASS: STATUS read returned 00000000");
+            pass_count = pass_count + 1;
+        end
+        else begin
+            $display(
+                "FAIL: STATUS read returned %h",
+                s_axi_rdata
+            );
+            fail_count = fail_count + 1;
+        end
+
+        s_axi_rready = 1'b1;
+
+        @(posedge aclk);
+        #1;
+
+        s_axi_rready = 1'b0;
+
+
+        /*
+         * TEST 3
+         */
+
+        $display("");
+        $display("TEST 3: Read DATA register");
+        $display("Expected: 12345678");
+
+        read_register(32'h00000008);
+
+        if (s_axi_rdata == 32'h12345678) begin
+            $display("PASS: DATA read returned 12345678");
+            pass_count = pass_count + 1;
+        end
+        else begin
+            $display(
+                "FAIL: DATA read returned %h",
+                s_axi_rdata
+            );
+            fail_count = fail_count + 1;
+        end
+
+        s_axi_rready = 1'b1;
+
+        @(posedge aclk);
+        #1;
+
+        s_axi_rready = 1'b0;
+
+
+        /*
+         * TEST 4
+         */
+
+        $display("");
+        $display("TEST 4: Read CONFIG register");
+        $display("Expected: A5A5A5A5");
+
+        read_register(32'h0000000C);
+
+        if (s_axi_rdata == 32'hA5A5A5A5) begin
+            $display("PASS: CONFIG read returned A5A5A5A5");
+            pass_count = pass_count + 1;
+        end
+        else begin
+            $display(
+                "FAIL: CONFIG read returned %h",
+                s_axi_rdata
+            );
+            fail_count = fail_count + 1;
+        end
+
+        s_axi_rready = 1'b1;
+
+        @(posedge aclk);
+        #1;
+
+        s_axi_rready = 1'b0;
+
+
+        /*
+         * TEST 5
+         *
+         * Check that RVALID stays asserted until RREADY.
+         */
+
+        $display("");
+        $display("TEST 5: Hold read response until RREADY");
+        $display("Expected: RVALID remains high");
+
+        read_register(32'h00000008);
+
+        if (s_axi_rvalid) begin
+            $display("PASS: RVALID is asserted");
+            pass_count = pass_count + 1;
+        end
+        else begin
+            $display("FAIL: RVALID was not asserted");
+            fail_count = fail_count + 1;
+        end
+
+        /*
+         * Leave RREADY low for one clock.
+         */
+
+        @(posedge aclk);
+        #1;
+
+        if (s_axi_rvalid) begin
+            $display("PASS: RVALID held while RREADY was low");
+            pass_count = pass_count + 1;
+        end
+        else begin
+            $display("FAIL: RVALID cleared before RREADY");
+            fail_count = fail_count + 1;
+        end
+
+
+        /*
+         * Now accept the response.
+         */
+
+        s_axi_rready = 1'b1;
+
+        @(posedge aclk);
+        #1;
+
+        if (!s_axi_rvalid) begin
+            $display("PASS: RVALID cleared after RREADY");
+            pass_count = pass_count + 1;
+        end
+        else begin
+            $display("FAIL: RVALID remained asserted");
+            fail_count = fail_count + 1;
+        end
+
+        s_axi_rready = 1'b0;
+
+
+        /*
+         * Summary.
+         */
+
+        $display("");
+        $display("================================================");
+        $display("PROJECT 38 STEP 4 VERIFICATION SUMMARY");
+        $display("================================================");
+
+        $display(
+            "PASS COUNT = %0d",
+            pass_count
+        );
+
+        $display(
+            "FAIL COUNT = %0d",
+            fail_count
+        );
+
+        if (fail_count == 0) begin
+            $display("");
+            $display(
+                "PROJECT 38 STEP 4 VERIFICATION: PASS"
+            );
+        end
+        else begin
+            $display("");
+            $display(
+                "PROJECT 38 STEP 4 VERIFICATION: FAIL"
+            );
+        end
+
+        $display("================================================");
+
+        $finish;
+
+    end
+
+
+    /*
+     * Waveform dump.
+     */
+
+    initial begin
+        $dumpfile("waves/axi4lite_reg_bank.vcd");
+        $dumpvars(0, tb_axi4lite_reg_bank);
+    end
+
+endmodule
