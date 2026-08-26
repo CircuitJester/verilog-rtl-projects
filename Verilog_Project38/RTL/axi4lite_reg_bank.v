@@ -166,11 +166,20 @@ module axi4lite_reg_bank #(
                 write_data_valid &&
                 !s_axi_bvalid) begin
 
-                case (write_addr[5:2])
+                /*
+                 * Only naturally aligned 32-bit addresses may
+                 * modify registers.
+                 *
+                 * Unaligned writes still receive an AXI OKAY
+                 * response, but must have no register side effect.
+                 */
+                if (write_addr[1:0] == 2'b00) begin
 
-                    /*
-                     * CONTROL register - 0x00
-                     */
+                    case (write_addr[5:2])
+
+                        /*
+                         * CONTROL register - 0x00
+                         */
                     4'h0: begin
 
                         if (write_strb[0])
@@ -234,7 +243,9 @@ module axi4lite_reg_bank #(
                     default: begin
                     end
 
-                endcase
+                    endcase
+
+                end
 
 
                 /*
@@ -293,48 +304,59 @@ module axi4lite_reg_bank #(
                  * Address bits [5:2] select the 32-bit register.
                  */
 
-                case (s_axi_araddr[5:2])
+                /*
+                 * Register accesses must be 32-bit word aligned.
+                 * Unaligned addresses return zero.
+                 */
+                if (s_axi_araddr[1:0] == 2'b00) begin
 
-                    /*
-                     * CONTROL - 0x00
-                     */
-                    4'h0: begin
-                        s_axi_rdata <= control_reg;
-                    end
+                    case (s_axi_araddr[5:2])
 
-
-                    /*
-                     * STATUS - 0x04
-                     */
-                    4'h1: begin
-                        s_axi_rdata <= status_reg;
-                    end
+                        /*
+                         * CONTROL - 0x00
+                         */
+                        4'h0: begin
+                            s_axi_rdata <= control_reg;
+                        end
 
 
-                    /*
-                     * DATA - 0x08
-                     */
-                    4'h2: begin
-                        s_axi_rdata <= data_reg;
-                    end
+                        /*
+                         * STATUS - 0x04
+                         */
+                        4'h1: begin
+                            s_axi_rdata <= status_reg;
+                        end
 
 
-                    /*
-                     * CONFIG - 0x0C
-                     */
-                    4'h3: begin
-                        s_axi_rdata <= config_reg;
-                    end
+                        /*
+                         * DATA - 0x08
+                         */
+                        4'h2: begin
+                            s_axi_rdata <= data_reg;
+                        end
 
 
-                    /*
-                     * Undefined address.
-                     */
-                    default: begin
-                        s_axi_rdata <= 32'b0;
-                    end
+                        /*
+                         * CONFIG - 0x0C
+                         */
+                        4'h3: begin
+                            s_axi_rdata <= config_reg;
+                        end
 
-                endcase
+
+                        /*
+                         * Undefined address.
+                         */
+                        default: begin
+                            s_axi_rdata <= 32'b0;
+                        end
+
+                    endcase
+
+                end
+                else begin
+                    s_axi_rdata <= 32'b0;
+                end
 
 
                 /*
