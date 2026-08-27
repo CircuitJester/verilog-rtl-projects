@@ -2398,22 +2398,339 @@ module tb_axi4lite_reg_bank;
 
         /*
          * --------------------------------------------------------
+         * TEST 39
+         *
+         * AWVALID held while W channel is not presented.
+         *
+         * The slave must accept AW only through an actual
+         * AWVALID/AWREADY handshake and must not generate BVALID
+         * until W data is also accepted.
+         * --------------------------------------------------------
+         */
+
+        $display("");
+        $display("TEST 39: AWVALID held without W");
+        $display("Expected: AW accepted, no BVALID until W arrives");
+
+        s_axi_awaddr  = 32'h00000000;
+        s_axi_awvalid = 1'b1;
+
+        while (!s_axi_awready)
+            @(posedge aclk);
+
+        @(posedge aclk);
+        #1;
+
+        if (s_axi_bvalid == 1'b0) begin
+            $display("PASS: AW-only hold produced no BVALID");
+            pass_count = pass_count + 1;
+        end
+        else begin
+            $display("FAIL: BVALID asserted before W acceptance");
+            fail_count = fail_count + 1;
+        end
+
+        s_axi_wdata  = 32'h13572468;
+        s_axi_wstrb  = 4'b1111;
+        s_axi_wvalid = 1'b1;
+        s_axi_awvalid = 1'b0;
+
+        while (!s_axi_wready)
+            @(posedge aclk);
+
+        @(posedge aclk);
+        #1;
+
+        s_axi_wvalid = 1'b0;
+
+        while (!s_axi_bvalid)
+            @(posedge aclk);
+
+        s_axi_bready = 1'b1;
+
+        @(posedge aclk);
+        #1;
+
+        s_axi_bready = 1'b0;
+
+        read_register(32'h00000000);
+
+        if (s_axi_rdata == 32'h13572468 &&
+            s_axi_rresp == 2'b00) begin
+            $display("PASS: held AW transaction completed correctly");
+            pass_count = pass_count + 1;
+        end
+        else begin
+            $display(
+                "FAIL: held AW recovery CONTROL=%h RRESP=%b",
+                s_axi_rdata,
+                s_axi_rresp
+            );
+            fail_count = fail_count + 1;
+        end
+
+        s_axi_rready = 1'b1;
+
+        @(posedge aclk);
+        #1;
+
+        s_axi_rready = 1'b0;
+
+
+        /*
+         * --------------------------------------------------------
+         * TEST 40
+         *
+         * WVALID held while AW channel is not presented.
+         * --------------------------------------------------------
+         */
+
+        $display("");
+        $display("TEST 40: WVALID held without AW");
+        $display("Expected: W accepted, no BVALID until AW arrives");
+
+        s_axi_wdata  = 32'h2468ACE0;
+        s_axi_wstrb  = 4'b1111;
+        s_axi_wvalid = 1'b1;
+
+        while (!s_axi_wready)
+            @(posedge aclk);
+
+        @(posedge aclk);
+        #1;
+
+        if (s_axi_bvalid == 1'b0) begin
+            $display("PASS: W-only hold produced no BVALID");
+            pass_count = pass_count + 1;
+        end
+        else begin
+            $display("FAIL: BVALID asserted before AW acceptance");
+            fail_count = fail_count + 1;
+        end
+
+        s_axi_awaddr  = 32'h00000008;
+        s_axi_awvalid = 1'b1;
+        s_axi_wvalid  = 1'b0;
+
+        while (!s_axi_awready)
+            @(posedge aclk);
+
+        @(posedge aclk);
+        #1;
+
+        s_axi_awvalid = 1'b0;
+
+        while (!s_axi_bvalid)
+            @(posedge aclk);
+
+        s_axi_bready = 1'b1;
+
+        @(posedge aclk);
+        #1;
+
+        s_axi_bready = 1'b0;
+
+        read_register(32'h00000008);
+
+        if (s_axi_rdata == 32'h2468ACE0 &&
+            s_axi_rresp == 2'b00) begin
+            $display("PASS: held W transaction completed correctly");
+            pass_count = pass_count + 1;
+        end
+        else begin
+            $display(
+                "FAIL: held W recovery DATA=%h RRESP=%b",
+                s_axi_rdata,
+                s_axi_rresp
+            );
+            fail_count = fail_count + 1;
+        end
+
+        s_axi_rready = 1'b1;
+
+        @(posedge aclk);
+        #1;
+
+        s_axi_rready = 1'b0;
+
+
+        /*
+         * --------------------------------------------------------
+         * TEST 41
+         *
+         * New write channels must remain blocked while BVALID
+         * is asserted. The pending transaction must not be
+         * accepted until the response is released.
+         * --------------------------------------------------------
+         */
+
+        $display("");
+        $display("TEST 41: AW/W blocked during BVALID");
+        $display("Expected: AWREADY/WREADY remain low while BVALID is active");
+
+        /*
+         * Create an outstanding write response.
+         */
+        s_axi_awaddr  = 32'h00000000;
+        s_axi_awvalid = 1'b1;
+
+        while (!s_axi_awready)
+            @(posedge aclk);
+
+        @(posedge aclk);
+        #1;
+
+        s_axi_awvalid = 1'b0;
+
+        s_axi_wdata  = 32'h11112222;
+        s_axi_wstrb  = 4'b1111;
+        s_axi_wvalid = 1'b1;
+
+        while (!s_axi_wready)
+            @(posedge aclk);
+
+        @(posedge aclk);
+        #1;
+
+        s_axi_wvalid = 1'b0;
+
+        while (!s_axi_bvalid)
+            @(posedge aclk);
+
+        /*
+         * Keep BREADY low so BVALID remains asserted.
+         */
+        s_axi_bready = 1'b0;
+
+        /*
+         * Present a second write while the first response
+         * is still outstanding.
+         */
+        s_axi_awaddr  = 32'h00000008;
+        s_axi_awvalid = 1'b1;
+
+        s_axi_wdata  = 32'h33334444;
+        s_axi_wstrb  = 4'b1111;
+        s_axi_wvalid = 1'b1;
+
+        @(posedge aclk);
+        #1;
+
+        if (s_axi_awready == 1'b0 &&
+            s_axi_wready == 1'b0) begin
+            $display("PASS: new write channels blocked by BVALID");
+            pass_count = pass_count + 1;
+        end
+        else begin
+            $display(
+                "FAIL: AWREADY=%b WREADY=%b during BVALID",
+                s_axi_awready,
+                s_axi_wready
+            );
+            fail_count = fail_count + 1;
+        end
+
+        /*
+         * Important:
+         * Remove the second transaction BEFORE releasing BREADY.
+         * Otherwise it would legitimately handshake immediately
+         * after BVALID clears.
+         */
+        s_axi_awvalid = 1'b0;
+        s_axi_wvalid  = 1'b0;
+
+        /*
+         * Release the original response.
+         */
+        s_axi_bready = 1'b1;
+
+        @(posedge aclk);
+        #1;
+
+        s_axi_bready = 1'b0;
+
+        /*
+         * Verify the blocked transaction was never accepted.
+         */
+        read_register(32'h00000008);
+
+        if (s_axi_rdata == 32'h2468ACE0 &&
+            s_axi_rresp == 2'b00) begin
+            $display("PASS: blocked write did not modify DATA");
+            pass_count = pass_count + 1;
+        end
+        else begin
+            $display("FAIL: DATA changed to %h", s_axi_rdata);
+            fail_count = fail_count + 1;
+        end
+
+        s_axi_rready = 1'b1;
+
+        @(posedge aclk);
+        #1;
+
+        s_axi_rready = 1'b0;
+
+
+        /*
+         * --------------------------------------------------------
+         * TEST 42
+         *
+         * Recovery after READY backpressure.
+         * --------------------------------------------------------
+         */
+
+        $display("");
+        $display("TEST 42: Recovery after write-channel blocking");
+        $display("Expected: normal aligned write still works");
+
+        write_aw_first(
+            32'h0000000C,
+            32'hCAFEBABE
+        );
+
+        read_register(32'h0000000C);
+
+        if (s_axi_rdata == 32'hCAFEBABE &&
+            s_axi_rresp == 2'b00) begin
+            $display("PASS: write-channel recovery successful");
+            pass_count = pass_count + 1;
+        end
+        else begin
+            $display(
+                "FAIL: recovery CONFIG=%h RRESP=%b",
+                s_axi_rdata,
+                s_axi_rresp
+            );
+            fail_count = fail_count + 1;
+        end
+
+        s_axi_rready = 1'b1;
+
+        @(posedge aclk);
+        #1;
+
+        s_axi_rready = 1'b0;
+
+
+        /*
+         * --------------------------------------------------------
          * Verification summary.
          * --------------------------------------------------------
          */
 
         $display("");
         $display("================================================");
-        $display("PROJECT 38 STEP 30 VERIFICATION SUMMARY");
+        $display("PROJECT 38 STEP 31 VERIFICATION SUMMARY");
         $display("================================================");
         $display("PASS COUNT = %0d", pass_count);
         $display("FAIL COUNT = %0d", fail_count);
 
         if (fail_count == 0) begin
-            $display("PROJECT 38 STEP 30 VERIFICATION: PASS");
+            $display("PROJECT 38 STEP 31 VERIFICATION: PASS");
         end
         else begin
-            $display("PROJECT 38 STEP 30 VERIFICATION: FAIL");
+            $display("PROJECT 38 STEP 31 VERIFICATION: FAIL");
         end
 
         $display("================================================");
