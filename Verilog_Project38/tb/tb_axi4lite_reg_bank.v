@@ -2332,22 +2332,88 @@ module tb_axi4lite_reg_bank;
 
         /*
          * --------------------------------------------------------
+         * TEST 38
+         *
+         * Simultaneous AW and W acceptance.
+         *
+         * Both write channels are presented in the same cycle.
+         * The register bank must accept both independently and
+         * complete the write transaction normally.
+         * --------------------------------------------------------
+         */
+
+        $display("");
+        $display("TEST 38: Simultaneous AW + W acceptance");
+        $display("Expected: CONTROL = DEADBEEF");
+
+        s_axi_awaddr  = 32'h00000000;
+        s_axi_awvalid = 1'b1;
+
+        s_axi_wdata   = 32'hDEADBEEF;
+        s_axi_wstrb   = 4'b1111;
+        s_axi_wvalid  = 1'b1;
+
+        while (!(s_axi_awready && s_axi_wready))
+            @(posedge aclk);
+
+        @(posedge aclk);
+        #1;
+
+        s_axi_awvalid = 1'b0;
+        s_axi_wvalid  = 1'b0;
+
+        while (!s_axi_bvalid)
+            @(posedge aclk);
+
+        s_axi_bready = 1'b1;
+
+        @(posedge aclk);
+        #1;
+
+        s_axi_bready = 1'b0;
+
+        read_register(32'h00000000);
+
+        if (s_axi_rdata == 32'hDEADBEEF &&
+            s_axi_rresp == 2'b00) begin
+            $display("PASS: simultaneous AW + W transaction completed");
+            pass_count = pass_count + 1;
+        end
+        else begin
+            $display(
+                "FAIL: simultaneous write CONTROL=%h RRESP=%b",
+                s_axi_rdata,
+                s_axi_rresp
+            );
+            fail_count = fail_count + 1;
+        end
+
+        s_axi_rready = 1'b1;
+
+        @(posedge aclk);
+        #1;
+
+        s_axi_rready = 1'b0;
+
+
+        /*
+         * --------------------------------------------------------
          * Verification summary.
          * --------------------------------------------------------
          */
 
         $display("");
         $display("================================================");
-        $display("PROJECT 38 STEP 29 VERIFICATION SUMMARY");
+        $display("PROJECT 38 STEP 30 VERIFICATION SUMMARY");
         $display("================================================");
         $display("PASS COUNT = %0d", pass_count);
         $display("FAIL COUNT = %0d", fail_count);
 
         if (fail_count == 0) begin
-            $display("PROJECT 38 STEP 29 VERIFICATION: PASS");
+            $display("PROJECT 38 STEP 30 VERIFICATION: PASS");
         end
         else begin
-            $display("PROJECT 38 STEP 29 VERIFICATION: FAIL");
+            $display("PROJECT 38 STEP 30 VERIFICATION: FAIL");
         end
 
         $display("================================================");
